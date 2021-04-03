@@ -19,6 +19,16 @@ class LoginViewModel(private val repository:LoginRepository) : ViewModel(){
         MutableLiveData<Boolean>()
     }
 
+    val id:MutableLiveData<String> by lazy {
+        MutableLiveData<String>().apply {
+            postValue("")
+        }
+    }
+    val pw:MutableLiveData<String> by lazy {
+        MutableLiveData<String>().apply {
+            postValue("")
+        }
+    }
 
     fun setSplashListener(listener:SplashListener){
         splashListener = listener
@@ -27,7 +37,7 @@ class LoginViewModel(private val repository:LoginRepository) : ViewModel(){
     fun autoLogin(){
         CoroutineScope(Dispatchers.IO).launch {
 
-            delay(1000)
+            delay(2000)
 
             val id = ApplicationClass.prefs.getId()
             if(id==""){
@@ -50,4 +60,5 @@ class LoginViewModel(private val repository:LoginRepository) : ViewModel(){
             }
         }
     }
+
 }

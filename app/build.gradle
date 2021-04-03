@@ -55,7 +55,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
     //Koin
-    def koin_version = "2.1.5"
+    def koin_version = "2.2.0"
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     testImplementation "org.koin:koin-test:$koin_version"
 
