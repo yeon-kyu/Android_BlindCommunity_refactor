@@ -1,4 +1,4 @@
-package com.example.blindcommunity2
+package com.yeonkyu.blindcommunity2
 
 import org.junit.Test
 
