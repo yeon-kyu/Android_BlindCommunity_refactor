@@ -27,7 +27,6 @@ class SplashActivity : AppCompatActivity(),SplashListener {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
         mBinding.lifecycleOwner = this
         mBinding.viewModel = mViewModel
-
     }
 
     private fun setupViewModel(){
@@ -40,13 +39,13 @@ class SplashActivity : AppCompatActivity(),SplashListener {
                 finish()
             }
         })
-
     }
 
     override fun onAutoLoginFailed() {
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-        finish()
+        runOnUiThread {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
-
 }

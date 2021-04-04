@@ -29,11 +29,16 @@ class LoginActivity : AppCompatActivity() {
         mBinding.loginSignUpTv.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
-            finish()
         }
     }
 
     private fun setupViewModel(){
+        mViewModel.id.observe(this,{
+            mViewModel.alertMsg.postValue("")
+        })
+        mViewModel.pw.observe(this,{
+            mViewModel.alertMsg.postValue("")
+        })
 
     }
 }
