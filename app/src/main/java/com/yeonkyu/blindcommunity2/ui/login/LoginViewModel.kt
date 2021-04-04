@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.yeonkyu.blindcommunity2.ApplicationClass
+import com.yeonkyu.blindcommunity2.data.listeners.LoginListener
 import com.yeonkyu.blindcommunity2.data.listeners.SplashListener
 import com.yeonkyu.blindcommunity2.data.repository.LoginRepository
 import kotlinx.coroutines.CoroutineScope
@@ -15,6 +16,7 @@ import java.util.regex.Pattern
 class LoginViewModel(private val repository:LoginRepository) : ViewModel(){
 
     private var splashListener: SplashListener? = null
+    private var loginListener: LoginListener? = null
 
     val loginSuccessFlag: MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>()
@@ -38,6 +40,9 @@ class LoginViewModel(private val repository:LoginRepository) : ViewModel(){
 
     fun setSplashListener(listener:SplashListener){
         splashListener = listener
+    }
+    fun setLoginListener(listener:LoginListener){
+        loginListener = listener
     }
 
     fun autoLogin(){
@@ -71,8 +76,6 @@ class LoginViewModel(private val repository:LoginRepository) : ViewModel(){
 
     fun login(){
 
-        Log.e("!!.","!!@")
-
         val userId = id.value.toString()
         val userPw = pw.value.toString()
 
@@ -88,8 +91,11 @@ class LoginViewModel(private val repository:LoginRepository) : ViewModel(){
         CoroutineScope(Dispatchers.IO).launch {
             val response = repository.login(userId,userPw)
             Log.e("BC_CHECK","login result : $response")
-            if(response=="1"){ //success
 
+            when(response){
+                "1"-> loginListener?.onLoginSuccess(userId)//로그인 성공
+                "0"-> loginListener?.onLoginFail("아이디를 확인해주세요")//아이디 없음
+                "-1"->loginListener?.onLoginFail("비밀번호를 확인해주세요")//비밀번호 틀림
             }
         }
     }

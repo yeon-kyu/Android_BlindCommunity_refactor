@@ -2,14 +2,15 @@ package com.yeonkyu.blindcommunity2.ui.dialogs
 
 import android.app.Dialog
 import android.content.Context
+import android.view.View
 import android.view.Window
 import android.widget.TextView
 import com.yeonkyu.blindcommunity2.R
 
-class AlertDialog(context: Context) {
+class GrayAlertDialog(context: Context) {
     private val mContext = context
 
-    fun callFunction(titleMsg: String, confirmMsg:String, cancelMsg:String){
+    fun callFunction(titleMsg: String, confirmMsg:String, cancelMsg:String?){
         val dig = Dialog(mContext)
         dig.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dig.window?.setBackgroundDrawableResource(android.R.color.transparent)
@@ -22,11 +23,22 @@ class AlertDialog(context: Context) {
         val confirmTv = dig.findViewById<TextView>(R.id.dialog_alert_confirm)
 
         titleTv.text = titleMsg
-        cancelTv.text = cancelMsg
         confirmTv.text = confirmMsg
 
-        cancelTv.setOnClickListener {
-            dig.dismiss()
+        if(cancelMsg==null){ //확인버튼 1개
+
+            cancelTv.visibility = View.GONE
+            confirmTv.setOnClickListener {
+                dig.dismiss()
+            }
         }
+        else{ //확인, 취소 버튼 각각 2개
+            cancelTv.text = cancelMsg
+            cancelTv.setOnClickListener {
+                dig.dismiss()
+            }
+        }
+
+        dig.show()
     }
 }
