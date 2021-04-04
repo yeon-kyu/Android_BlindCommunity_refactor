@@ -47,7 +47,6 @@ class LoginViewModel(private val repository:LoginRepository) : ViewModel(){
 
     fun autoLogin(){
         CoroutineScope(Dispatchers.IO).launch {
-
             delay(2000)
 
             val id = ApplicationClass.prefs.getId()
@@ -62,7 +61,6 @@ class LoginViewModel(private val repository:LoginRepository) : ViewModel(){
                 Log.e("BC_CHECK","no saved pw")
                 return@launch
             }
-
             try {
                 val response = repository.login(id,pw)
                 loginSuccessFlag.postValue(true)
@@ -89,13 +87,18 @@ class LoginViewModel(private val repository:LoginRepository) : ViewModel(){
         }
 
         CoroutineScope(Dispatchers.IO).launch {
-            val response = repository.login(userId,userPw)
-            Log.e("BC_CHECK","login result : $response")
+            try {
+                val response = repository.login(userId,userPw)
+                Log.e("BC_CHECK","login result : $response")
 
-            when(response){
-                "1"-> loginListener?.onLoginSuccess(userId)//로그인 성공
-                "0"-> loginListener?.onLoginFail("아이디를 확인해주세요")//아이디 없음
-                "-1"->loginListener?.onLoginFail("비밀번호를 확인해주세요")//비밀번호 틀림
+                when(response){
+                    "1"-> loginListener?.onLoginSuccess(userId)//로그인 성공
+                    "0"-> loginListener?.onLoginFail("아이디를 확인해주세요")//아이디 없음
+                    "-1"->loginListener?.onLoginFail("비밀번호를 확인해주세요")//비밀번호 틀림
+                }
+
+            }catch (e:Exception){
+                Log.e("BC_ERROR","api Fail $e")
             }
         }
     }

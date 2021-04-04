@@ -5,11 +5,9 @@ import com.yeonkyu.blindcommunity2.di.networkModule
 import com.yeonkyu.blindcommunity2.di.repositoryModule
 import com.yeonkyu.blindcommunity2.di.viewModelModule
 import com.yeonkyu.blindcommunity2.utils.PreferenceUtil
-import org.conscrypt.Conscrypt
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
-import java.security.Security
 
 class ApplicationClass : Application() {
 
