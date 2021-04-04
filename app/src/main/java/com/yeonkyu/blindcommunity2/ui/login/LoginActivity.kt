@@ -9,6 +9,7 @@ import com.yeonkyu.blindcommunity2.data.listeners.LoginListener
 import com.yeonkyu.blindcommunity2.databinding.ActivityLoginBinding
 import com.yeonkyu.blindcommunity2.ui.MainActivity
 import com.yeonkyu.blindcommunity2.ui.dialogs.GrayAlertDialog
+import com.yeonkyu.blindcommunity2.ui.signup.SignupActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity(), LoginListener {
@@ -29,7 +30,7 @@ class LoginActivity : AppCompatActivity(), LoginListener {
         mBinding.viewModel = mViewModel
 
         mBinding.loginSignUpTv.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, SignupActivity::class.java)
             startActivity(intent)
         }
     }
