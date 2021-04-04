@@ -23,8 +23,8 @@ class PreferenceUtil(context: Context) {
     fun setPw(pw:String){
         prefs.edit().putString(Pw,pw).apply()
     }
-    fun getPw(id:String):String{
-        return prefs.getString(id,"").toString()
+    fun getPw():String{
+        return prefs.getString(Pw,"").toString()
     }
 
     fun removeUserData(){

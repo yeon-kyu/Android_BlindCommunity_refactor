@@ -55,7 +55,7 @@ class LoginViewModel(private val repository:LoginRepository) : ViewModel(){
                 Log.e("BC_CHECK","no saved id")
                 return@launch
             }
-            val pw = ApplicationClass.prefs.getPw(id)
+            val pw = ApplicationClass.prefs.getPw()
             if(pw==""){
                 splashListener?.onAutoLoginFailed()
                 Log.e("BC_CHECK","no saved pw")
@@ -92,7 +92,12 @@ class LoginViewModel(private val repository:LoginRepository) : ViewModel(){
                 Log.e("BC_CHECK","login result : $response")
 
                 when(response){
-                    "1"-> loginListener?.onLoginSuccess(userId)//로그인 성공
+                    "1"-> {
+                        loginListener?.onLoginSuccess(userId)//로그인 성공
+                        ApplicationClass.prefs.setId(userId)
+                        ApplicationClass.prefs.setPw(userPw)
+
+                    }
                     "0"-> loginListener?.onLoginFail("아이디를 확인해주세요")//아이디 없음
                     "-1"->loginListener?.onLoginFail("비밀번호를 확인해주세요")//비밀번호 틀림
                 }
