@@ -88,6 +88,9 @@ class LoginViewModel(private val repository:LoginRepository) : ViewModel(){
         CoroutineScope(Dispatchers.IO).launch {
             val response = repository.login(userId,userPw)
             Log.e("BC_CHECK","login result : $response")
+            if(response=="1"){ //success
+
+            }
         }
     }
 

@@ -11,7 +11,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 const val BASE_URL = "http://13.125.232.199:3000/"
-//const val BASE_URL = "https://grepp-programmers-challenges.s3.ap-northeast-2.amazonaws.com/2020-flo/"
 
 val networkModule: Module = module {
 
@@ -20,14 +19,14 @@ val networkModule: Module = module {
 
     fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor) =
         OkHttpClient.Builder()
-//            .addInterceptor(HttpLoggingInterceptor().apply {
-//                level = if (BuildConfig.DEBUG) {
-//                    HttpLoggingInterceptor.Level.BODY
-//                } else {
-//                    HttpLoggingInterceptor.Level.NONE
-//                }
-//            })
-            .addInterceptor(httpLoggingInterceptor)
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = if (BuildConfig.DEBUG) {
+                    HttpLoggingInterceptor.Level.BODY
+                } else {
+                    HttpLoggingInterceptor.Level.NONE
+                }
+            })
+//            .addInterceptor(httpLoggingInterceptor)
             .connectTimeout(1, TimeUnit.MINUTES)
             .readTimeout(30,TimeUnit.SECONDS)
             .build()
