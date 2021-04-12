@@ -23,6 +23,7 @@
         <activity android:name=".ui.login.LoginActivity"/>
         <activity android:name=".ui.signup.SignupActivity"/>
         <activity android:name=".ui.MainActivity"/>
+        <activity android:name=".ui.board.BoardActivity"/>
     </application>
 
 </manifest>

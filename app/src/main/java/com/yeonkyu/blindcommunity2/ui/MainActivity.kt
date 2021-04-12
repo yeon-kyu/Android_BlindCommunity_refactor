@@ -20,6 +20,5 @@ class MainActivity : AppCompatActivity() {
                 findNavController(R.id.main_nav_host)
         )
 
-
     }
 }
