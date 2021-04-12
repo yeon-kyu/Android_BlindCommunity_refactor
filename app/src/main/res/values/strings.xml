@@ -12,4 +12,5 @@
     <string name="free_board">자유 게시판</string>
     <string name="info_board">정보 게시판</string>
     <string name="employee_board">취업 게시판</string>
+    <string name="main_toolbar_text">Blind Community</string>
 </resources>

@@ -11,12 +11,13 @@
         android:id="@+id/main_toolbar_text"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/main_nav_host"
-        android:background="@color/orange"
+        android:background="@color/light_gray"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:text=""
+        android:gravity="center"
+        android:text="@string/main_toolbar_text"
         android:textSize="20sp"
-        android:textColor="@color/dark_gray"
+        android:textColor="@color/primary"
         android:fontFamily="@font/notosanskr_bold"/>
 
     <fragment

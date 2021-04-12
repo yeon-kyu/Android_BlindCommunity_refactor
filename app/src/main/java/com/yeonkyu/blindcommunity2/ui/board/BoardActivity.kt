@@ -18,7 +18,6 @@ class BoardActivity : AppCompatActivity(){
         setupView()
 
         mBinding.boardTv.text = intent.getStringExtra("type")
-
     }
 
     private fun setupView(){
