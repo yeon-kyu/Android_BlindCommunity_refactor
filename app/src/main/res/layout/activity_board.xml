@@ -21,5 +21,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/board_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintVertical_weight="1"
+            android:background="@color/orange"
+            app:layout_constraintTop_toBottomOf="@+id/board_tv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:scrollbars="vertical"
+            android:clipToPadding="false"
+            android:overScrollMode="never"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -4,10 +4,10 @@ import com.google.gson.annotations.SerializedName
 
 data class BoardInfo(
         @SerializedName(value = "post_id")
-        val postId:String,
+        val postId:String?,
         @SerializedName(value = "nickname")
-        val nickname:String,
+        val nickname:String?,
         @SerializedName(value = "title")
-        val title:String
+        val title:String?
 
 )
