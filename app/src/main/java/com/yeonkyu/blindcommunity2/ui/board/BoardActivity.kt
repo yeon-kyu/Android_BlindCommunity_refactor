@@ -16,13 +16,17 @@ class BoardActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
 
         setupView()
-
-        mBinding.boardTv.text = intent.getStringExtra("type")
     }
 
     private fun setupView(){
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_board)
         mBinding.lifecycleOwner = this
         mBinding.viewModel = boardViewModel
+
+        when(intent.getStringExtra("type")){
+            "free" -> mBinding.boardTv.text = "자유 게시판"
+            "info" -> mBinding.boardTv.text = "정보 게시판"
+            "employee" -> mBinding.boardTv.text = "취업 게시판"
+        }
     }
 }
