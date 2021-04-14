@@ -13,4 +13,7 @@
     <string name="info_board">정보 게시판</string>
     <string name="employee_board">취업 게시판</string>
     <string name="main_toolbar_text">Blind Community</string>
+
+    <!--  board  -->
+    <string name="board_list_user_icn">board list user icon</string>
 </resources>

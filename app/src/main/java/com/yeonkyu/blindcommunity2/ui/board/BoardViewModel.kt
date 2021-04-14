@@ -17,11 +17,32 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
         MutableLiveData<ArrayList<BoardInfo>>()
     }
     private var count:Int = 0
+    private var boardType = 0 //1:자유게시판 2:정보게시판 3:취업게시판
+
+    fun setCount(cnt:Int){
+        count = cnt
+    }
+
+    fun setBoardType(type:Int){
+        boardType = type
+    }
 
     fun refresh(){
+        count = 0
+        loadNextBoards()
+    }
+
+    fun loadNextBoards(){
+        when(boardType){
+            1 -> loadNextFreeBoards()
+            2 -> loadNextInfoBoards()
+            3 -> loadNextEmployeeBoards()
+        }
+    }
+
+    private fun loadNextFreeBoards(){
         CoroutineScope(Dispatchers.IO).launch{
             try {
-                count = 0
                 val response = repository.getFreeBoard(count)
 
                 if(response is String){
@@ -37,8 +58,8 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
                         boardList.add(BoardInfo(postId,nickname,title))
                     }
                     liveBoardList.postValue(boardList)
+                    count+= response.size
                 }
-                Log.e("CHECK_TAG","$response")
 
             }catch (e:Exception){
                 Log.e("ERROR_TAG","getFreeBoard api error $e")
@@ -47,7 +68,59 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
         }
     }
 
-    fun loadNextBoards(){
+    private fun loadNextInfoBoards(){
+        CoroutineScope(Dispatchers.IO).launch{
+            try {
+                val response = repository.getInfoBoard(count)
 
+                if(response is String){
+                    Log.e("CHECK_TAG","response is string")
+                }
+                else{
+                    Log.e("CHECK_TAG","response is Array")
+                    val boardArray = response as ArrayList<LinkedTreeMap<String, String>>
+                    for(board in boardArray){
+                        val nickname: String? = board["nickname"]
+                        val title: String? = board["title"]
+                        val postId: String? = board["post_id"]
+                        boardList.add(BoardInfo(postId,nickname,title))
+                    }
+                    liveBoardList.postValue(boardList)
+                    count+= response.size
+                }
+
+            }catch (e:Exception){
+                Log.e("ERROR_TAG","getFreeBoard api error $e")
+
+            }
+        }
+    }
+
+    private fun loadNextEmployeeBoards(){
+        CoroutineScope(Dispatchers.IO).launch{
+            try {
+                val response = repository.getEmployeeBoard(count)
+
+                if(response is String){
+                    Log.e("CHECK_TAG","response is string")
+                }
+                else{
+                    Log.e("CHECK_TAG","response is Array")
+                    val boardArray = response as ArrayList<LinkedTreeMap<String, String>>
+                    for(board in boardArray){
+                        val nickname: String? = board["nickname"]
+                        val title: String? = board["title"]
+                        val postId: String? = board["post_id"]
+                        boardList.add(BoardInfo(postId,nickname,title))
+                    }
+                    liveBoardList.postValue(boardList)
+                    count+= response.size
+                }
+
+            }catch (e:Exception){
+                Log.e("ERROR_TAG","getFreeBoard api error $e")
+
+            }
+        }
     }
 }

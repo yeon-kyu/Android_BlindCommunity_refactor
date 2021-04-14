@@ -45,9 +45,18 @@ class BoardActivity : AppCompatActivity(){
 
 
         when(intent.getStringExtra("type")){
-            "free" -> mBinding.boardTv.text = "자유 게시판"
-            "info" -> mBinding.boardTv.text = "정보 게시판"
-            "employee" -> mBinding.boardTv.text = "취업 게시판"
+            "free" -> {
+                mBinding.boardTv.text = "자유 게시판"
+                boardViewModel.setBoardType(1)
+            }
+            "info" -> {
+                mBinding.boardTv.text = "정보 게시판"
+                boardViewModel.setBoardType(2)
+            }
+            "employee" -> {
+                mBinding.boardTv.text = "취업 게시판"
+                boardViewModel.setBoardType(3)
+            }
         }
     }
 

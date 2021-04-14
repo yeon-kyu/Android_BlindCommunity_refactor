@@ -6,14 +6,25 @@
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/board_list_nickname"
+    <ImageView
+        android:id="@+id/board_list_user_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="10dp"
         android:layout_marginStart="20dp"
+        android:src="@drawable/icn_emoji_emotions_24"
+        android:contentDescription="@string/board_list_user_icn" />
+
+    <TextView
+        android:id="@+id/board_list_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/board_list_user_img"
+        app:layout_constraintBottom_toBottomOf="@+id/board_list_user_img"
+        app:layout_constraintStart_toEndOf="@+id/board_list_user_img"
+        android:layout_marginStart="6dp"
         android:text="nickname"
         android:textSize="14sp"
         android:textColor="@color/dark_gray"
@@ -36,7 +47,7 @@
         android:id="@+id/board_list_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/board_list_nickname"
+        app:layout_constraintTop_toBottomOf="@id/board_list_user_img"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="6dp"
         android:layout_marginStart="20dp"
