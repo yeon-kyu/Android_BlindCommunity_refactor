@@ -18,6 +18,7 @@
 - res/value/string, res/value/color 파일 적극 활용
 - 직관적인 UI로 개선
 
+</br>
 ## Tech stack & Open-source libraries
 ### Architecture
 - `MVVM Architecture`
