@@ -13,9 +13,9 @@
 - LinearLayout, RelativeLayout 위주 XML -> ConstraintLayout 위주 XML
 - 로그인 데이터 저장 방식 FileInputStream 삭제 -> SharedPreference 추가
 - 디폴트 다이얼로그 사용 방식 -> 커스텀 다이얼로그 사용
-- 직관적인 UI로 개선
 - 일관성있고 직관적인 변수, 함수, 클래스명으로 수정
-- res/value/string, res/value/color 파일 적극적으로 활용
+- res/value/string, res/value/color 파일 적극 활용
+- 직관적인 UI로 개선
 
 ## Tech stack & Open-source libraries
 ### Architecture
