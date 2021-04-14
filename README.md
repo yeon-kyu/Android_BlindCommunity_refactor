@@ -6,11 +6,13 @@
 ### 변경 사항
 - 언어 변경 Java -> Kotlin
 - MVC Architecture -> MVVM Architecture
-- deprecated 라이브라리 삭제(AsyncTask) -> retrofit 추가
+- 의존성 주입(Koin) 추가
+- deprecated 라이브라리(AsyncTask) 삭제 -> retrofit, coroutine 추가
 - ListView 삭제 -> RecyclerView 추가
 - fragment 사용 방식 변경 -> Navigation 라이브라리 사용
 - LinearLayout, RelativeLayout 기반 XML -> ConstraintLayout 기반 XML
-- 로컬 데이터 저장 방식 FileInputStream 삭제 -> SharedPreference 추가
+- 로그인 데이터 저장 방식 FileInputStream 삭제 -> SharedPreference 추가
+- 디폴트 다이얼로그 사용 방식 -> 커스텀 다이얼로그 사용
 
 ## Tech stack & Open-source libraries
 ### Architecture
