@@ -1,6 +1,6 @@
 # BlindCommunity2
 
-2020년에 만들었던 <a href="https://github.com/yeon-kyu/Android_BlindCommunity" target="_blank"> BlindCommunity </a> 를 리펙토링한 프로젝트입니다.
+2020년에 만들었던 <a href="https://github.com/yeon-kyu/Android_BlindCommunity" target="_blank"> BlindCommunity </a> 를 리펙토링한 프로젝트입니다. </br>
 기존 서버 코드 유지한 채로 앱단에서 UI, 아키텍쳐, 비즈니스 로직을 수정하였습니다
 
 ### 변경 사항
