@@ -16,4 +16,6 @@
 
     <!--  board  -->
     <string name="board_list_user_icn">board list user icon</string>
+    <string name="board_plus_icn">board plus icon</string>
+    <string name="board_refresh_icn">board refresh icon</string>
 </resources>

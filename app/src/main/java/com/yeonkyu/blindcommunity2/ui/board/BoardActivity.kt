@@ -3,12 +3,14 @@ package com.yeonkyu.blindcommunity2.ui.board
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yeonkyu.blindcommunity2.R
 import com.yeonkyu.blindcommunity2.databinding.ActivityBoardBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class BoardActivity : AppCompatActivity(){
 
@@ -35,14 +37,25 @@ class BoardActivity : AppCompatActivity(){
         boardAdapter = BoardAdapter(this)
         boardRecyclerView.adapter = boardAdapter
 
-        mBinding.boardRecyclerview.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+        mBinding.boardRecyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                if(linearLayoutManager.findLastVisibleItemPosition()==boardAdapter.itemCount-1){
+                if (linearLayoutManager.findLastVisibleItemPosition() == boardAdapter.itemCount - 1) {
                     boardViewModel.loadNextBoards()
                 }
             }
         })
 
+        mBinding.boardSwipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this,R.color.primary))
+        //mBinding.boardSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.rgb(0,165,165))
+
+        mBinding.boardSwipeRefreshLayout.setOnRefreshListener {
+            boardViewModel.refresh()
+            mBinding.boardSwipeRefreshLayout.isRefreshing = false
+        }
+
+        mBinding.boardRefreshBt.setOnClickListener {
+            boardViewModel.refresh()
+        }
 
         when(intent.getStringExtra("type")){
             "free" -> {
@@ -63,7 +76,8 @@ class BoardActivity : AppCompatActivity(){
     private fun setupViewModel(){
         boardViewModel.refresh()
 
-        boardViewModel.liveBoardList.observe(mBinding.lifecycleOwner!!,{
+        boardViewModel.liveBoardList.observe(mBinding.lifecycleOwner!!, {
+            Log.e("CHECK_TAG","liveboardlist observed")
             boardAdapter.setBoardList(it)
         })
     }

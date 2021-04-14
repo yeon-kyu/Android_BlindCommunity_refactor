@@ -19,16 +19,13 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
     private var count:Int = 0
     private var boardType = 0 //1:자유게시판 2:정보게시판 3:취업게시판
 
-    fun setCount(cnt:Int){
-        count = cnt
-    }
-
     fun setBoardType(type:Int){
         boardType = type
     }
 
     fun refresh(){
         count = 0
+        boardList.clear()
         loadNextBoards()
     }
 
@@ -58,7 +55,7 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
                         boardList.add(BoardInfo(postId,nickname,title))
                     }
                     liveBoardList.postValue(boardList)
-                    count+= response.size
+                    count += response.size
                 }
 
             }catch (e:Exception){
@@ -86,7 +83,7 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
                         boardList.add(BoardInfo(postId,nickname,title))
                     }
                     liveBoardList.postValue(boardList)
-                    count+= response.size
+                    count += response.size
                 }
 
             }catch (e:Exception){
@@ -114,7 +111,7 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
                         boardList.add(BoardInfo(postId,nickname,title))
                     }
                     liveBoardList.postValue(boardList)
-                    count+= response.size
+                    count += response.size
                 }
 
             }catch (e:Exception){
