@@ -1,5 +1,6 @@
 # BlindCommunity2
- Android app with Kotlin
+
+<a href="https://github.com/yeon-kyu/Android_BlindCommunity" target="_blank"> BlindCommunity </a> 를 리펙토링한 프로젝트입니다.
 
 ## Tech stack & Open-source libraries
 ### Architecture
