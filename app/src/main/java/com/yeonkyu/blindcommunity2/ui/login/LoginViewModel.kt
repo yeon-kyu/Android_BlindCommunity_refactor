@@ -3,6 +3,7 @@ package com.yeonkyu.blindcommunity2.ui.login
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.yeonkyu.blindcommunity2.ApplicationClass
 import com.yeonkyu.blindcommunity2.data.listeners.LoginListener
 import com.yeonkyu.blindcommunity2.data.listeners.SplashListener
@@ -46,7 +47,8 @@ class LoginViewModel(private val repository:LoginRepository) : ViewModel(){
     }
 
     fun autoLogin(){
-        CoroutineScope(Dispatchers.IO).launch {
+
+        viewModelScope.launch {
             delay(2000)
 
             val id = ApplicationClass.prefs.getId()
@@ -70,6 +72,7 @@ class LoginViewModel(private val repository:LoginRepository) : ViewModel(){
                 Log.e("BC_ERROR","auto login error $e")
             }
         }
+
     }
 
     fun login(){

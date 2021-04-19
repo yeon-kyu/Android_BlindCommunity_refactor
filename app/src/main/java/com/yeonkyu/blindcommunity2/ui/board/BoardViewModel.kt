@@ -3,10 +3,10 @@ package com.yeonkyu.blindcommunity2.ui.board
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.gson.internal.LinkedTreeMap
 import com.yeonkyu.blindcommunity2.data.entities.BoardInfo
 import com.yeonkyu.blindcommunity2.data.repository.BoardRepository
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -38,7 +38,7 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
     }
 
     private fun loadNextFreeBoards(){
-        CoroutineScope(Dispatchers.IO).launch{
+        viewModelScope.launch(Dispatchers.IO){
             try {
                 val response = repository.getFreeBoard(count)
 
@@ -66,7 +66,7 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
     }
 
     private fun loadNextInfoBoards(){
-        CoroutineScope(Dispatchers.IO).launch{
+        viewModelScope.launch(Dispatchers.IO){
             try {
                 val response = repository.getInfoBoard(count)
 
@@ -94,7 +94,7 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
     }
 
     private fun loadNextEmployeeBoards(){
-        CoroutineScope(Dispatchers.IO).launch{
+        viewModelScope.launch(Dispatchers.IO){
             try {
                 val response = repository.getEmployeeBoard(count)
 
