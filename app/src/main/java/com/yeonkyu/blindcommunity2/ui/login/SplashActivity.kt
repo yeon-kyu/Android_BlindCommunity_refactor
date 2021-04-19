@@ -11,8 +11,8 @@ import com.yeonkyu.blindcommunity2.ui.MainActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SplashActivity : AppCompatActivity(),SplashListener {
-    private lateinit var mBinding: ActivitySplashBinding
-    private val mViewModel: LoginViewModel by viewModel()
+    private lateinit var binding: ActivitySplashBinding
+    private val loginViewModel: LoginViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,19 +20,19 @@ class SplashActivity : AppCompatActivity(),SplashListener {
         setupView()
         setupViewModel()
 
-        mViewModel.autoLogin()
+        loginViewModel.autoLogin()
     }
 
     private fun setupView() {
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
-        mBinding.lifecycleOwner = this
-        mBinding.viewModel = mViewModel
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
+        binding.lifecycleOwner = this
+        binding.viewModel = loginViewModel
     }
 
     private fun setupViewModel(){
-        mViewModel.setSplashListener(this)
+        loginViewModel.setSplashListener(this)
 
-        mViewModel.loginSuccessFlag.observe(this,{
+        loginViewModel.loginSuccessFlag.observe(this,{
             if(it==true){
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)

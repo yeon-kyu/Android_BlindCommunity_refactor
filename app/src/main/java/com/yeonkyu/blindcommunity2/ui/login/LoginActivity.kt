@@ -14,8 +14,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity(), LoginListener {
 
-    private lateinit var mBinding:ActivityLoginBinding
-    private val mViewModel: LoginViewModel by viewModel()
+    private lateinit var binding:ActivityLoginBinding
+    private val loginViewModel: LoginViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,24 +25,24 @@ class LoginActivity : AppCompatActivity(), LoginListener {
     }
 
     private fun setupView(){
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
-        mBinding.lifecycleOwner = this
-        mBinding.viewModel = mViewModel
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        binding.lifecycleOwner = this
+        binding.viewModel = loginViewModel
 
-        mBinding.loginSignUpTv.setOnClickListener {
+        binding.loginSignUpTv.setOnClickListener {
             val intent = Intent(this, SignupActivity::class.java)
             startActivity(intent)
         }
     }
 
     private fun setupViewModel(){
-        mViewModel.setLoginListener(this)
+        loginViewModel.setLoginListener(this)
 
-        mViewModel.id.observe(this,{
-            mViewModel.alertMsg.postValue("")
+        loginViewModel.id.observe(this,{
+            loginViewModel.alertMsg.postValue("")
         })
-        mViewModel.pw.observe(this,{
-            mViewModel.alertMsg.postValue("")
+        loginViewModel.pw.observe(this,{
+            loginViewModel.alertMsg.postValue("")
         })
 
     }
