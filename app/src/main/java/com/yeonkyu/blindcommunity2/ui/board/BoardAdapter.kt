@@ -1,6 +1,5 @@
 package com.yeonkyu.blindcommunity2.ui.board
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,37 +11,48 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class BoardAdapter(context: Context) : RecyclerView.Adapter<BoardAdapter.BoardViewHolder>() {
+class BoardAdapter : RecyclerView.Adapter<BoardAdapter.BoardViewHolder>() {
 
-    private val mContext = context
-    private val mBoardList = ArrayList<BoardInfo>()
+    private val boardList = ArrayList<BoardInfo>()
+    private var endScrollListener: EndScrollListener? = null
+
+    interface EndScrollListener{
+        fun onTouchEndScroll()
+    }
+
+    fun setEndScrollListener(listener: EndScrollListener){
+        endScrollListener = listener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BoardViewHolder {
-        val view = LayoutInflater.from(mContext).inflate(R.layout.item_board_list, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_board_list, parent, false)
         return BoardViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: BoardViewHolder, position: Int) {
-        holder.onBind(mBoardList[position])
+        holder.onBind(boardList[position])
+        if(boardList.size - position == 1){
+            endScrollListener?.onTouchEndScroll()
+        }
     }
 
     override fun getItemCount(): Int {
-        return mBoardList.size
+        return boardList.size
     }
 
-    fun setBoardList(boardList: ArrayList<BoardInfo>){
-        mBoardList.clear()
-        mBoardList.addAll(boardList)
+    fun setBoardList(boardData: ArrayList<BoardInfo>){
+        this.boardList.clear()
+        this.boardList.addAll(boardData)
         notifyDataSetChanged()
     }
 
     fun clear(){
-        mBoardList.clear()
+        boardList.clear()
         notifyDataSetChanged()
     }
 
     fun addLast(board: BoardInfo){
-        mBoardList.add(board)
+        boardList.add(board)
     }
 
 

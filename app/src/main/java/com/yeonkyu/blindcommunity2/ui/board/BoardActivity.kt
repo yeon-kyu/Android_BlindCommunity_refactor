@@ -34,16 +34,10 @@ class BoardActivity : AppCompatActivity(){
         val linearLayoutManager = LinearLayoutManager(this)
         boardRecyclerView.layoutManager = linearLayoutManager
 
-        boardAdapter = BoardAdapter(this)
+        boardAdapter = BoardAdapter()
         boardRecyclerView.adapter = boardAdapter
 
-        mBinding.boardRecyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                if (linearLayoutManager.findLastVisibleItemPosition() == boardAdapter.itemCount - 1) {
-                    boardViewModel.loadNextBoards()
-                }
-            }
-        })
+        setEndScrollListener()
 
         mBinding.boardSwipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this,R.color.primary))
         //mBinding.boardSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.rgb(0,165,165))
@@ -81,4 +75,18 @@ class BoardActivity : AppCompatActivity(){
             boardAdapter.setBoardList(it)
         })
     }
+
+    private fun setEndScrollListener(){
+        boardAdapter.setEndScrollListener(object : BoardAdapter.EndScrollListener{
+            override fun onTouchEndScroll() {
+                boardViewModel.loadNextBoards()
+
+            }
+
+        })
+
+
+    }
+
+
 }

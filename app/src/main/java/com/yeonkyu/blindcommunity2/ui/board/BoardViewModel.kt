@@ -38,28 +38,24 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
     }
 
     private fun loadNextFreeBoards(){
-        viewModelScope.launch(Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response = repository.getFreeBoard(count)
 
-                if(response is String){
-                    Log.e("CHECK_TAG","response is string")
-                }
-                else{
-                    Log.e("CHECK_TAG","response is Array")
+                if(response is ArrayList<*>) {
+                    Log.e("CHECK_TAG", "response is Array")
                     val boardArray = response as ArrayList<LinkedTreeMap<String, String>>
-                    for(board in boardArray){
+                    for (board in boardArray) {
                         val nickname: String? = board["nickname"]
                         val title: String? = board["title"]
                         val postId: String? = board["post_id"]
-                        boardList.add(BoardInfo(postId,nickname,title))
+                        boardList.add(BoardInfo(postId, nickname, title))
                     }
                     liveBoardList.postValue(boardList)
                     count += response.size
                 }
-
-            }catch (e:Exception){
-                Log.e("ERROR_TAG","getFreeBoard api error $e")
+            } catch (e: Exception) {
+                Log.e("ERROR_TAG", "getFreeBoard api error $e")
 
             }
         }
@@ -70,10 +66,7 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
             try {
                 val response = repository.getInfoBoard(count)
 
-                if(response is String){
-                    Log.e("CHECK_TAG","response is string")
-                }
-                else{
+                if(response is ArrayList<*>){
                     Log.e("CHECK_TAG","response is Array")
                     val boardArray = response as ArrayList<LinkedTreeMap<String, String>>
                     for(board in boardArray){
@@ -85,9 +78,8 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
                     liveBoardList.postValue(boardList)
                     count += response.size
                 }
-
             }catch (e:Exception){
-                Log.e("ERROR_TAG","getFreeBoard api error $e")
+                Log.e("ERROR_TAG","getInfoBoard api error $e")
 
             }
         }
@@ -98,10 +90,7 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
             try {
                 val response = repository.getEmployeeBoard(count)
 
-                if(response is String){
-                    Log.e("CHECK_TAG","response is string")
-                }
-                else{
+                if(response is ArrayList<*>){
                     Log.e("CHECK_TAG","response is Array")
                     val boardArray = response as ArrayList<LinkedTreeMap<String, String>>
                     for(board in boardArray){
@@ -113,9 +102,8 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
                     liveBoardList.postValue(boardList)
                     count += response.size
                 }
-
             }catch (e:Exception){
-                Log.e("ERROR_TAG","getFreeBoard api error $e")
+                Log.e("ERROR_TAG","getEmployeeBoard api error $e")
 
             }
         }
