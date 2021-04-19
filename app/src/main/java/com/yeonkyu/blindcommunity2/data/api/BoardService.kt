@@ -12,5 +12,8 @@ interface BoardService {
     suspend fun getInfoBoard(@Query("cnt")cnt: Int): Response<Any>
 
     @GET("/search_employee")
-    suspend fun getEmployeeBoard(@Query("cnt")cnt: Int) : Response<Any>
+    suspend fun getEmployeeBoard(@Query("cnt")cnt: Int): Response<Any>
+
+    @GET("/find_trace")
+    suspend fun getMyBoard(@Query("user_id")id: String): Response<Any>
 }

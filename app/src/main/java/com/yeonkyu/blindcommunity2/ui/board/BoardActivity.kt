@@ -14,7 +14,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BoardActivity : AppCompatActivity(){
 
-    private lateinit var mBinding: ActivityBoardBinding
+    private lateinit var binding: ActivityBoardBinding
     private val boardViewModel: BoardViewModel by viewModel()
     private lateinit var boardAdapter: BoardAdapter
 
@@ -26,11 +26,11 @@ class BoardActivity : AppCompatActivity(){
     }
 
     private fun setupView(){
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_board)
-        mBinding.lifecycleOwner = this
-        mBinding.viewModel = boardViewModel
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_board)
+        binding.lifecycleOwner = this
+        binding.viewModel = boardViewModel
 
-        val boardRecyclerView: RecyclerView = mBinding.boardRecyclerview
+        val boardRecyclerView: RecyclerView = binding.boardRecyclerview
         val linearLayoutManager = LinearLayoutManager(this)
         boardRecyclerView.layoutManager = linearLayoutManager
 
@@ -39,29 +39,29 @@ class BoardActivity : AppCompatActivity(){
 
         setEndScrollListener()
 
-        mBinding.boardSwipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this,R.color.primary))
+        binding.boardSwipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this,R.color.primary))
         //mBinding.boardSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.rgb(0,165,165))
 
-        mBinding.boardSwipeRefreshLayout.setOnRefreshListener {
+        binding.boardSwipeRefreshLayout.setOnRefreshListener {
             boardViewModel.refresh()
-            mBinding.boardSwipeRefreshLayout.isRefreshing = false
+            binding.boardSwipeRefreshLayout.isRefreshing = false
         }
 
-        mBinding.boardRefreshBt.setOnClickListener {
+        binding.boardRefreshBt.setOnClickListener {
             boardViewModel.refresh()
         }
 
         when(intent.getStringExtra("type")){
             "free" -> {
-                mBinding.boardTv.text = "자유 게시판"
+                binding.boardTv.text = "자유 게시판"
                 boardViewModel.setBoardType(1)
             }
             "info" -> {
-                mBinding.boardTv.text = "정보 게시판"
+                binding.boardTv.text = "정보 게시판"
                 boardViewModel.setBoardType(2)
             }
             "employee" -> {
-                mBinding.boardTv.text = "취업 게시판"
+                binding.boardTv.text = "취업 게시판"
                 boardViewModel.setBoardType(3)
             }
         }
@@ -70,7 +70,7 @@ class BoardActivity : AppCompatActivity(){
     private fun setupViewModel(){
         boardViewModel.refresh()
 
-        boardViewModel.liveBoardList.observe(mBinding.lifecycleOwner!!, {
+        boardViewModel.liveBoardList.observe(binding.lifecycleOwner!!, {
             Log.e("CHECK_TAG","liveboardlist observed")
             boardAdapter.setBoardList(it)
         })

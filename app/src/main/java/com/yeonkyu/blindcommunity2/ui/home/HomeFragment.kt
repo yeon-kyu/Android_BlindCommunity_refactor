@@ -28,6 +28,7 @@ class HomeFragment : Fragment(){
             intent.putExtra("type", "info")
             startActivity(intent)
         }
+
         home_employee_board.setOnClickListener {
             val intent = Intent(activity, BoardActivity::class.java)
             intent.putExtra("type", "employee")
