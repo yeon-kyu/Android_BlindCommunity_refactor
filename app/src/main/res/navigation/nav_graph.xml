@@ -10,7 +10,11 @@
         android:id="@+id/home_screen"
         android:name="com.yeonkyu.blindcommunity2.ui.home.HomeFragment"
         android:label="Home Screen"
-        tools:layout="@layout/fragment_home"/>
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_home_screen_to_account_screen"
+            app:destination="@id/account_screen" />
+    </fragment>
 
     <fragment
         android:id="@+id/account_screen"
