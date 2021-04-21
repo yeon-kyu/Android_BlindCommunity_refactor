@@ -101,6 +101,5 @@ class BoardActivity : AppCompatActivity(){
         val intent = Intent(this, PostActivity::class.java)
         intent.putExtra("postId",postId)
         startActivity(intent)
-        finish()
     }
 }
