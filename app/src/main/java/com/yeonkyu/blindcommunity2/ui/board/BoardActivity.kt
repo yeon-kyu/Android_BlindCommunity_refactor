@@ -1,5 +1,6 @@
 package com.yeonkyu.blindcommunity2.ui.board
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +9,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yeonkyu.blindcommunity2.R
+import com.yeonkyu.blindcommunity2.data.entities.BoardInfo
 import com.yeonkyu.blindcommunity2.databinding.ActivityBoardBinding
+import com.yeonkyu.blindcommunity2.ui.login.LoginActivity
+import com.yeonkyu.blindcommunity2.ui.post.PostActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -37,6 +41,7 @@ class BoardActivity : AppCompatActivity(){
         boardAdapter = BoardAdapter()
         boardRecyclerView.adapter = boardAdapter
 
+        setItemClickListener()
         setEndScrollListener()
 
         binding.boardSwipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this,R.color.primary))
@@ -80,13 +85,22 @@ class BoardActivity : AppCompatActivity(){
         boardAdapter.setEndScrollListener(object : BoardAdapter.EndScrollListener{
             override fun onTouchEndScroll() {
                 boardViewModel.loadNextBoards()
-
             }
-
         })
-
-
     }
 
+    private fun setItemClickListener(){
+        boardAdapter.setItemClickListener(object: BoardAdapter.OnItemClickListener{
+            override fun onItemClick(board: BoardInfo) {
+                moveToPostActivity(board.postId!!)
+            }
+        })
+    }
 
+    fun moveToPostActivity(postId: String){
+        val intent = Intent(this, PostActivity::class.java)
+        intent.putExtra("postId",postId)
+        startActivity(intent)
+        finish()
+    }
 }

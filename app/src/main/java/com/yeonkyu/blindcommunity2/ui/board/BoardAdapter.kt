@@ -16,12 +16,19 @@ import kotlin.collections.ArrayList
 class BoardAdapter : RecyclerView.Adapter<BoardAdapter.BoardViewHolder>() {
 
     private val boardList = ArrayList<BoardInfo>()
+    private var onItemClickListener: OnItemClickListener? = null
     private var endScrollListener: EndScrollListener? = null
 
+    interface OnItemClickListener{
+        fun onItemClick(board: BoardInfo)
+    }
     interface EndScrollListener{
         fun onTouchEndScroll()
     }
 
+    fun setItemClickListener(listener: OnItemClickListener){
+        onItemClickListener = listener
+    }
     fun setEndScrollListener(listener: EndScrollListener){
         endScrollListener = listener
     }
@@ -62,6 +69,10 @@ class BoardAdapter : RecyclerView.Adapter<BoardAdapter.BoardViewHolder>() {
         fun onBind(board: BoardInfo){
             binding.boardItem = board
             binding.executePendingBindings()
+
+            binding.root.setOnClickListener {
+                onItemClickListener?.onItemClick(board)
+            }
         }
     }
 }
