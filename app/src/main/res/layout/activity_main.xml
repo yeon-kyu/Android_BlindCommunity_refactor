@@ -11,7 +11,7 @@
         android:id="@+id/main_toolbar_text"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/main_nav_host"
-        android:background="@color/light_gray"
+        android:background="@color/dark_white"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:gravity="center"

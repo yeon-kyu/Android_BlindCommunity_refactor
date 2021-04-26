@@ -13,6 +13,7 @@ import com.yeonkyu.blindcommunity2.data.entities.BoardInfo
 import com.yeonkyu.blindcommunity2.databinding.ActivityBoardBinding
 import com.yeonkyu.blindcommunity2.ui.login.LoginActivity
 import com.yeonkyu.blindcommunity2.ui.post.PostActivity
+import com.yeonkyu.blindcommunity2.ui.write.WriteActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -78,6 +79,12 @@ class BoardActivity : AppCompatActivity(){
         boardViewModel.liveBoardList.observe(binding.lifecycleOwner!!, {
             Log.e("CHECK_TAG","liveboardlist observed")
             boardAdapter.setBoardList(it)
+        })
+
+        boardViewModel.writePostEvent.observe(binding.lifecycleOwner!!,{
+            val intent = Intent(this, WriteActivity::class.java)
+            intent.putExtra("type",it.getContextIfNotHandled())
+            startActivity(intent)
         })
     }
 

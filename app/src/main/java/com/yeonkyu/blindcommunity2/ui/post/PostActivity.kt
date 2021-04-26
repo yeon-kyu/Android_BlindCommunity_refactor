@@ -17,6 +17,8 @@ class PostActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        postViewModel.postId = intent.getStringExtra("postId")!!
+
         setupView()
         setupViewModel()
     }

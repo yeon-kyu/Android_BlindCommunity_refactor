@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.gson.internal.LinkedTreeMap
 import com.yeonkyu.blindcommunity2.data.entities.BoardInfo
 import com.yeonkyu.blindcommunity2.data.repository.BoardRepository
+import com.yeonkyu.blindcommunity2.utils.Event
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -18,6 +19,8 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
     }
     private var count:Int = 0
     private var boardType = 0 //1:자유게시판 2:정보게시판 3:취업게시판
+
+    val writePostEvent = MutableLiveData<Event<String>>()
 
     fun setBoardType(type:Int){
         boardType = type
@@ -106,6 +109,14 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
                 Log.e("ERROR_TAG","getEmployeeBoard api error $e")
 
             }
+        }
+    }
+
+    fun writePost(){
+        when(boardType){
+            1->writePostEvent.postValue(Event("자유 게시판"))
+            2->writePostEvent.postValue(Event("정보 게시판"))
+            3->writePostEvent.postValue(Event("취업 게시판"))
         }
     }
 }
