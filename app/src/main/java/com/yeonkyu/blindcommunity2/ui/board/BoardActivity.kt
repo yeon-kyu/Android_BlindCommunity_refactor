@@ -89,21 +89,18 @@ class BoardActivity : AppCompatActivity(){
         boardViewModel.refresh()
 
         boardViewModel.liveBoardList.observe(binding.lifecycleOwner!!, {
-            Log.e("CHECK_TAG","liveboardlist observed")
+            //Log.e("CHECK_TAG","liveboardlist observed, ${it.size}")
             boardAdapter.setBoardList(it)
         })
 
-        boardViewModel.writePostEvent.observe(binding.lifecycleOwner!!,{
-            val intent = Intent(this, WriteActivity::class.java)
-            intent.putExtra("type",it)
-            startActivity(intent)
-        })
-
-        boardViewModel.toastEvent.observe(binding.lifecycleOwner!!,{ event ->
-            event.getContextIfNotHandled()?.let {
-                Toast.makeText(this,it,Toast.LENGTH_SHORT).show()
+        boardViewModel.writePostEvent.observe(binding.lifecycleOwner!!,{ event ->
+            event.getContentIfNotHandled()?.let {
+                val intent = Intent(this, WriteActivity::class.java)
+                intent.putExtra("type",it)
+                startActivity(intent)
             }
         })
+
     }
 
     private fun setEndScrollListener(){

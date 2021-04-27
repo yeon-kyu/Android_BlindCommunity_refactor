@@ -104,6 +104,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:text="@string/cancel"
         android:textSize="16sp"
+        android:textColor="@color/dark_gray"
         android:fontFamily="@font/notosanskr_regular"
         android:background="@color/white"
         android:gravity="center"/>
@@ -117,6 +118,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/confirm"
         android:textSize="16sp"
+        android:textColor="@color/dark_gray"
         android:fontFamily="@font/notosanskr_regular"
         android:background="@color/white"
         android:gravity="center"/>

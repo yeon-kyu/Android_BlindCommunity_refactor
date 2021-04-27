@@ -21,18 +21,9 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
     private var count:Int = 0
     private var boardType = 0 //1:자유게시판 2:정보게시판 3:취업게시판
 
-    private val _writePostEvent = MutableLiveData<String>()
-    val writePostEvent : LiveData<String>
+    private val _writePostEvent = MutableLiveData<Event<String>>()
+    val writePostEvent : LiveData<Event<String>>
         get() = _writePostEvent
-
-    private val _toastEvent = Event<String>()
-    val toastEvent = MutableLiveData<Event<String>>()
-
-    private var _showDialog = MutableLiveData<Event<String>>()
-    val showDialog: LiveData<Event<String>>
-        get() = _showDialog
-
-
 
     fun setBoardType(type:Int){
         boardType = type
@@ -58,7 +49,7 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
                 val response = repository.getFreeBoard(count)
 
                 if(response is ArrayList<*>) {
-                    Log.e("CHECK_TAG", "response is Array")
+                    //Log.e("CHECK_TAG", "response is Array")
                     val boardArray = response as ArrayList<LinkedTreeMap<String, String>>
                     for (board in boardArray) {
                         val nickname: String? = board["nickname"]
@@ -126,9 +117,9 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
 
     fun writePost(){
         when(boardType){
-            1 -> _writePostEvent.postValue("자유 게시판")
-            2 -> _writePostEvent.postValue("정보 게시판")
-            3 -> _writePostEvent.postValue("취업 게시판")
+            1 -> _writePostEvent.postValue(Event("자유 게시판"))
+            2 -> _writePostEvent.postValue(Event("정보 게시판"))
+            3 -> _writePostEvent.postValue(Event("취업 게시판"))
         }
     }
 }

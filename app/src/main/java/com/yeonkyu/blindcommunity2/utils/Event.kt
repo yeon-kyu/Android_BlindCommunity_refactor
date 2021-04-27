@@ -1,21 +1,18 @@
 package com.yeonkyu.blindcommunity2.utils
 
-open class Event<T> {
-    private var content: T? = null
+open class Event<out T>(private val content: T) {
 
     var hasBeenHandled = false
-        private set //allow external read but not write
+        private set // Allow external read but not write
 
-    fun set(_content: T){
-        content = _content
-    }
-
-    fun getContextIfNotHandled(): T? {
-        return if(hasBeenHandled){
+    fun getContentIfNotHandled(): T? {
+        return if (hasBeenHandled) {
             null
-        }else{
+        } else {
             hasBeenHandled = true
             content
         }
     }
+
+    fun peekContent(): T = content
 }
