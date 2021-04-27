@@ -69,5 +69,12 @@
                 android:clipToPadding="false"
                 android:overScrollMode="never"/>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <com.github.mmin18.widget.RealtimeBlurView
+            android:id="@+id/board_blur_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:realtimeBlurRadius="2dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

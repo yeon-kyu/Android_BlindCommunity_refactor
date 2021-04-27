@@ -25,7 +25,8 @@
         <activity android:name=".ui.MainActivity"/>
         <activity android:name=".ui.board.BoardActivity"/>
         <activity android:name=".ui.post.PostActivity"/>
-        <activity android:name=".ui.write.WriteActivity"/>
+        <activity android:name=".ui.write.WriteActivity"
+            android:theme="@style/Theme.AppCompat.Transparent.NoActionBar"/>
     </application>
 
 </manifest>

@@ -88,4 +88,7 @@ dependencies {
 
     //swipeRefreshLayout
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
+    //realTimeBlurView
+    implementation 'com.github.mmin18:realtimeblurview:1.2.1'
 }

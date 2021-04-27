@@ -3,6 +3,8 @@ package com.yeonkyu.blindcommunity2.ui.board
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -28,6 +30,16 @@ class BoardActivity : AppCompatActivity(){
 
         setupView()
         setupViewModel()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.boardBlurView.visibility = View.GONE
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.boardBlurView.visibility = View.VISIBLE
     }
 
     private fun setupView(){
@@ -83,8 +95,14 @@ class BoardActivity : AppCompatActivity(){
 
         boardViewModel.writePostEvent.observe(binding.lifecycleOwner!!,{
             val intent = Intent(this, WriteActivity::class.java)
-            intent.putExtra("type",it.getContextIfNotHandled())
+            intent.putExtra("type",it)
             startActivity(intent)
+        })
+
+        boardViewModel.toastEvent.observe(binding.lifecycleOwner!!,{ event ->
+            event.getContextIfNotHandled()?.let {
+                Toast.makeText(this,it,Toast.LENGTH_SHORT).show()
+            }
         })
     }
 

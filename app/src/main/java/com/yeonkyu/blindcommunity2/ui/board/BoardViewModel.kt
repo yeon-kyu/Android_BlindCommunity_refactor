@@ -1,6 +1,7 @@
 package com.yeonkyu.blindcommunity2.ui.board
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,7 +21,18 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
     private var count:Int = 0
     private var boardType = 0 //1:자유게시판 2:정보게시판 3:취업게시판
 
-    val writePostEvent = MutableLiveData<Event<String>>()
+    private val _writePostEvent = MutableLiveData<String>()
+    val writePostEvent : LiveData<String>
+        get() = _writePostEvent
+
+    private val _toastEvent = Event<String>()
+    val toastEvent = MutableLiveData<Event<String>>()
+
+    private var _showDialog = MutableLiveData<Event<String>>()
+    val showDialog: LiveData<Event<String>>
+        get() = _showDialog
+
+
 
     fun setBoardType(type:Int){
         boardType = type
@@ -114,9 +126,9 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
 
     fun writePost(){
         when(boardType){
-            1->writePostEvent.postValue(Event("자유 게시판"))
-            2->writePostEvent.postValue(Event("정보 게시판"))
-            3->writePostEvent.postValue(Event("취업 게시판"))
+            1 -> _writePostEvent.postValue("자유 게시판")
+            2 -> _writePostEvent.postValue("정보 게시판")
+            3 -> _writePostEvent.postValue("취업 게시판")
         }
     }
 }

@@ -11,6 +11,7 @@
     <color name="blue">#6666ff</color>
     <color name="orange">#ffb567</color>
     <color name="light_orange">#ffe5c7</color>
+    <color name="transparent_orange">#a1ffe5c7</color>
 
     <color name="primary">#ff9500</color>
     <color name="light_gray">#b9b9b9</color>
