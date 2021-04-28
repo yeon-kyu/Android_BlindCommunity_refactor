@@ -38,3 +38,4 @@
  - `SwipeRefreshLayout`
  - `RecyclerView`
  - `Navigation`
+ - `RealTimeBlurView`
