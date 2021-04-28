@@ -23,4 +23,18 @@ class BoardRepository(private val boardService: BoardService) : BaseRepository()
         userId: String
     ): Any = apiRequest { boardService.writeFreePost(postId, title, content, userId) }
 
+    suspend fun writeInfoPost(
+        postId: String,
+        title: String,
+        content: String,
+        userId: String
+    ): Any = apiRequest { boardService.writeInfoPost(postId, title, content, userId) }
+
+    suspend fun writeEmployPost(
+        postId: String,
+        title: String,
+        content: String,
+        userId: String
+    ): Any = apiRequest { boardService.writeEmployPost(postId, title, content, userId) }
+
 }

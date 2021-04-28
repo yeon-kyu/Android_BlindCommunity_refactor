@@ -15,6 +15,8 @@ import java.util.*
 
 class WriteViewModel(private val repository: BoardRepository) : ViewModel() {
 
+    var postType:String? = null
+
     private val _alertEvent = MutableLiveData<Event<String>>()
     val alertEvent : LiveData<Event<String>>
         get() = _alertEvent
@@ -52,7 +54,16 @@ class WriteViewModel(private val repository: BoardRepository) : ViewModel() {
         }
 
         viewModelScope.launch(Dispatchers.IO) {
-            val response = repository.writeFreePost(postId, title, content, ApplicationClass.prefs.getId())
+
+            val response = when(postType){
+                "자유 게시판" -> repository.writeFreePost(postId, title, content, ApplicationClass.prefs.getId())
+                "정보 게시판" -> repository.writeInfoPost(postId, title, content, ApplicationClass.prefs.getId())
+                "취업 게시판" -> repository.writeEmployPost(postId, title, content, ApplicationClass.prefs.getId())
+                else -> {
+                    Log.e("BC_ERROR", "게시판 종류에 문제가 있습니다.")
+                }
+            }
+
             if(response is Double){
                 when(response.toInt()){
                     1 -> {

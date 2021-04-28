@@ -24,4 +24,20 @@ interface BoardService {
         @Query("content") content: String,
         @Query("user_id") userId: String
     ): Response<Any>
+
+    @GET("/write_info?")
+    suspend fun writeInfoPost(
+        @Query("post_id") postId: String,
+        @Query("title") title: String,
+        @Query("content") content: String,
+        @Query("user_id") userId: String
+    ): Response<Any>
+
+    @GET("/write_employ")
+    suspend fun writeEmployPost(
+        @Query("post_id") postId: String,
+        @Query("title") title: String,
+        @Query("content") content: String,
+        @Query("user_id") userId: String
+    ): Response<Any>
 }

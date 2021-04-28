@@ -30,6 +30,7 @@ class WriteActivity : BaseActivity() {
         val type = intent.getStringExtra("type")
         type?.let {
             binding.writePostTypeTv.text = type
+            writeViewModel.postType = type
         }
 
         binding.writePostBackBt.setOnClickListener {
