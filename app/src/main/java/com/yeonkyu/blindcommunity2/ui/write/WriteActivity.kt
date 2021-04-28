@@ -6,9 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.yeonkyu.blindcommunity2.R
 import com.yeonkyu.blindcommunity2.databinding.ActivityWriteBinding
+import com.yeonkyu.blindcommunity2.ui.BaseActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class WriteActivity : AppCompatActivity() {
+class WriteActivity : BaseActivity() {
 
     private lateinit var binding : ActivityWriteBinding
     private val writeViewModel: WriteViewModel by viewModel()
@@ -41,6 +42,23 @@ class WriteActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel(){
+        writeViewModel.alertEvent.observe(binding.lifecycleOwner!!,{ event ->
+            event.getContentIfNotHandled()?.let {
+                showDialog(it,"확인",null)
+            }
+        })
 
+        writeViewModel.writeSuccessEvent.observe(binding.lifecycleOwner!!,{ event ->
+            event.getContentIfNotHandled()?.let{
+                when(it){
+                    true -> exit()
+                    false -> showDialog("게시물 쓰기에 실패하였습니다","확인",null)
+                }
+            }
+        })
+    }
+
+    private fun exit(){
+        finish()
     }
 }

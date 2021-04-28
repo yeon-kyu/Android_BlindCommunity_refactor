@@ -16,4 +16,12 @@ interface BoardService {
 
     @GET("/find_trace")
     suspend fun getMyBoard(@Query("user_id")id: String): Response<Any>
+
+    @GET("/write_free?")
+    suspend fun writeFreePost(
+        @Query("post_id") postId: String,
+        @Query("title") title: String,
+        @Query("content") content: String,
+        @Query("user_id") userId: String
+    ): Response<Any>
 }

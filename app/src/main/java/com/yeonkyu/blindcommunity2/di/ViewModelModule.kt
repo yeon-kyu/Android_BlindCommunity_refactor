@@ -13,5 +13,5 @@ val viewModelModule = module {
     viewModel { BoardViewModel(get()) }
     viewModel { AccountViewModel(get()) }
     viewModel { PostViewModel() }
-    viewModel { WriteViewModel() }
+    viewModel { WriteViewModel(get()) }
 }
