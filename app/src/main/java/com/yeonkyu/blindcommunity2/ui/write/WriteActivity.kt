@@ -1,8 +1,6 @@
 package com.yeonkyu.blindcommunity2.ui.write
 
 import android.os.Bundle
-import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.yeonkyu.blindcommunity2.R
 import com.yeonkyu.blindcommunity2.databinding.ActivityWriteBinding

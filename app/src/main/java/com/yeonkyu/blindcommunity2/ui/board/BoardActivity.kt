@@ -4,16 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yeonkyu.blindcommunity2.R
-import com.yeonkyu.blindcommunity2.data.entities.BoardInfo
 import com.yeonkyu.blindcommunity2.databinding.ActivityBoardBinding
-import com.yeonkyu.blindcommunity2.ui.login.LoginActivity
 import com.yeonkyu.blindcommunity2.ui.post.PostActivity
 import com.yeonkyu.blindcommunity2.ui.write.WriteActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -23,7 +20,7 @@ class BoardActivity : AppCompatActivity(){
 
     private lateinit var binding: ActivityBoardBinding
     private val boardViewModel: BoardViewModel by viewModel()
-    private lateinit var boardAdapter: BoardAdapter
+    private lateinit var boardAdapter: BoardListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +31,7 @@ class BoardActivity : AppCompatActivity(){
 
     override fun onResume() {
         super.onResume()
+        boardViewModel.refresh()
         binding.boardBlurView.visibility = View.GONE
     }
 
@@ -51,7 +49,7 @@ class BoardActivity : AppCompatActivity(){
         val linearLayoutManager = LinearLayoutManager(this)
         boardRecyclerView.layoutManager = linearLayoutManager
 
-        boardAdapter = BoardAdapter()
+        boardAdapter = BoardListAdapter()
         boardRecyclerView.adapter = boardAdapter
 
         setItemClickListener()
@@ -86,11 +84,8 @@ class BoardActivity : AppCompatActivity(){
     }
 
     private fun setupViewModel(){
-        boardViewModel.refresh()
-
-        boardViewModel.liveBoardList.observe(binding.lifecycleOwner!!, {
-            //Log.e("CHECK_TAG","liveboardlist observed, ${it.size}")
-            boardAdapter.setBoardList(it)
+        boardViewModel.boardList.observe(binding.lifecycleOwner!!, {
+            boardAdapter.submitList(it.toMutableList())
         })
 
         boardViewModel.writePostEvent.observe(binding.lifecycleOwner!!,{ event ->
@@ -100,23 +95,22 @@ class BoardActivity : AppCompatActivity(){
                 startActivity(intent)
             }
         })
-
     }
 
     private fun setEndScrollListener(){
-        boardAdapter.setEndScrollListener(object : BoardAdapter.EndScrollListener{
-            override fun onTouchEndScroll() {
-                boardViewModel.loadNextBoards()
-            }
-        })
+//        boardAdapter.setEndScrollListener(object : BoardAdapter.EndScrollListener{
+//            override fun onTouchEndScroll() {
+//                boardViewModel.loadNextBoards()
+//            }
+//        })
     }
 
     private fun setItemClickListener(){
-        boardAdapter.setItemClickListener(object: BoardAdapter.OnItemClickListener{
-            override fun onItemClick(board: BoardInfo) {
-                moveToPostActivity(board.postId!!)
-            }
-        })
+//        boardAdapter.setItemClickListener(object: BoardAdapter.OnItemClickListener{
+//            override fun onItemClick(board: BoardInfo) {
+//                moveToPostActivity(board.postId!!)
+//            }
+//        })
     }
 
     fun moveToPostActivity(postId: String){
