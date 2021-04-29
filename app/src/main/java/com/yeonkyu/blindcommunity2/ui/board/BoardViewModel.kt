@@ -51,7 +51,6 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
                 val response = repository.getFreeBoard(count)
 
                 if(response is ArrayList<*>) {
-                    //Log.e("CHECK_TAG", "response is Array")
                     val boardArray = response as ArrayList<LinkedTreeMap<String, String>>
                     for (board in boardArray) {
                         val nickname: String? = board["nickname"]
@@ -65,7 +64,6 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
                 }
             } catch (e: Exception) {
                 Log.e("ERROR_TAG", "getFreeBoard api error $e")
-
             }
         }
     }
@@ -76,7 +74,6 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
                 val response = repository.getInfoBoard(count)
 
                 if(response is ArrayList<*>){
-                    Log.e("CHECK_TAG","response is Array")
                     val boardArray = response as ArrayList<LinkedTreeMap<String, String>>
                     for(board in boardArray){
                         val nickname: String? = board["nickname"]
@@ -89,7 +86,6 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
                 }
             }catch (e:Exception){
                 Log.e("ERROR_TAG","getInfoBoard api error $e")
-
             }
         }
     }
@@ -100,7 +96,6 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
                 val response = repository.getEmployeeBoard(count)
 
                 if(response is ArrayList<*>){
-                    Log.e("CHECK_TAG","response is Array")
                     val boardArray = response as ArrayList<LinkedTreeMap<String, String>>
                     for(board in boardArray){
                         val nickname: String? = board["nickname"]
@@ -113,7 +108,6 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
                 }
             }catch (e:Exception){
                 Log.e("ERROR_TAG","getEmployeeBoard api error $e")
-
             }
         }
     }

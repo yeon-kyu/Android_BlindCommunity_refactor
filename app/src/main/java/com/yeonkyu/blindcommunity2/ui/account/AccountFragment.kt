@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.yeonkyu.blindcommunity2.R
 import com.yeonkyu.blindcommunity2.databinding.FragmentAccountBinding
-import com.yeonkyu.blindcommunity2.ui.board.BoardAdapter
 import com.yeonkyu.blindcommunity2.ui.board.BoardListAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
