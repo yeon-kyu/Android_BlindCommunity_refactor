@@ -1,13 +1,13 @@
 package com.yeonkyu.blindcommunity2.ui.login
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yeonkyu.blindcommunity2.ApplicationClass
-import com.yeonkyu.blindcommunity2.data.listeners.LoginListener
-import com.yeonkyu.blindcommunity2.data.listeners.SplashListener
 import com.yeonkyu.blindcommunity2.data.repository.LoginRepository
+import com.yeonkyu.blindcommunity2.utils.Event
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -16,8 +16,17 @@ import java.util.regex.Pattern
 
 class LoginViewModel(private val repository:LoginRepository) : ViewModel(){
 
-    private var splashListener: SplashListener? = null
-    private var loginListener: LoginListener? = null
+    private val _autoLoginEvent = MutableLiveData<Event<Boolean>>()
+    val autoLoginEvent : LiveData<Event<Boolean>>
+        get() = _autoLoginEvent
+
+    private val _popUpEvent = MutableLiveData<Event<String>>()
+    val popUpEvent: LiveData<Event<String>>
+        get() = _popUpEvent
+
+    private val _loginSuccessEvent = MutableLiveData<Event<String>>()
+    val loginSuccessEvent: LiveData<Event<String>>
+        get() = _loginSuccessEvent
 
     val loginSuccessFlag: MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>()
@@ -39,27 +48,19 @@ class LoginViewModel(private val repository:LoginRepository) : ViewModel(){
         }
     }
 
-    fun setSplashListener(listener:SplashListener){
-        splashListener = listener
-    }
-    fun setLoginListener(listener:LoginListener){
-        loginListener = listener
-    }
-
     fun autoLogin(){
-
         viewModelScope.launch {
             delay(2000)
 
             val id = ApplicationClass.prefs.getId()
-            if(id==""){
-                splashListener?.onAutoLoginFailed()
+            if(id.isEmpty()){
+                _autoLoginEvent.postValue(Event(false))
                 Log.e("BC_CHECK","no saved id")
                 return@launch
             }
             val pw = ApplicationClass.prefs.getPw()
-            if(pw==""){
-                splashListener?.onAutoLoginFailed()
+            if(pw.isEmpty()){
+                _autoLoginEvent.postValue(Event(false))
                 Log.e("BC_CHECK","no saved pw")
                 return@launch
             }
@@ -76,7 +77,6 @@ class LoginViewModel(private val repository:LoginRepository) : ViewModel(){
     }
 
     fun login(){
-
         val userId = id.value.toString()
         val userPw = pw.value.toString()
 
@@ -96,13 +96,13 @@ class LoginViewModel(private val repository:LoginRepository) : ViewModel(){
 
                 when(response){
                     "1"-> {
-                        loginListener?.onLoginSuccess(userId)//로그인 성공
+                        _loginSuccessEvent.postValue(Event(userId))
                         ApplicationClass.prefs.setId(userId)
                         ApplicationClass.prefs.setPw(userPw)
 
                     }
-                    "0"-> loginListener?.onLoginFail("아이디를 확인해주세요")//아이디 없음
-                    "-1"->loginListener?.onLoginFail("비밀번호를 확인해주세요")//비밀번호 틀림
+                    "0"-> _popUpEvent.postValue(Event("아이디를 확인해주세요"))
+                    "-1"-> _popUpEvent.postValue(Event("비밀번호를 확인해 주세요"))
                 }
 
             }catch (e:Exception){

@@ -5,14 +5,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.yeonkyu.blindcommunity2.R
-import com.yeonkyu.blindcommunity2.data.listeners.LoginListener
 import com.yeonkyu.blindcommunity2.databinding.ActivityLoginBinding
 import com.yeonkyu.blindcommunity2.ui.MainActivity
 import com.yeonkyu.blindcommunity2.ui.dialogs.GrayAlertDialog
 import com.yeonkyu.blindcommunity2.ui.signup.SignupActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class LoginActivity : AppCompatActivity(), LoginListener {
+class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding:ActivityLoginBinding
     private val loginViewModel: LoginViewModel by viewModel()
@@ -36,7 +35,7 @@ class LoginActivity : AppCompatActivity(), LoginListener {
     }
 
     private fun setupViewModel(){
-        loginViewModel.setLoginListener(this)
+        //loginViewModel.setLoginListener(this)
 
         loginViewModel.id.observe(this,{
             loginViewModel.alertMsg.postValue("")
@@ -45,21 +44,20 @@ class LoginActivity : AppCompatActivity(), LoginListener {
             loginViewModel.alertMsg.postValue("")
         })
 
-    }
+        loginViewModel.popUpEvent.observe(this,{ it ->
+            it.getContentIfNotHandled()?.let{
+                val alertDialog = GrayAlertDialog(this@LoginActivity)
+                alertDialog.callFunction(it,"확인",null)
+            }
+        })
 
-    override fun onLoginFail(msg: String) {
-        runOnUiThread {
-            val alertDialog = GrayAlertDialog(this@LoginActivity)
-            alertDialog.callFunction(msg,"확인",null)
-        }
-    }
-
-    override fun onLoginSuccess(id:String) {
-        runOnUiThread {
-            val intent = Intent(this,MainActivity::class.java)
-            intent.putExtra("id",id)
-            startActivity(intent)
-            finish()
-        }
+        loginViewModel.loginSuccessEvent.observe(this,{ event ->
+            event.getContentIfNotHandled()?.let {
+                val intent = Intent(this,MainActivity::class.java)
+                intent.putExtra("id", it)
+                startActivity(intent)
+                finish()
+            }
+        })
     }
 }

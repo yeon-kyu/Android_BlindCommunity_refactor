@@ -5,12 +5,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.yeonkyu.blindcommunity2.R
-import com.yeonkyu.blindcommunity2.data.listeners.SplashListener
 import com.yeonkyu.blindcommunity2.databinding.ActivitySplashBinding
 import com.yeonkyu.blindcommunity2.ui.MainActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SplashActivity : AppCompatActivity(),SplashListener {
+class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
     private val loginViewModel: LoginViewModel by viewModel()
 
@@ -30,7 +29,7 @@ class SplashActivity : AppCompatActivity(),SplashListener {
     }
 
     private fun setupViewModel(){
-        loginViewModel.setSplashListener(this)
+        //loginViewModel.setSplashListener(this)
 
         loginViewModel.loginSuccessFlag.observe(this,{
             if(it==true){
@@ -39,13 +38,21 @@ class SplashActivity : AppCompatActivity(),SplashListener {
                 finish()
             }
         })
+
+        loginViewModel.autoLoginEvent.observe(binding.lifecycleOwner!!,{
+            it.getContentIfNotHandled()?.let {
+                val intent = Intent(this,LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        })
     }
 
-    override fun onAutoLoginFailed() {
-        runOnUiThread {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-    }
+//    override fun onAutoLoginFailed() {
+//        runOnUiThread {
+//            val intent = Intent(this, LoginActivity::class.java)
+//            startActivity(intent)
+//            finish()
+//        }
+//    }
 }

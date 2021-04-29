@@ -12,7 +12,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="회원가입 화면은 준비중입니다\n BlindCommunity v1을 통해 가입할 수 있습니다"
+        android:text="회원가입 화면은 준비중입니다\n BlindCommunity v1을 통해 가입할 수 있습니다\n 임시 아이디와 비밀번호는 \n aaaaa1, qqqqq를 쓰셔도 좋습니다"
         android:textSize="16sp"
         android:textColor="@color/dark_gray"
         android:fontFamily="@font/notosanskr_regular"
