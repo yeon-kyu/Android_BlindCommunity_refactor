@@ -4,6 +4,9 @@
 
     <data>
         <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener"/>
+        <variable
             name="boardItem"
             type="com.yeonkyu.blindcommunity2.data.entities.BoardInfo" />
     </data>

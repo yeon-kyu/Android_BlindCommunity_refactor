@@ -47,6 +47,7 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
     private fun loadNextFreeBoards(){
         viewModelScope.launch(Dispatchers.IO) {
             try {
+                Log.e("BC_CHECK","count : $count")
                 val response = repository.getFreeBoard(count)
 
                 if(response is ArrayList<*>) {

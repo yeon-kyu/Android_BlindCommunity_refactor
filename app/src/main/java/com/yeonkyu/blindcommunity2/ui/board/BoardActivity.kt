@@ -2,7 +2,6 @@ package com.yeonkyu.blindcommunity2.ui.board
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -10,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yeonkyu.blindcommunity2.R
+import com.yeonkyu.blindcommunity2.data.entities.BoardInfo
 import com.yeonkyu.blindcommunity2.databinding.ActivityBoardBinding
 import com.yeonkyu.blindcommunity2.ui.post.PostActivity
 import com.yeonkyu.blindcommunity2.ui.write.WriteActivity
@@ -98,19 +98,19 @@ class BoardActivity : AppCompatActivity(){
     }
 
     private fun setEndScrollListener(){
-//        boardAdapter.setEndScrollListener(object : BoardAdapter.EndScrollListener{
-//            override fun onTouchEndScroll() {
-//                boardViewModel.loadNextBoards()
-//            }
-//        })
+        boardAdapter.setEndScrollListener(object : BoardListAdapter.EndScrollListener{
+            override fun onTouchEndScroll() {
+                boardViewModel.loadNextBoards()
+            }
+        })
     }
 
     private fun setItemClickListener(){
-//        boardAdapter.setItemClickListener(object: BoardAdapter.OnItemClickListener{
-//            override fun onItemClick(board: BoardInfo) {
-//                moveToPostActivity(board.postId!!)
-//            }
-//        })
+        boardAdapter.setItemClickListener(object: BoardListAdapter.OnItemClickListener{
+            override fun onItemClick(board: BoardInfo) {
+                moveToPostActivity(board.postId!!)
+            }
+        })
     }
 
     fun moveToPostActivity(postId: String){
