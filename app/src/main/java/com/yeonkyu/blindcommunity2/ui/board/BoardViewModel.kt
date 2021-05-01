@@ -29,6 +29,9 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
     fun setBoardType(type:Int){
         boardType = type
     }
+    fun getBoardType(): Int{
+        return boardType
+    }
 
     fun refresh(){
         count = 0

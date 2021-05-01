@@ -116,6 +116,7 @@ class BoardActivity : AppCompatActivity(){
     fun moveToPostActivity(postId: String){
         val intent = Intent(this, PostActivity::class.java)
         intent.putExtra("postId",postId)
+        intent.putExtra("postType",boardViewModel.getBoardType())
         startActivity(intent)
     }
 }

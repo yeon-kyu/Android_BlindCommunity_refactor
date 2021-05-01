@@ -2,6 +2,7 @@ package com.yeonkyu.blindcommunity2.di
 
 import com.yeonkyu.blindcommunity2.data.api.AuthService
 import com.yeonkyu.blindcommunity2.data.api.BoardService
+import com.yeonkyu.blindcommunity2.data.api.PostService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.BuildConfig
@@ -45,9 +46,13 @@ val networkModule: Module = module {
     fun provideBoardService(retrofit: Retrofit): BoardService =
         retrofit.create(BoardService::class.java)
 
+    fun providePostService(retrofit: Retrofit): PostService =
+        retrofit.create(PostService::class.java)
+
     single { provideHttpLoggingInterceptor() }
     single { provideOkHttpClient(get()) }
     single { provideRetrofit(get()) }
     single { provideSplashService(get()) }
     single { provideBoardService(get()) }
+    single { providePostService(get()) }
 }
