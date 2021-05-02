@@ -14,4 +14,7 @@ interface PostService {
 
     @GET("/search_employ_content?")
     suspend fun getEmployPost(@Query("post_id")postId:String): Response<Any>
+
+    @GET("/search_comment?")
+    suspend fun getComment(@Query("post_id")postId: String): Response<Any>
 }

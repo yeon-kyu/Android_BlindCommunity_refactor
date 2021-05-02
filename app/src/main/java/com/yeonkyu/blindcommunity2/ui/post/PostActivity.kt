@@ -29,6 +29,7 @@ class PostActivity: AppCompatActivity() {
         setupViewModel()
 
         postViewModel.refreshPost()
+        postViewModel.refreshComment()
     }
 
     private fun setupView(){

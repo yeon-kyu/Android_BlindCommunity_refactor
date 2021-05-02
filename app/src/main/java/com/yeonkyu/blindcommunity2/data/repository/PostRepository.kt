@@ -13,4 +13,7 @@ class PostRepository(private val postService: PostService) : BaseRepository() {
 
     suspend fun getEmployPost(postId: String): Any =
             apiRequest { postService.getEmployPost(postId) }
+
+    suspend fun getComment(postId: String): Any =
+            apiRequest { postService.getComment(postId) }
 }
