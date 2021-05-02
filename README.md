@@ -2,6 +2,16 @@
 
 2020년에 만들었던 <a href="https://github.com/yeon-kyu/Android_BlindCommunity" target="_blank"> BlindCommunity </a> 를 리펙토링한 프로젝트입니다. </br>
 기존 서버 코드는 유지한 채로 앱단에서 UI, 아키텍쳐, 비즈니스 로직 등을 수정하였습니다.
+
+<p align="center">
+<img src="https://github.com/yeon-kyu/Android_BlindCommunity_refactor/blob/main/previews/BC_from_login_to_post.gif" width="32%"/>
+<img src="https://github.com/yeon-kyu/Android_BlindCommunity_refactor/blob/main/previews/BC_from_board_to_write_post.gif" width="32%"/>
+<img src="https://github.com/yeon-kyu/Android_BlindCommunity_refactor/blob/main/previews/BC_from_board_to_write_comment.gif" width="32%"/>
+</p>
+
+
+
+
 ### 현재 수정 진행중..
 
 ### 변경 사항
