@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.yeonkyu.blindcommunity2.R
 import com.yeonkyu.blindcommunity2.databinding.ActivityPostBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -28,8 +30,11 @@ class PostActivity: AppCompatActivity() {
         setupView()
         setupViewModel()
 
-        postViewModel.refreshPost()
-        postViewModel.refreshComment()
+        if(!postViewModel.hasBeenInit) {
+            postViewModel.refreshPost()
+            postViewModel.refreshComment()
+            postViewModel.hasBeenInit = true
+        }
     }
 
     private fun setupView(){
@@ -37,9 +42,22 @@ class PostActivity: AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = postViewModel
 
+        val commentRecyclerview : RecyclerView = binding.postRecyclerview
+        val linearLayoutManager = LinearLayoutManager(this)
+        commentRecyclerview.layoutManager = linearLayoutManager
+
+        commentAdapter = CommentAdapter()
+        commentRecyclerview.adapter = commentAdapter
+
+        binding.postBackBt.setOnClickListener {
+            finish()
+        }
+
     }
 
     private fun setupViewModel(){
-
+        postViewModel.commentList.observe(binding.lifecycleOwner!!,{
+            commentAdapter.submitList(it.toMutableList())
+        })
     }
 }

@@ -13,29 +13,21 @@ import kotlinx.coroutines.launch
 
 class PostViewModel(private val repository: PostRepository) : ViewModel() {
 
+    var hasBeenInit = false
     var type: Int? = null//1: free, 2: info, 3: employ
-
     val postId : MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
 
-    private val _nickname : MutableLiveData<String> by lazy {
-        MutableLiveData<String>().apply {
-            postValue("")
-        }
-    }
+    private val _nickname = MutableLiveData<String>()
     val nickname : LiveData<String>
         get() = _nickname
 
-    private val _title = MutableLiveData<String>().apply {
-        postValue("")
-    }
+    private val _title = MutableLiveData<String>()
     val title : LiveData<String>
         get() = _title
 
-    private val _content = MutableLiveData<String>().apply {
-        postValue("")
-    }
+    private val _content = MutableLiveData<String>()
     val content : LiveData<String>
         get() = _content
 
