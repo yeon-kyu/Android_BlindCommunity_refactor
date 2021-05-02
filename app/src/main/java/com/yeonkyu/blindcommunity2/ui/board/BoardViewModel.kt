@@ -14,6 +14,8 @@ import kotlinx.coroutines.launch
 
 class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
 
+    var hasBeenInit = false
+
     private val _boardList = ArrayList<BoardInfo>()
     val boardList: MutableLiveData<ArrayList<BoardInfo>> by lazy{
         MutableLiveData<ArrayList<BoardInfo>>()
@@ -63,7 +65,7 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
                     }
                     boardList.postValue(_boardList)
                     count += response.size
-                    Log.e("BC_CHECK","lvieboardlist size : ${boardList.value?.size}")
+                    Log.e("BC_CHECK","boardlist size : ${_boardList.size}")
                 }
             } catch (e: Exception) {
                 Log.e("ERROR_TAG", "getFreeBoard api error $e")

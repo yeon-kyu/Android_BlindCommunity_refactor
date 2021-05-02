@@ -27,11 +27,15 @@ class BoardActivity : AppCompatActivity(){
 
         setupView()
         setupViewModel()
+
+        if(!boardViewModel.hasBeenInit){
+            boardViewModel.refresh()
+            boardViewModel.hasBeenInit = true
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        boardViewModel.refresh()
         binding.boardBlurView.visibility = View.GONE
     }
 
