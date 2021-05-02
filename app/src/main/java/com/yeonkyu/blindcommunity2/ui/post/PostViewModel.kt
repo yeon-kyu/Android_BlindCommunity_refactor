@@ -49,11 +49,10 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
         }
     }
 
-
-
     fun refreshPost(){
         viewModelScope.launch(Dispatchers.IO) {
             try{
+                isLoading.postValue(true)
                 postId.value?.let {
                     val response = when(type){
                         1 -> repository.getFreePost(it) as ArrayList<LinkedTreeMap<String, String>>
@@ -61,7 +60,6 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
                         3 -> repository.getEmployPost(it) as ArrayList<LinkedTreeMap<String, String>>
                         else -> null
                     }
-                    //Log.e("BC_CHECK","post response : $response")
                     response?.let {
                         _nickname.postValue(response[0]["nickname"])
                         _title.postValue(response[0]["title"])
@@ -72,13 +70,18 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
             catch (e:Exception){
                 Log.e("BC_ERROR","getPost error : $e")
             }
+            finally {
+                isLoading.postValue(false)
+            }
         }
     }
 
     fun refreshComment(){
         viewModelScope.launch(Dispatchers.IO) {
             try {
+                isLoading.postValue(true)
                 postId.value?.let {
+                    _commentList.clear()
                     val response = repository.getComment(it)
                     if(response is ArrayList<*>){
                         val comments = response as ArrayList<LinkedTreeMap<String,String>>
@@ -99,6 +102,9 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
             }catch (e: Exception){
                 Log.e("BC_ERROR","getComment error : $e")
             }
+            finally {
+                isLoading.postValue(false)
+            }
         }
     }
 
@@ -109,7 +115,6 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 isLoading.postValue(true)
-
                 val userId =  ApplicationClass.prefs.getId()
                 val comment = registerCommentEt.value!!
                 val sdfNow = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.KOREA)

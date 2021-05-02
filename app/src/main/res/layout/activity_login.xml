@@ -82,7 +82,7 @@
             android:textColor="@color/black"
             android:fontFamily="@font/notosanskr_regular"
             android:importantForAutofill="no"
-            android:inputType="text"
+            android:inputType="textPassword"
             tools:ignore="LabelFor"/>
 
         <TextView

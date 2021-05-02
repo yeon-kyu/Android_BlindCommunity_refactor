@@ -35,7 +35,7 @@
             android:layout_marginStart="20dp"
             android:text="@{commentItem.comment}"
             android:textSize="12sp"
-            android:textColor="@color/gray"
+            android:textColor="@color/dark_gray"
             android:fontFamily="@font/notosanskr_regular" />
 
         <TextView

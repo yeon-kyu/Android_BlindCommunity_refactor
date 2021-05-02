@@ -13,6 +13,10 @@ import com.yeonkyu.blindcommunity2.data.entities.BoardInfo
 import com.yeonkyu.blindcommunity2.databinding.ActivityBoardBinding
 import com.yeonkyu.blindcommunity2.ui.post.PostActivity
 import com.yeonkyu.blindcommunity2.ui.write.WriteActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -96,7 +100,7 @@ class BoardActivity : AppCompatActivity(){
             event.getContentIfNotHandled()?.let {
                 val intent = Intent(this, WriteActivity::class.java)
                 intent.putExtra("type",it)
-                startActivity(intent)
+                startActivityForResult(intent,100)
             }
         })
     }
@@ -122,5 +126,14 @@ class BoardActivity : AppCompatActivity(){
         intent.putExtra("postId",postId)
         intent.putExtra("postType",boardViewModel.getBoardType())
         startActivity(intent)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == 100){
+            if(resultCode == RESULT_OK){
+                boardViewModel.refresh()
+            }
+        }
     }
 }

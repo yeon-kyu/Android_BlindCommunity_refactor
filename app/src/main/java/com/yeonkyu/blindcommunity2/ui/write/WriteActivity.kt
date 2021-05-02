@@ -50,14 +50,15 @@ class WriteActivity : BaseActivity() {
         writeViewModel.writeSuccessEvent.observe(binding.lifecycleOwner!!,{ event ->
             event.getContentIfNotHandled()?.let{
                 when(it){
-                    true -> exit()
+                    true -> exitWithSuccess()
                     false -> showDialog("게시물 쓰기에 실패하였습니다","확인",null)
                 }
             }
         })
     }
 
-    private fun exit(){
+    private fun exitWithSuccess(){
+        setResult(RESULT_OK)
         finish()
     }
 }
