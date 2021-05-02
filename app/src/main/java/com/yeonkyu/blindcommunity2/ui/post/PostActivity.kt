@@ -3,6 +3,7 @@ package com.yeonkyu.blindcommunity2.ui.post
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -58,6 +59,15 @@ class PostActivity: AppCompatActivity() {
     private fun setupViewModel(){
         postViewModel.commentList.observe(binding.lifecycleOwner!!,{
             commentAdapter.submitList(it.toMutableList())
+        })
+
+        postViewModel.registerCommentEt.observe(binding.lifecycleOwner!!,{
+            if(it.isEmpty()){
+                binding.postRegisterCommentBt.setTextColor(ContextCompat.getColor(this,R.color.gray))
+            }
+            else{
+                binding.postRegisterCommentBt.setTextColor(ContextCompat.getColor(this,R.color.primary))
+            }
         })
     }
 }

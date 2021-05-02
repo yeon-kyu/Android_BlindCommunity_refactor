@@ -36,6 +36,8 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
         MutableLiveData<ArrayList<CommentInfo>>()
     }
 
+    val registerCommentEt = MutableLiveData<String>()
+
     fun refreshPost(){
         viewModelScope.launch(Dispatchers.IO) {
             try{
@@ -85,6 +87,10 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
                 Log.e("BC_ERROR","getComment error : $e")
             }
         }
+    }
+
+    fun registerComment(){
+        Log.e("BC_CHECK","등록 버튼 눌림")
     }
 
 
