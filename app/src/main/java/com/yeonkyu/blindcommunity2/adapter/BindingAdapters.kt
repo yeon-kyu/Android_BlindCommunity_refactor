@@ -1,5 +1,6 @@
 package com.yeonkyu.blindcommunity2.adapter
 
+import android.view.View
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import java.text.SimpleDateFormat
@@ -36,6 +37,15 @@ object BindingAdapters {
             } else {
                 "${hourGap}시간 전"
             }
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("visibleIf")
+    fun View.visibleIf(value:Boolean){
+        visibility = when(value){
+            true -> View.VISIBLE
+            else -> View.INVISIBLE
         }
     }
 }

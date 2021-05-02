@@ -6,10 +6,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.internal.LinkedTreeMap
+import com.yeonkyu.blindcommunity2.ApplicationClass
 import com.yeonkyu.blindcommunity2.data.entities.CommentInfo
 import com.yeonkyu.blindcommunity2.data.repository.PostRepository
+import com.yeonkyu.blindcommunity2.utils.Event
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class PostViewModel(private val repository: PostRepository) : ViewModel() {
 
@@ -37,6 +42,14 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
     }
 
     val registerCommentEt = MutableLiveData<String>()
+
+    val isLoading : MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>().apply {
+            postValue(false)
+        }
+    }
+
+
 
     fun refreshPost(){
         viewModelScope.launch(Dispatchers.IO) {
@@ -90,8 +103,40 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
     }
 
     fun registerComment(){
-        Log.e("BC_CHECK","등록 버튼 눌림")
+        if(registerCommentEt.value?.length == 0){
+            return
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                isLoading.postValue(true)
+
+                val userId =  ApplicationClass.prefs.getId()
+                val comment = registerCommentEt.value!!
+                val sdfNow = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.KOREA)
+                val commentId = sdfNow.format(Date(System.currentTimeMillis())) + userId
+
+                val response = repository.registerComment(postId.value!!, userId,comment,commentId)
+                Log.e("BC_CHECK","response: $response")
+                if(response is Double){
+                    when(response.toInt()) {
+                        1 -> {
+                            registerCommentEt.postValue("")
+                            refreshComment()
+                        }
+                        else -> {
+                            Log.e("BC_FAIL","registerComment failed")
+                        }
+                    }
+                }
+                else{
+                    Log.e("BC_FAIL","registerComment failed")
+                }
+            }catch (e: Exception){
+                Log.e("BC_ERROR","registerComment error : $e")
+            }
+            finally {
+                isLoading.postValue(false)
+            }
+        }
     }
-
-
 }

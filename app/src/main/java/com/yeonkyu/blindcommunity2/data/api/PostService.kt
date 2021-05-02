@@ -17,4 +17,12 @@ interface PostService {
 
     @GET("/search_comment?")
     suspend fun getComment(@Query("post_id")postId: String): Response<Any>
+
+    @GET("/write_comment")
+    suspend fun registerComment(
+            @Query("post_id") postId: String,
+            @Query("user_id") userId: String,
+            @Query("comment_content") commentContent: String,
+            @Query("comment_id") commentId: String
+    ): Response<Any>
 }

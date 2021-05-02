@@ -16,4 +16,7 @@ class PostRepository(private val postService: PostService) : BaseRepository() {
 
     suspend fun getComment(postId: String): Any =
             apiRequest { postService.getComment(postId) }
+
+    suspend fun registerComment(postId:String, userId:String, commentContent:String, commentId:String): Any =
+            apiRequest { postService.registerComment(postId,userId,commentContent,commentId) }
 }
