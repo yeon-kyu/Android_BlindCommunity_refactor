@@ -1,5 +1,6 @@
 package com.yeonkyu.blindcommunity2.data.api
 
+import com.yeonkyu.blindcommunity2.data.entities.PostInfo
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

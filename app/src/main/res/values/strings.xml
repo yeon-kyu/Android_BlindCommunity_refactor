@@ -25,8 +25,12 @@
     <string name="board_plus_icn">board plus icon</string>
     <string name="board_refresh_icn">board refresh icon</string>
 
-<!--  write post  -->
+    <!--  write post  -->
     <string name="write_post_back_icn">write post back icon</string>
     <string name="write_post_title">제목</string>
     <string name="write_post_content">내용</string>
+
+    <!--  post  -->
+    <string name="post_more_icn">post more icon</string>
+
 </resources>

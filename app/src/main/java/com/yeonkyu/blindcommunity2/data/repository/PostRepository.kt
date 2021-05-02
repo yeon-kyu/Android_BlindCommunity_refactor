@@ -1,6 +1,7 @@
 package com.yeonkyu.blindcommunity2.data.repository
 
 import com.yeonkyu.blindcommunity2.data.api.PostService
+import com.yeonkyu.blindcommunity2.data.entities.PostInfo
 
 class PostRepository(private val postService: PostService) : BaseRepository() {
 

@@ -21,14 +21,14 @@ class PostActivity: AppCompatActivity() {
         val postId = intent.getStringExtra("postId")
         val postType = intent.getIntExtra("postType",0)
         Log.e("BC_CHECK","postID : $postId")
-        postViewModel.postId.postValue(postId)
+        postViewModel.postId.value = postId
 
         postViewModel.type = postType
 
         setupView()
         setupViewModel()
 
-        //postViewModel.refreshPost()
+        postViewModel.refreshPost()
     }
 
     private fun setupView(){

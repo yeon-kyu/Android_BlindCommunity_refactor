@@ -99,7 +99,7 @@
                     android:gravity="top"
                     android:maxLength="1000"
                     android:autofillHints="no"
-                    android:inputType="text" />
+                    android:inputType="textMultiLine" />
             </LinearLayout>
         </ScrollView>
 

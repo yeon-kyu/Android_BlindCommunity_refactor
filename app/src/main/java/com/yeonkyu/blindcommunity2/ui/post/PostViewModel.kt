@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.gson.internal.LinkedTreeMap
 import com.yeonkyu.blindcommunity2.data.repository.PostRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,16 +40,21 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
 
     fun refreshPost(){
         viewModelScope.launch(Dispatchers.IO) {
-            Log.e("BC_CHECK","type : $type")
+            Log.e("BC_CHECK","type : $type, postId : ${postId.value}")
             try{
                 postId.value?.let {
                     val response = when(type){
-                        1 -> repository.getFreePost(it)
-                        2 -> repository.getInfoPost(it)
-                        3 -> repository.getEmployPost(it)
+                        1 -> repository.getFreePost(it) as ArrayList<LinkedTreeMap<String, String>>
+                        2 -> repository.getInfoPost(it) as ArrayList<LinkedTreeMap<String, String>>
+                        3 -> repository.getEmployPost(it) as ArrayList<LinkedTreeMap<String, String>>
                         else -> null
                     }
                     Log.e("BC_CHECK","response : $response")
+                    response?.let {
+                        _nickname.postValue(response[0]["nickname"])
+                        _title.postValue(response[0]["title"])
+                        _content.postValue(response[0]["content"])
+                    }
                 }
             }
             catch (e:Exception){
