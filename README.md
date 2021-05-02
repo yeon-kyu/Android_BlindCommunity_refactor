@@ -46,6 +46,6 @@
 
 ### Other Libraries
  - `SwipeRefreshLayout`
- - `RecyclerView`
+ - `RecyclerView` + `ListAdapter`
  - `Navigation`
  - `RealTimeBlurView`
