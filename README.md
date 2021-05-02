@@ -11,9 +11,6 @@
 
 
 
-
-### 현재 수정 진행중..
-
 ### 변경 사항
 - 언어 변경 `Java` -> `Kotlin`
 - `MVC` Architecture -> `MVVM` Architecture
