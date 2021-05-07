@@ -1,6 +1,7 @@
 package com.yeonkyu.blindcommunity2.ui.post
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -48,6 +49,14 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
             postValue(false)
         }
     }
+
+    private val _alertEvent = MutableLiveData<Event<String>>()
+    val alertEvent : LiveData<Event<String>>
+        get() = _alertEvent
+
+    private val _finishActivityEvent = MutableLiveData<Event<Boolean>>()
+    val finishActivityEvent: LiveData<Event<Boolean>>
+        get() = _finishActivityEvent
 
     fun refreshPost(){
         viewModelScope.launch(Dispatchers.IO) {
@@ -143,5 +152,25 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
                 isLoading.postValue(false)
             }
         }
+    }
+
+    fun deletePost(){
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                postId.value?.let {
+                    val response = repository.deletePost(postId.value!!, type!!)
+                    if(response is Double) {
+                        when (response.toInt()) {
+                            -1 -> _alertEvent.postValue(Event("게시물 삭제에 실패하였습니다"))
+                            1 -> _finishActivityEvent.postValue(Event(true))
+                        }
+                    }
+                }
+            }
+            catch (e: Exception){
+                _alertEvent.postValue(Event("게시물을 삭제하던 중 문제가 발생하였습니다"))
+            }
+        }
+
     }
 }

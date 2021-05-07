@@ -33,5 +33,6 @@
     <!--  post  -->
     <string name="post_more_icn">post more icon</string>
     <string name="post_register_comment">등록</string>
+    <string name="dialog_action_delete">삭제하기</string>
 
 </resources>

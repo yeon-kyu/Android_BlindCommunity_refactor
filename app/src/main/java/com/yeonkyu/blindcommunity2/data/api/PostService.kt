@@ -25,4 +25,15 @@ interface PostService {
             @Query("comment_content") commentContent: String,
             @Query("comment_id") commentId: String
     ): Response<Any>
+
+    @GET("/delete_post")
+    suspend fun deletePost(
+            @Query("post_id") postId: String,
+            @Query("post_type") postType: Int
+    ): Response<Any>
+
+    @GET("/delete_comment")
+    suspend fun deleteComment(
+            @Query("comment_id") commentId: String
+    ): Response<Any>
 }

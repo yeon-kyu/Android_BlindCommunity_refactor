@@ -16,10 +16,7 @@ const val BASE_URL = "http://13.125.232.199:3000/"
 
 val networkModule: Module = module {
 
-    fun provideHttpLoggingInterceptor() =
-        HttpLoggingInterceptor().apply { HttpLoggingInterceptor.Level.BASIC }
-
-    fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor) =
+    fun provideOkHttpClient() =
         OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level = if (BuildConfig.DEBUG) {
@@ -28,7 +25,6 @@ val networkModule: Module = module {
                     HttpLoggingInterceptor.Level.NONE
                 }
             })
-//            .addInterceptor(httpLoggingInterceptor)
             .connectTimeout(1, TimeUnit.MINUTES)
             .readTimeout(30,TimeUnit.SECONDS)
             .build()
@@ -49,8 +45,7 @@ val networkModule: Module = module {
     fun providePostService(retrofit: Retrofit): PostService =
         retrofit.create(PostService::class.java)
 
-    single { provideHttpLoggingInterceptor() }
-    single { provideOkHttpClient(get()) }
+    single { provideOkHttpClient() }
     single { provideRetrofit(get()) }
     single { provideSplashService(get()) }
     single { provideBoardService(get()) }

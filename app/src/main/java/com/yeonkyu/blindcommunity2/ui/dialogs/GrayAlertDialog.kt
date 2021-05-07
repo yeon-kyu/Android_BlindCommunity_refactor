@@ -8,10 +8,9 @@ import android.widget.TextView
 import com.yeonkyu.blindcommunity2.R
 
 class GrayAlertDialog(context: Context) {
-    private val mContext = context
+    private val dig = Dialog(context)
 
     fun callFunction(titleMsg: String, confirmMsg:String, cancelMsg:String?){
-        val dig = Dialog(mContext)
         dig.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dig.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dig.setContentView(R.layout.dialog_alert)

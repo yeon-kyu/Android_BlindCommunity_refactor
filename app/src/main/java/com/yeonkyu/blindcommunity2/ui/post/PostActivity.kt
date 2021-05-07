@@ -9,9 +9,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yeonkyu.blindcommunity2.R
 import com.yeonkyu.blindcommunity2.databinding.ActivityPostBinding
+import com.yeonkyu.blindcommunity2.ui.BaseActivity
+import com.yeonkyu.blindcommunity2.ui.post.dialog.ActionDialog
+import com.yeonkyu.blindcommunity2.ui.post.dialog.DialogListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PostActivity: AppCompatActivity() {
+class PostActivity: BaseActivity(), DialogListener {
 
     private lateinit var binding: ActivityPostBinding
     private val postViewModel: PostViewModel by viewModel()
@@ -54,6 +57,13 @@ class PostActivity: AppCompatActivity() {
             finish()
         }
 
+        binding.postMoreBt.setOnClickListener {
+            postViewModel.postId.value?.let{
+                showDeletePostDialog(it)
+            }
+
+        }
+
     }
 
     private fun setupViewModel(){
@@ -69,5 +79,33 @@ class PostActivity: AppCompatActivity() {
                 binding.postRegisterCommentBt.setTextColor(ContextCompat.getColor(this,R.color.primary))
             }
         })
+
+        postViewModel.alertEvent.observe(binding.lifecycleOwner!!,{ event ->
+            event.getContentIfNotHandled()?.let {
+                showDialog(it,"확인",null)
+            }
+
+        })
+
+        postViewModel.finishActivityEvent.observe(binding.lifecycleOwner!!,{ event ->
+            event.getContentIfNotHandled()?.let {
+                if(it) {
+                    finish()
+                }
+            }
+        })
+    }
+
+    private fun showDeletePostDialog(postId: String){
+        val deletePostDialog = ActionDialog(this)
+        deletePostDialog.initDialog(this)
+    }
+
+    private fun showDeleteCommentDialog(commentId: String){
+
+    }
+
+    override fun getDeleteFlag() {
+        postViewModel.deletePost()
     }
 }
