@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.content.Context
 import android.view.Window
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.yeonkyu.blindcommunity2.R
 
 class ActionDialog(context: Context) {
@@ -15,7 +14,6 @@ class ActionDialog(context: Context) {
         dig.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dig.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dig.setContentView(R.layout.dialog_choose_action)
-
         dig.show()
 
         val deleteTv = dig.findViewById<TextView>(R.id.dialog_action_delete_tv)

@@ -58,10 +58,7 @@ class PostActivity: BaseActivity(), DialogListener {
         }
 
         binding.postMoreBt.setOnClickListener {
-            postViewModel.postId.value?.let{
-                showDeletePostDialog(it)
-            }
-
+            showDeletePostDialog()
         }
 
     }
@@ -96,7 +93,7 @@ class PostActivity: BaseActivity(), DialogListener {
         })
     }
 
-    private fun showDeletePostDialog(postId: String){
+    private fun showDeletePostDialog(){
         val deletePostDialog = ActionDialog(this)
         deletePostDialog.initDialog(this)
     }

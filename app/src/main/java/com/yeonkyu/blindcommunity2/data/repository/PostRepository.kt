@@ -20,6 +20,9 @@ class PostRepository(private val postService: PostService) : BaseRepository() {
     suspend fun registerComment(postId:String, userId:String, commentContent:String, commentId:String): Any =
             apiRequest { postService.registerComment(postId,userId,commentContent,commentId) }
 
+    suspend fun isPostWriter(postId: String, userId: String): Any =
+            apiRequest { postService.isPostWriter(postId,userId) }
+
     suspend fun deletePost(postId:String, postType: Int): Any =
             apiRequest { postService.deletePost(postId, postType) }
 

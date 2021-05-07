@@ -158,11 +158,19 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 postId.value?.let {
-                    val response = repository.deletePost(postId.value!!, type!!)
-                    if(response is Double) {
-                        when (response.toInt()) {
-                            -1 -> _alertEvent.postValue(Event("게시물 삭제에 실패하였습니다"))
-                            1 -> _finishActivityEvent.postValue(Event(true))
+                    val isWriterResponse = repository.isPostWriter(it,ApplicationClass.prefs.getId())
+                    if(isWriterResponse is Double){
+                        when(isWriterResponse.toInt()){
+                            0 -> _alertEvent.postValue(Event("글쓴 사람이 삭제할 수 있습니다"))
+                            1 -> {
+                                val response = repository.deletePost(postId.value!!, type!!)
+                                if(response is Double) {
+                                    when (response.toInt()) {
+                                        -1 -> _alertEvent.postValue(Event("게시물 삭제에 실패하였습니다"))
+                                        1 -> _finishActivityEvent.postValue(Event(true))
+                                    }
+                                }
+                            }
                         }
                     }
                 }
