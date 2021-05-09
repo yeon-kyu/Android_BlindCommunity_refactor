@@ -10,9 +10,19 @@ import com.yeonkyu.blindcommunity2.R
 import com.yeonkyu.blindcommunity2.data.entities.CommentInfo
 import com.yeonkyu.blindcommunity2.databinding.ItemCommentListBinding
 
-class CommentAdapter: ListAdapter<CommentInfo,CommentAdapter.CommentListViewHolder>(
+open class CommentAdapter: ListAdapter<CommentInfo,CommentAdapter.CommentListViewHolder>(
         CommentDiffCallback
 ) {
+    private var menuClickListener: OnMenuClickListener? = null
+
+    interface OnMenuClickListener {
+        fun onClick(commentId: String)
+    }
+
+    fun setMenuClickListener(listener: OnMenuClickListener){
+        menuClickListener = listener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentListViewHolder {
         val binding: ItemCommentListBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_comment_list,parent,false)
         return CommentListViewHolder(binding)
@@ -26,6 +36,9 @@ class CommentAdapter: ListAdapter<CommentInfo,CommentAdapter.CommentListViewHold
             RecyclerView.ViewHolder(binding.root) {
 
         fun bind(commentInfo: CommentInfo) {
+            binding.commentListMoreBt.setOnClickListener {
+                menuClickListener?.onClick(commentInfo.commentId)
+            }
             binding.commentItem = commentInfo
             binding.executePendingBindings()
         }

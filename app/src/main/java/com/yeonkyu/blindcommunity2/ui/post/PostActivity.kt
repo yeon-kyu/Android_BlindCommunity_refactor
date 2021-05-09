@@ -2,6 +2,7 @@ package com.yeonkyu.blindcommunity2.ui.post
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -33,6 +34,7 @@ class PostActivity: BaseActivity(), DialogListener {
 
         setupView()
         setupViewModel()
+        setMenuClickListener()
 
         if(!postViewModel.hasBeenInit) {
             postViewModel.refreshPost()
@@ -104,5 +106,13 @@ class PostActivity: BaseActivity(), DialogListener {
 
     override fun getDeleteFlag() {
         postViewModel.deletePost()
+    }
+
+    private fun setMenuClickListener(){
+        commentAdapter.setMenuClickListener(object : CommentAdapter.OnMenuClickListener {
+            override fun onClick(commentId: String) {
+                Toast.makeText(this@PostActivity, "메뉴 클릭", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }
