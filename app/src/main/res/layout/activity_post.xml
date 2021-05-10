@@ -45,7 +45,10 @@
             app:layout_constraintEnd_toStartOf="@id/post_more_bt"
             android:layout_marginEnd="10dp"
             android:src="@drawable/icn_refresh"
-            android:contentDescription="@string/board_refresh_icn"/>
+            android:clickable="true"
+            android:onClick="@{() -> viewModel.refreshAll()}"
+            android:contentDescription="@string/board_refresh_icn"
+            android:focusable="true" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/post_main_content_layout"

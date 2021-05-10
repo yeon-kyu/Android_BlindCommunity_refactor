@@ -58,6 +58,11 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
     val finishActivityEvent: LiveData<Event<Boolean>>
         get() = _finishActivityEvent
 
+    fun refreshAll(){
+        refreshPost()
+        refreshComment()
+    }
+
     fun refreshPost(){
         viewModelScope.launch(Dispatchers.IO) {
             try{
