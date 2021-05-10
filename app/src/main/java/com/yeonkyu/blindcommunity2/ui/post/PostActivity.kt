@@ -2,13 +2,12 @@ package com.yeonkyu.blindcommunity2.ui.post
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yeonkyu.blindcommunity2.R
+import com.yeonkyu.blindcommunity2.data.entities.CommentInfo
 import com.yeonkyu.blindcommunity2.databinding.ActivityPostBinding
 import com.yeonkyu.blindcommunity2.ui.BaseActivity
 import com.yeonkyu.blindcommunity2.ui.post.dialog.ActionDialog
@@ -97,22 +96,29 @@ class PostActivity: BaseActivity(), DialogListener {
 
     private fun showDeletePostDialog(){
         val deletePostDialog = ActionDialog(this)
-        deletePostDialog.initDialog(this)
+        deletePostDialog.deletePost(this)
     }
 
-    private fun showDeleteCommentDialog(commentId: String){
-
+    private fun showDeleteCommentDialog(commentInfo: CommentInfo){
+        val deleteCommentDialog = ActionDialog(this)
+        deleteCommentDialog.deleteComment(this,commentInfo)
     }
 
-    override fun getDeleteFlag() {
-        postViewModel.deletePost()
-    }
+
 
     private fun setMenuClickListener(){
         commentAdapter.setMenuClickListener(object : CommentAdapter.OnMenuClickListener {
-            override fun onClick(commentId: String) {
-                Toast.makeText(this@PostActivity, "메뉴 클릭", Toast.LENGTH_SHORT).show()
+            override fun onClick(commentInfo: CommentInfo) {
+                showDeleteCommentDialog(commentInfo)
             }
         })
+    }
+
+    override fun getDeletePostFlag() {
+        postViewModel.deletePost()
+    }
+
+    override fun getDeleteCommentFlag(commentInfo: CommentInfo) {
+        postViewModel.deleteComment(commentInfo)
     }
 }

@@ -104,8 +104,14 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
                         }
                         commentList.postValue(_commentList)
                     }
-                    else{
-                        Log.e("BC_CHECK","response is not array")
+                    else if(response is Double){
+                        if(response.toInt()==0){
+                            commentList.postValue(_commentList)
+                            Log.e("CHECK_TAG","no comment in this post")
+                        }
+                        else{
+                            Log.e("CHECK_TAG 2","failed to search comment in this post")
+                        }
                     }
                 }
             }catch (e: Exception){
@@ -179,6 +185,29 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
                 _alertEvent.postValue(Event("게시물을 삭제하던 중 문제가 발생하였습니다"))
             }
         }
-
     }
+
+    fun deleteComment(commentInfo: CommentInfo){
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                if(ApplicationClass.prefs.getId() == commentInfo.userId){
+                    val response = repository.deleteComment(commentInfo.commentId)
+                    if(response is Double){
+                        when(response.toInt()){
+                            1 -> refreshComment()
+                            -1 -> _alertEvent.postValue(Event("댓글 삭제에 실패하였습니다."))
+                        }
+                    }
+                }
+                else{
+                    _alertEvent.postValue(Event("댓글 작성자가 댓글을 지울 수 있습니다."))
+                }
+
+            }
+            catch (e: Exception){
+                _alertEvent.postValue(Event("댓글을 삭제하던 중 문제가 발생하였습니다."))
+            }
+        }
+    }
+
 }

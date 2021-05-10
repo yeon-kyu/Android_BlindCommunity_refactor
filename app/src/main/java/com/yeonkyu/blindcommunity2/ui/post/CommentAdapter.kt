@@ -16,7 +16,7 @@ open class CommentAdapter: ListAdapter<CommentInfo,CommentAdapter.CommentListVie
     private var menuClickListener: OnMenuClickListener? = null
 
     interface OnMenuClickListener {
-        fun onClick(commentId: String)
+        fun onClick(commentInfo: CommentInfo)
     }
 
     fun setMenuClickListener(listener: OnMenuClickListener){
@@ -37,7 +37,7 @@ open class CommentAdapter: ListAdapter<CommentInfo,CommentAdapter.CommentListVie
 
         fun bind(commentInfo: CommentInfo) {
             binding.commentListMoreBt.setOnClickListener {
-                menuClickListener?.onClick(commentInfo.commentId)
+                menuClickListener?.onClick(commentInfo)
             }
             binding.commentItem = commentInfo
             binding.executePendingBindings()
