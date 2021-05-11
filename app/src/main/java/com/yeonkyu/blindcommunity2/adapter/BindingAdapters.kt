@@ -45,7 +45,7 @@ object BindingAdapters {
     fun View.visibleIf(value:Boolean){
         visibility = when(value){
             true -> View.VISIBLE
-            else -> View.INVISIBLE
+            else -> View.GONE
         }
     }
 }
