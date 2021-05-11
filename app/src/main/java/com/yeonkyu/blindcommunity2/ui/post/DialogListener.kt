@@ -1,4 +1,4 @@
-package com.yeonkyu.blindcommunity2.ui.post.dialog
+package com.yeonkyu.blindcommunity2.ui.post
 
 import com.yeonkyu.blindcommunity2.data.entities.CommentInfo
 

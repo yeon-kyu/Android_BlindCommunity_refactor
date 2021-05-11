@@ -1,4 +1,4 @@
-package com.yeonkyu.blindcommunity2.ui.dialogs
+package com.yeonkyu.blindcommunity2.ui
 
 import android.app.Dialog
 import android.content.Context

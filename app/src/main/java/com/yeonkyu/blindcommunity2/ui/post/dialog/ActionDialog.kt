@@ -6,6 +6,7 @@ import android.view.Window
 import android.widget.TextView
 import com.yeonkyu.blindcommunity2.R
 import com.yeonkyu.blindcommunity2.data.entities.CommentInfo
+import com.yeonkyu.blindcommunity2.ui.post.DialogListener
 
 class ActionDialog(context: Context) {
 

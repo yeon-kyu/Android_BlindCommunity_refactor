@@ -11,7 +11,6 @@ import com.yeonkyu.blindcommunity2.data.entities.CommentInfo
 import com.yeonkyu.blindcommunity2.databinding.ActivityPostBinding
 import com.yeonkyu.blindcommunity2.ui.BaseActivity
 import com.yeonkyu.blindcommunity2.ui.post.dialog.ActionDialog
-import com.yeonkyu.blindcommunity2.ui.post.dialog.DialogListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PostActivity: BaseActivity(), DialogListener {

@@ -7,7 +7,7 @@ import androidx.databinding.DataBindingUtil
 import com.yeonkyu.blindcommunity2.R
 import com.yeonkyu.blindcommunity2.databinding.ActivityLoginBinding
 import com.yeonkyu.blindcommunity2.ui.MainActivity
-import com.yeonkyu.blindcommunity2.ui.dialogs.GrayAlertDialog
+import com.yeonkyu.blindcommunity2.ui.GrayAlertDialog
 import com.yeonkyu.blindcommunity2.ui.signup.SignupActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
