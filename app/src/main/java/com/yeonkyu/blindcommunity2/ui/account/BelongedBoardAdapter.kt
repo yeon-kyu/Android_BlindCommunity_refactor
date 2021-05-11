@@ -9,19 +9,19 @@ import com.yeonkyu.blindcommunity2.R
 import com.yeonkyu.blindcommunity2.data.entities.BoardInfo
 import com.yeonkyu.blindcommunity2.databinding.ItemBelongedBoardListBinding
 import com.yeonkyu.blindcommunity2.ui.account.BelongedBoardAdapter.*
+import com.yeonkyu.blindcommunity2.ui.board.BoardListAdapter
 
 class BelongedBoardAdapter: androidx.recyclerview.widget.ListAdapter<BoardInfo, BelongedBoardViewHolder>(
         BoardDiffCallback
 ) {
-
     private var onItemClickListener: OnItemClickListener? = null
-    private var endScrollListener: EndScrollListener? = null
 
     interface OnItemClickListener{
         fun onItemClick(board: BoardInfo)
     }
-    interface EndScrollListener{
-        fun onTouchEndScroll()
+
+    fun setItemClickListener(listener: OnItemClickListener){
+        onItemClickListener = listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BelongedBoardViewHolder {
@@ -31,9 +31,6 @@ class BelongedBoardAdapter: androidx.recyclerview.widget.ListAdapter<BoardInfo, 
 
     override fun onBindViewHolder(holder: BelongedBoardViewHolder, position: Int) {
         holder.bind(getItem(position))
-        if (itemCount - position == 1) {
-            endScrollListener?.onTouchEndScroll()
-        }
     }
 
     inner class BelongedBoardViewHolder(private val binding: ItemBelongedBoardListBinding) :
