@@ -112,10 +112,10 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
                     else if(response is Double){
                         if(response.toInt()==0){
                             commentList.postValue(_commentList)
-                            Log.e("CHECK_TAG","no comment in this post")
+                            Log.e("BC_CHECK","no comment in this post")
                         }
                         else{
-                            Log.e("CHECK_TAG 2","failed to search comment in this post")
+                            Log.e("BC_FAIL","failed to search comment in this post")
                         }
                     }
                 }

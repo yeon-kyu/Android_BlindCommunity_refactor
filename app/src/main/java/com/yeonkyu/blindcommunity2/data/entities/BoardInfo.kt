@@ -8,6 +8,8 @@ data class BoardInfo(
         @SerializedName(value = "nickname")
         val nickname:String?,
         @SerializedName(value = "title")
-        val title:String?
+        val title:String?,
+        @SerializedName(value = "type")
+        val type: String? = null
 
 )
