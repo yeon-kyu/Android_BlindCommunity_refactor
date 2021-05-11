@@ -36,6 +36,8 @@
     <string name="dialog_action_delete">삭제하기</string>
 
     <!--  account  -->
+    <string name="account_my_boards">내가 쓴 게시물</string>
     <string name="account_no_data">내가 쓴 게시물이 없습니다. \n 게시물을 작성하여 기록을 남겨보세요!</string>
+    <string name="account_setting_img">account setting icon</string>
 
 </resources>

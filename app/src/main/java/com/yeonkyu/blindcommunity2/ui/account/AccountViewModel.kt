@@ -18,14 +18,19 @@ class AccountViewModel(private val repository: BoardRepository): ViewModel() {
         MutableLiveData<ArrayList<BoardInfo>>()
     }
 
-    var hasData:Boolean = true
+    val hasData: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>().apply {
+            postValue(true)
+        }
+    }
 
     fun loadAllMyBoards(){
         viewModelScope.launch(Dispatchers.IO) {
             try {
+                _boardList.clear()
+
                 val nickname = ApplicationClass.prefs.getId()
                 val response = repository.getMyBoard(nickname)
-                Log.e("CHECK_TAG", "$response")
                 if (response is ArrayList<*>) {
                     val boardArray = response as ArrayList<LinkedTreeMap<String, String>>
                     for (board in boardArray) {
@@ -35,11 +40,11 @@ class AccountViewModel(private val repository: BoardRepository): ViewModel() {
                         _boardList.add(BoardInfo(postId, nickname, title,type))
                     }
                     boardList.postValue(_boardList)
-                    hasData = true
+                    hasData.postValue(true)
                 }
                 else if(response is Double){
                     if(response.toInt()==0){
-                        hasData = false
+                        hasData.postValue(false)
                     }
                 }
             }
