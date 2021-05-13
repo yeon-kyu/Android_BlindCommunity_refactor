@@ -89,7 +89,7 @@ class LoginViewModel(private val repository:AuthRepository) : ViewModel(){
             return
         }
 
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch(Dispatchers.IO){
             try {
                 val response = repository.login(userId,userPw)
                 Log.e("BC_CHECK","login result : $response")

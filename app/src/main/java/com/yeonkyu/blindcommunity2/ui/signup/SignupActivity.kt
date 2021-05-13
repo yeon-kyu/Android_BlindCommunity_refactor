@@ -1,14 +1,17 @@
 package com.yeonkyu.blindcommunity2.ui.signup
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.yeonkyu.blindcommunity2.R
 import com.yeonkyu.blindcommunity2.databinding.ActivitySignupBinding
+import com.yeonkyu.blindcommunity2.ui.BaseActivity
+import com.yeonkyu.blindcommunity2.ui.MainActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SignupActivity: AppCompatActivity() {
+class SignupActivity: BaseActivity() {
 
     private lateinit var binding : ActivitySignupBinding
     private val signupViewModel: SignupViewModel by viewModel()
@@ -31,6 +34,19 @@ class SignupActivity: AppCompatActivity() {
     }
 
     private fun setupViewModel(){
+        signupViewModel.alertEvent.observe(binding.lifecycleOwner!!,{ event ->
+            event.getContentIfNotHandled()?.let{
+                showDialog(it,"확인",null)
+            }
+        })
 
+        signupViewModel.signupEvent.observe(binding.lifecycleOwner!!,{ event ->
+            event.getContentIfNotHandled()?.let {
+                val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("id", signupViewModel.id.value)
+                startActivity(intent)
+                finish()
+            }
+        })
     }
 }

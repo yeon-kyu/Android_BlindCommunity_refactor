@@ -7,4 +7,12 @@ import retrofit2.http.Query
 interface AuthService {
     @GET("/sign_in?")
     suspend fun login(@Query("id")id:String, @Query("pw")pw:String): Response<String>
+
+    @GET("sign_up")
+    suspend fun signup(
+            @Query("id")id: String,
+            @Query("pw")pw: String,
+            @Query("nickname")nickname: String,
+            @Query("age")age: String
+    ) : Response<String>
 }
