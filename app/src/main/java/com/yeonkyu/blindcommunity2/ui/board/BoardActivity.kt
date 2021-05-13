@@ -13,10 +13,6 @@ import com.yeonkyu.blindcommunity2.data.entities.BoardInfo
 import com.yeonkyu.blindcommunity2.databinding.ActivityBoardBinding
 import com.yeonkyu.blindcommunity2.ui.post.PostActivity
 import com.yeonkyu.blindcommunity2.ui.write.WriteActivity
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 

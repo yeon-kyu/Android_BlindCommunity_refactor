@@ -23,7 +23,6 @@ class AccountFragment : Fragment() {
     private lateinit var boardAdapter: BelongedBoardAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_account,container,false)
         binding.lifecycleOwner = activity
         binding.viewModel = accountViewModel
@@ -36,7 +35,6 @@ class AccountFragment : Fragment() {
     }
 
     private fun setupView(){
-
         val accountRecyclerview = binding.accountRecyclerview
         val linearLayoutManager = LinearLayoutManager(context)
         accountRecyclerview.layoutManager = linearLayoutManager
@@ -66,6 +64,7 @@ class AccountFragment : Fragment() {
             }
         })
     }
+
     private fun moveToPostActivity(board: BoardInfo){
         val intent = Intent(requireContext(), PostActivity::class.java)
         intent.putExtra("postId",board.postId)

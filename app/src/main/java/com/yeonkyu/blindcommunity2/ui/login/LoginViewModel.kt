@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yeonkyu.blindcommunity2.ApplicationClass
-import com.yeonkyu.blindcommunity2.data.repository.LoginRepository
+import com.yeonkyu.blindcommunity2.data.repository.AuthRepository
 import com.yeonkyu.blindcommunity2.utils.Event
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +14,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
-class LoginViewModel(private val repository:LoginRepository) : ViewModel(){
+class LoginViewModel(private val repository:AuthRepository) : ViewModel(){
 
     private val _autoLoginEvent = MutableLiveData<Event<Boolean>>()
     val autoLoginEvent : LiveData<Event<Boolean>>

@@ -40,4 +40,13 @@
     <string name="account_no_data">내가 쓴 게시물이 없습니다. \n 게시물을 작성하여 기록을 남겨보세요!</string>
     <string name="account_setting_img">account setting icon</string>
 
+    <!--  sign up  -->
+    <string name="signup_back">뒤로</string>
+    <string name="signup_id">ID</string>
+    <string name="signup_pw">PW</string>
+    <string name="signup_nickname">NICKNAME</string>
+    <string name="signup_age">AGE</string>
+    <string name="signup_confirm">회원가입 완료</string>
+
+
 </resources>
