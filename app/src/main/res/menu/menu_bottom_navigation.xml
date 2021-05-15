@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item
         android:id="@+id/home_screen"
         android:icon="@drawable/icn_yellow_home"
@@ -10,4 +11,8 @@
         android:icon="@drawable/icn_yellow_person"
         android:title="@string/account" />
 
+    <item
+        android:id="@+id/favorite_screen"
+        android:icon="@drawable/icn_favorite"
+        android:title="@string/favorite"/>
 </menu>

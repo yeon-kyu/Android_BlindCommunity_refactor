@@ -14,6 +14,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.yeonkyu.blindcommunity2.R
 import com.yeonkyu.blindcommunity2.ui.account.AccountFragment
+import com.yeonkyu.blindcommunity2.ui.favorite.FavoriteFragment
 import com.yeonkyu.blindcommunity2.ui.home.HomeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -40,16 +41,21 @@ class MainActivity : AppCompatActivity() {
                 main_view_pager.currentItem = 1
                 return true
             }
+            R.id.favorite_screen -> {
+                main_view_pager.currentItem = 2
+                return true
+            }
         }
         return false
     }
 
     private inner class PagerAdapter(fm: FragmentManager, lc: Lifecycle): FragmentStateAdapter(fm, lc) {
-        override fun getItemCount() = 2
+        override fun getItemCount() = 3
         override fun createFragment(position: Int): Fragment {
             return when (position) {
                 0 -> HomeFragment()
                 1 -> AccountFragment()
+                2 -> FavoriteFragment()
                 else -> error("no such position: $position")
             }
         }
@@ -61,6 +67,7 @@ class MainActivity : AppCompatActivity() {
             main_bottom_navigation.selectedItemId = when (position) {
                 0 -> R.id.home_screen
                 1 -> R.id.account_screen
+                2 -> R.id.favorite_screen
                 else -> error("no such position: $position")
             }
         }
