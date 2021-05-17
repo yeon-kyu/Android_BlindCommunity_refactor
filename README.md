@@ -21,7 +21,7 @@
 - `MVC` Architecture -> `MVVM` Architecture
 - 의존성 주입(`Koin`) 추가
 - deprecated 라이브라리(`AsyncTask`) 삭제 -> `retrofit`, `coroutine` 추가
-- `ListView` 삭제 -> `RecyclerView`+`DiffUtil 을 이용한 ListAdapter` 추가
+- `ListView` 삭제 -> `RecyclerView`+DiffUtil 을 이용한 `ListAdapter` 추가
 - fragment 사용 방식 변경 -> `ViewPager2`, `Bottom Navigation` 라이브라리 사용
 - `LinearLayout`, `RelativeLayout` 위주 XML -> `ConstraintLayout` 위주 XML
 - 로그인 데이터 저장 방식 `FileInputStream` 삭제 -> `SharedPreference` 추가
