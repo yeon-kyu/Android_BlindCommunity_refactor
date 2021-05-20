@@ -17,7 +17,6 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     dataBinding{
@@ -61,6 +60,11 @@ dependencies {
     def koin_version = "2.2.0"
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     testImplementation "org.koin:koin-test:$koin_version"
+
+    //Mockito
+    androidTestImplementation("org.mockito:mockito-android:2.24.5")
+    testImplementation 'org.mockito:mockito-inline:2.21.0'
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
 
     //retrofit
     def retrofit_version = "2.9.0"
