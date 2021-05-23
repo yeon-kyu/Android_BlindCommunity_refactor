@@ -21,9 +21,10 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
 
     var hasBeenInit = false
     var type: Int? = null//1: free, 2: info, 3: employ
-    val postId : MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
-    }
+    val postId = MutableLiveData<String>()
+//    by lazy {
+//        MutableLiveData<String>()
+//    }
 
     private val _nickname = MutableLiveData<String>()
     val nickname : LiveData<String>
