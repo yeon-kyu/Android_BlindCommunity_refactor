@@ -22,7 +22,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:text="@string/account_my_boards"
+            android:text="@string/favorite_header"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:fontFamily="@font/notosanskr_bold"/>

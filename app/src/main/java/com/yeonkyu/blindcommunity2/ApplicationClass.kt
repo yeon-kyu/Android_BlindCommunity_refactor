@@ -3,6 +3,7 @@ package com.yeonkyu.blindcommunity2
 import android.app.Application
 import com.yeonkyu.blindcommunity2.di.networkModule
 import com.yeonkyu.blindcommunity2.di.repositoryModule
+import com.yeonkyu.blindcommunity2.di.roomDBModule
 import com.yeonkyu.blindcommunity2.di.viewModelModule
 import com.yeonkyu.blindcommunity2.utils.PreferenceUtil
 import org.koin.android.ext.koin.androidContext
@@ -22,10 +23,7 @@ class ApplicationClass : Application() {
         startKoin{
             androidLogger()
             androidContext(this@ApplicationClass)
-            modules(viewModelModule)
-            modules(networkModule)
-            modules(repositoryModule)
-
+            modules(listOf(viewModelModule, networkModule, repositoryModule, roomDBModule))
         }
     }
 }

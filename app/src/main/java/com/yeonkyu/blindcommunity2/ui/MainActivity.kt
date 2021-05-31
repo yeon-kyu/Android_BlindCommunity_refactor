@@ -12,6 +12,7 @@ import com.yeonkyu.blindcommunity2.R
 import com.yeonkyu.blindcommunity2.ui.account.AccountFragment
 import com.yeonkyu.blindcommunity2.ui.favorite.FavoriteFragment
 import com.yeonkyu.blindcommunity2.ui.home.HomeFragment
+import com.yeonkyu.blindcommunity2.utils.DepthPageTransformer
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         main_view_pager.isUserInputEnabled = false
         main_view_pager.adapter = PagerAdapter(supportFragmentManager,lifecycle)
         main_view_pager.registerOnPageChangeCallback(PageChangeCallback())
+        main_view_pager.setPageTransformer(DepthPageTransformer())
         main_bottom_navigation.setOnNavigationItemSelectedListener { navigationSelected(it) }
     }
 

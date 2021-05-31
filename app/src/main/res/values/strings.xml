@@ -49,5 +49,6 @@
     <string name="signup_age">AGE</string>
     <string name="signup_confirm">회원가입 완료</string>
 
-
+    <!--  favorite  -->
+    <string name="favorite_header">내가 찜한 게시글</string>
 </resources>
