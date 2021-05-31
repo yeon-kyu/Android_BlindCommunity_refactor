@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.yeonkyu.blindcommunity2.data.entities.BoardInfo
 import com.yeonkyu.blindcommunity2.data.repository.BoardRepository
 import com.yeonkyu.blindcommunity2.data.room_persistence.Favorites
 import com.yeonkyu.blindcommunity2.data.room_persistence.FavoritesDao
@@ -12,14 +13,18 @@ import kotlinx.coroutines.launch
 
 class FavoriteViewModel(private val repository: BoardRepository, private val db: FavoritesDao): ViewModel() {
 
-    private val _favoritePostList = MutableLiveData<List<Favorites>>()
-    val favoritePostList : LiveData<List<Favorites>>
+    private val _favoritePostList = MutableLiveData<List<BoardInfo>>()
+    val favoritePostList : LiveData<List<BoardInfo>>
         get() = _favoritePostList
 
     fun loadFavoritePostList(){
         viewModelScope.launch(Dispatchers.Default) {
             val favoritesList: List<Favorites> = db.getAll()
-            _favoritePostList.postValue(favoritesList)
+            val boardInfoList: MutableList<BoardInfo> = mutableListOf()
+            for(item in favoritesList){
+                boardInfoList.add(BoardInfo(postId = item.postId, nickname = item.nickname, title = item.title, type = item.type))
+            }
+            _favoritePostList.postValue(boardInfoList)
         }
     }
 
