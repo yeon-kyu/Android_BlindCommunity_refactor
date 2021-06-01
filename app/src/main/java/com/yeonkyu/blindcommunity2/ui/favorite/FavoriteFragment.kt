@@ -2,6 +2,7 @@ package com.yeonkyu.blindcommunity2.ui.favorite
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.yeonkyu.blindcommunity2.R
 import com.yeonkyu.blindcommunity2.data.entities.BoardInfo
 import com.yeonkyu.blindcommunity2.databinding.FragmentFavoriteBinding
 import com.yeonkyu.blindcommunity2.ui.account.BelongedBoardAdapter
+import com.yeonkyu.blindcommunity2.ui.board.BoardListAdapter
 import com.yeonkyu.blindcommunity2.ui.post.PostActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -45,24 +47,26 @@ class FavoriteFragment : Fragment() {
         boardAdapter = BelongedBoardAdapter()
         favoriteRecyclerview.adapter = boardAdapter
 
-        binding.favoriteSwipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(requireContext(),R.color.primary))
-        binding.favoriteSwipeRefreshLayout.setOnRefreshListener {
-            favoriteViewModel.loadFavoritePostList()
-            binding.favoriteSwipeRefreshLayout.isRefreshing = false
-        }
+//        binding.favoriteSwipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(requireContext(),R.color.primary))
+//        binding.favoriteSwipeRefreshLayout.setOnRefreshListener {
+//            favoriteViewModel.loadFavoritePostList()
+//            binding.favoriteSwipeRefreshLayout.isRefreshing = false
+//        }
 
         setItemClickListener()
     }
 
     private fun setupViewModel(){
         favoriteViewModel.favoritePostList.observe(binding.lifecycleOwner!!,{
-            boardAdapter.submitList(it.toMutableList())
+            Log.e("CHECK_TAG","favoriteList size : ${it.size}")
+            boardAdapter.submitList(it)
         })
     }
 
     private fun setItemClickListener(){
         boardAdapter.setItemClickListener(object: BelongedBoardAdapter.OnItemClickListener{
             override fun onItemClick(board: BoardInfo) {
+                Log.e("BC_CHECK","item clicked")
                 moveToPostActivity(board)
             }
         })

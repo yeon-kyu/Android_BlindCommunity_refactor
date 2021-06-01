@@ -39,7 +39,6 @@ class AccountViewModel(private val repository: BoardRepository): ViewModel() {
                         val type: String? = board["post_type"]
                         _boardList.add(BoardInfo(postId, nickname, title,type))
                     }
-                    boardList.postValue(_boardList)
                     hasData.postValue(true)
                 }
                 else if(response is Double){
@@ -47,6 +46,7 @@ class AccountViewModel(private val repository: BoardRepository): ViewModel() {
                         hasData.postValue(false)
                     }
                 }
+                boardList.postValue(_boardList)
             }
             catch (e: Exception){
                 Log.e("BC_ERROR","loadAllMyBoards api error $e")

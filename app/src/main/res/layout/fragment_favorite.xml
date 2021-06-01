@@ -27,7 +27,7 @@
             android:textSize="20sp"
             android:fontFamily="@font/notosanskr_bold"/>
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        <FrameLayout
             android:id="@+id/favorite_swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -40,8 +40,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white"
+                android:overScrollMode="never"
                 android:scrollbars="vertical"
                 android:clipToPadding="false"/>
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -11,7 +11,7 @@ import com.yeonkyu.blindcommunity2.data.room_persistence.FavoritesDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class FavoriteViewModel(private val repository: BoardRepository, private val db: FavoritesDao): ViewModel() {
+class FavoriteViewModel(private val db: FavoritesDao): ViewModel() {
 
     private val _favoritePostList = MutableLiveData<List<BoardInfo>>()
     val favoritePostList : LiveData<List<BoardInfo>>
@@ -22,7 +22,13 @@ class FavoriteViewModel(private val repository: BoardRepository, private val db:
             val favoritesList: List<Favorites> = db.getAllPost()
             val boardInfoList: MutableList<BoardInfo> = mutableListOf()
             for(item in favoritesList){
-                boardInfoList.add(BoardInfo(postId = item.postId, nickname = item.nickname, title = item.title, type = item.type))
+                val type = when(item.type){
+                    "1" -> "자유 게시판"
+                    "2" -> "정보 게시판"
+                    "3" -> "취업 게시판"
+                    else -> "-"
+                }
+                boardInfoList.add(BoardInfo(postId = item.postId, nickname = item.nickname, title = item.title, type = type))
             }
             _favoritePostList.postValue(boardInfoList)
         }

@@ -1,6 +1,8 @@
 package com.yeonkyu.blindcommunity2.ui.account
 
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
@@ -9,9 +11,9 @@ import com.yeonkyu.blindcommunity2.R
 import com.yeonkyu.blindcommunity2.data.entities.BoardInfo
 import com.yeonkyu.blindcommunity2.databinding.ItemBelongedBoardListBinding
 import com.yeonkyu.blindcommunity2.ui.account.BelongedBoardAdapter.*
-import com.yeonkyu.blindcommunity2.ui.board.BoardListAdapter
+import androidx.recyclerview.widget.ListAdapter
 
-class BelongedBoardAdapter: androidx.recyclerview.widget.ListAdapter<BoardInfo, BelongedBoardViewHolder>(
+class BelongedBoardAdapter: ListAdapter<BoardInfo, BelongedBoardAdapter.BelongedBoardViewHolder>(
         BoardDiffCallback
 ) {
     private var onItemClickListener: OnItemClickListener? = null
@@ -39,7 +41,7 @@ class BelongedBoardAdapter: androidx.recyclerview.widget.ListAdapter<BoardInfo, 
         fun bind(boardInfo: BoardInfo) {
             binding.belongedBoardItem = boardInfo
             binding.root.setOnClickListener {
-                onItemClickListener?.onItemClick(boardInfo)
+                onItemClickListener!!.onItemClick(boardInfo)
             }
             binding.executePendingBindings()
         }

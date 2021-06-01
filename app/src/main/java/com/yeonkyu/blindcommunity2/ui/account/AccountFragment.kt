@@ -2,6 +2,7 @@ package com.yeonkyu.blindcommunity2.ui.account
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,17 +43,18 @@ class AccountFragment : Fragment() {
         boardAdapter = BelongedBoardAdapter()
         accountRecyclerview.adapter = boardAdapter
 
-        binding.accountSwipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(requireContext(),R.color.primary))
-        binding.accountSwipeRefreshLayout.setOnRefreshListener {
-            accountViewModel.loadAllMyBoards()
-            binding.accountSwipeRefreshLayout.isRefreshing = false
-        }
-
         setItemClickListener()
+
+//        binding.accountSwipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(requireContext(),R.color.primary))
+//        binding.accountSwipeRefreshLayout.setOnRefreshListener {
+//            accountViewModel.loadAllMyBoards()
+//            binding.accountSwipeRefreshLayout.isRefreshing = false
+//        }
     }
 
     private fun setupViewModel(){
         accountViewModel.boardList.observe(binding.lifecycleOwner!!,{
+            Log.e("BC_CHECK","boardlist : $it")
             boardAdapter.submitList(it.toMutableList())
         })
     }
