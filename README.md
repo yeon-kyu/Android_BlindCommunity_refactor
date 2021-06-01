@@ -41,6 +41,7 @@
  - `ViewModel`
  - `DataBinding`
  - `LiveData`
+ - `Room`
 
 ### REST API 통신
  - `retrofit2`
@@ -51,3 +52,4 @@
  - `RecyclerView` + `ListAdapter`
  - `Navigation`
  - `RealTimeBlurView`
+ - `Mockito`
