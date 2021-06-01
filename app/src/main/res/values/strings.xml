@@ -35,6 +35,7 @@
     <string name="post_more_icn">post more icon</string>
     <string name="post_register_comment">등록</string>
     <string name="dialog_action_delete">삭제하기</string>
+    <string name="post_star_icn">post star icon</string>
 
     <!--  account  -->
     <string name="account_my_boards">내가 쓴 게시물</string>

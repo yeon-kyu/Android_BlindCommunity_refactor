@@ -1,8 +1,10 @@
 package com.yeonkyu.blindcommunity2.adapter
 
 import android.view.View
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.yeonkyu.blindcommunity2.R
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -46,6 +48,17 @@ object BindingAdapters {
         visibility = when(value){
             true -> View.VISIBLE
             else -> View.GONE
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("staredIf")
+    fun ImageButton.staredIf(value:Boolean){
+        if(value){
+            setImageResource(R.drawable.icon_star_gold_32)
+        }
+        else{
+            setImageResource(R.drawable.icon_star_black_24)
         }
     }
 }

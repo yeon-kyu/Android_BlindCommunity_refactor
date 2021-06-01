@@ -33,6 +33,11 @@ class FavoriteFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        favoriteViewModel.loadFavoritePostList()
+    }
+
     private fun setupView(){
         val favoriteRecyclerview = binding.favoriteRecyclerview
         favoriteRecyclerview.layoutManager = LinearLayoutManager(context)

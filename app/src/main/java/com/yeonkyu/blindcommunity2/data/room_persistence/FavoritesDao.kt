@@ -1,9 +1,6 @@
 package com.yeonkyu.blindcommunity2.data.room_persistence
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface FavoritesDao {
@@ -11,5 +8,8 @@ interface FavoritesDao {
     fun insertPost(vararg post: Favorites)
 
     @Query("SELECT * FROM favorites")
-    fun getAll(): List<Favorites>
+    fun getAllPost(): List<Favorites>
+
+    @Delete
+    fun deletePost(favorite:Favorites)
 }

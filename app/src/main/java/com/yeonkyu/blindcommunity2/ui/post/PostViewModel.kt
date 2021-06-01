@@ -1,7 +1,6 @@
 package com.yeonkyu.blindcommunity2.ui.post
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +9,8 @@ import com.google.gson.internal.LinkedTreeMap
 import com.yeonkyu.blindcommunity2.ApplicationClass
 import com.yeonkyu.blindcommunity2.data.entities.CommentInfo
 import com.yeonkyu.blindcommunity2.data.repository.PostRepository
+import com.yeonkyu.blindcommunity2.data.room_persistence.Favorites
+import com.yeonkyu.blindcommunity2.data.room_persistence.FavoritesDao
 import com.yeonkyu.blindcommunity2.utils.Event
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,14 +18,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class PostViewModel(private val repository: PostRepository) : ViewModel() {
+class PostViewModel(private val repository: PostRepository, private val db: FavoritesDao) : ViewModel() {
 
     var hasBeenInit = false
     var type: Int? = null//1: free, 2: info, 3: employ
     val postId = MutableLiveData<String>()
-//    by lazy {
-//        MutableLiveData<String>()
-//    }
+
+    val isStared = MutableLiveData<Boolean>()
 
     private val _nickname = MutableLiveData<String>()
     val nickname : LiveData<String>
@@ -87,6 +87,41 @@ class PostViewModel(private val repository: PostRepository) : ViewModel() {
             }
             finally {
                 isLoading.postValue(false)
+            }
+        }
+
+        refreshStar()
+    }
+
+    private fun refreshStar(){
+        viewModelScope.launch(Dispatchers.Default) {
+            try {
+                val postList  = db.getAllPost()
+                isStared.postValue(false)
+                for(item in postList){
+                    if(item.postId == postId.value){
+                        isStared.postValue(true)
+                        break
+                    }
+                }
+            }catch (e: Exception){
+                Log.e("BC_ERROR","refresh star error $e")
+            }
+        }
+    }
+
+    fun insertOrDeleteStar(){
+        viewModelScope.launch(Dispatchers.Default) {
+            val favorite = Favorites(postId.value!!,nickname.value!!,title.value!!,type!!.toString())
+            if(isStared.value == true){
+                db.deletePost(favorite)
+                isStared.postValue(false)
+                Log.e("BC_CHECK","게시물이 찜 리스트에서 삭제되었습니다.")
+            }
+            else{
+                db.insertPost(favorite)
+                isStared.postValue(true)
+                Log.e("BC_CHECK","게시물이 찜 리스트에 추가되었습니다.")
             }
         }
     }

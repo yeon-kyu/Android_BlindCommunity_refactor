@@ -19,7 +19,7 @@ class FavoriteViewModel(private val repository: BoardRepository, private val db:
 
     fun loadFavoritePostList(){
         viewModelScope.launch(Dispatchers.Default) {
-            val favoritesList: List<Favorites> = db.getAll()
+            val favoritesList: List<Favorites> = db.getAllPost()
             val boardInfoList: MutableList<BoardInfo> = mutableListOf()
             for(item in favoritesList){
                 boardInfoList.add(BoardInfo(postId = item.postId, nickname = item.nickname, title = item.title, type = item.type))
