@@ -20,13 +20,14 @@
 - 언어 변경 `Java` -> `Kotlin`
 - `MVC` Architecture -> `MVVM` Architecture
 - 의존성 주입(`Koin`) 추가
-- deprecated 라이브라리(`AsyncTask`) 삭제 -> `retrofit`, `coroutine` 추가
+- deprecated 라이브라리(`AsyncTask`) 삭제 -> `coroutine` 추가
+- `HttpUrlConnection` -> `OkHttp` + `Retrofit`
 - `ListView` 삭제 -> `RecyclerView`+DiffUtil 을 이용한 `ListAdapter` 추가
 - fragment 사용 방식 변경 -> `ViewPager2`, `Bottom Navigation` 라이브라리 사용
 - `LinearLayout`, `RelativeLayout` 위주 XML -> `ConstraintLayout` 위주 XML
 - 로그인 데이터 저장 방식 `FileInputStream` 삭제 -> `SharedPreference` 추가
 - 기본 제공 다이얼로그 사용 방식 -> `커스텀 다이얼로그` 
-- 일관성있고 직관적인 변수, 함수, 클래스명으로 수정
+- 보다 일관성있고 직관적인 변수, 함수, 클래스명
 - res/value/string, res/value/color 파일 활용
 - 더 직관적인 UI
 
