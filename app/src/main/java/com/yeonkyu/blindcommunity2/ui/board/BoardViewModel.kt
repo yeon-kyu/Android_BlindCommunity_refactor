@@ -55,17 +55,17 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
                 Log.e("BC_CHECK","count : $count")
                 val response = repository.getFreeBoard(count)
 
-                if(response is ArrayList<*>) {
-                    val boardArray = response as ArrayList<LinkedTreeMap<String, String>>
-                    for (board in boardArray) {
-                        val nickname: String? = board["nickname"]
-                        val title: String? = board["title"]
-                        val postId: String? = board["post_id"]
-                        _boardList.add(BoardInfo(postId, nickname, title))
+                if(response.isSuccess){
+                    for(board in response.result){
+                        _boardList.add(board)
                     }
+                    //_boardList.addAll(response.result)
                     boardList.postValue(_boardList)
-                    count += response.size
-                    Log.e("BC_CHECK","boardlist size : ${_boardList.size}")
+                    count += response.result.size
+                    Log.e("BC_CHECK","boardList size : ${_boardList.size}")
+                }
+                else{
+                    Log.e("BC_FAIL","getFreeBoard failed ${response.message}")
                 }
             } catch (e: Exception) {
                 Log.e("ERROR_TAG", "getFreeBoard api error $e")
