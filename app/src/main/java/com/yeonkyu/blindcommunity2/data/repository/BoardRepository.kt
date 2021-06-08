@@ -6,9 +6,9 @@ import com.yeonkyu.blindcommunity2.data.entities.BoardResponse
 class BoardRepository(private val boardService: BoardService) : BaseRepository(){
 
     suspend fun getFreeBoard(cnt:Int): BoardResponse =
-        apiRequest { boardService.getFreeBoard2(cnt) }
+        apiRequest { boardService.getFreeBoard(cnt) }
 
-    suspend fun getInfoBoard(cnt: Int): Any =
+    suspend fun getInfoBoard(cnt: Int): BoardResponse =
         apiRequest { boardService.getInfoBoard(cnt) }
 
     suspend fun getEmployeeBoard(cnt:Int): Any =
