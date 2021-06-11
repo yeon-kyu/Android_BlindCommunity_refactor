@@ -6,9 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yeonkyu.blindcommunity2.ApplicationClass
+import com.yeonkyu.blindcommunity2.data.entities.LoginInfo
 import com.yeonkyu.blindcommunity2.data.repository.AuthRepository
 import com.yeonkyu.blindcommunity2.utils.Event
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -65,7 +65,7 @@ class LoginViewModel(private val repository:AuthRepository) : ViewModel(){
                 return@launch
             }
             try {
-                val response = repository.login(id,pw)
+                val response = repository.login(LoginInfo(id,pw))
                 loginSuccessFlag.postValue(true)
                 Log.e("BC_CHECK","auto Login result : $response")
 
@@ -91,18 +91,16 @@ class LoginViewModel(private val repository:AuthRepository) : ViewModel(){
 
         viewModelScope.launch(Dispatchers.IO){
             try {
-                val response = repository.login(userId,userPw)
-                Log.e("BC_CHECK","login result : $response")
-
-                when(response){
-                    "1"-> {
-                        _loginSuccessEvent.postValue(Event(userId))
-                        ApplicationClass.prefs.setId(userId)
-                        ApplicationClass.prefs.setPw(userPw)
-
-                    }
-                    "0"-> _popUpEvent.postValue(Event("아이디를 확인해주세요"))
-                    "-1"-> _popUpEvent.postValue(Event("비밀번호를 확인해 주세요"))
+                val response = repository.login(LoginInfo(userId,userPw))
+                if(response.isSuccess){
+                    Log.e("BC_CHECK","login success")
+                    _loginSuccessEvent.postValue(Event(userId))
+                    ApplicationClass.prefs.setId(userId)
+                    ApplicationClass.prefs.setPw(userPw)
+                }
+                else{
+                    Log.e("BC_CHECK","login failed message : ${response.message}")
+                    _popUpEvent.postValue(Event(response.message))
                 }
 
             }catch (e:Exception){

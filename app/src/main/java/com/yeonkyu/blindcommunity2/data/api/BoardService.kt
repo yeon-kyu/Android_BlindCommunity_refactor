@@ -15,9 +15,6 @@ interface BoardService {
     @GET("/search/employee_post")
     suspend fun getEmployeeBoard(@Query("cnt")cnt: Int): Response<BoardResponse>
 
-    @GET("/find_trace")
-    suspend fun getMyBoard(@Query("user_id")id: String): Response<Any>
-
     @GET("/search/my_post")
     suspend fun getMyBoard2(@Query("user_id")id: String): Response<BoardResponse>
 
