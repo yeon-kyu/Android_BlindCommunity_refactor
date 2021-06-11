@@ -28,25 +28,15 @@ class AccountViewModel(private val repository: BoardRepository): ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 _boardList.clear()
-
                 val nickname = ApplicationClass.prefs.getId()
                 val response = repository.getMyBoard(nickname)
-                if (response is ArrayList<*>) {
-                    val boardArray = response as ArrayList<LinkedTreeMap<String, String>>
-                    for (board in boardArray) {
-                        val title: String? = board["title"]
-                        val postId: String? = board["post_id"]
-                        val type: String? = board["post_type"]
-                        _boardList.add(BoardInfo(postId, nickname, title,type))
-                    }
-                    hasData.postValue(true)
+                if(response.isSuccess){
+                    _boardList.addAll(response.result)
+                    boardList.postValue(_boardList)
                 }
-                else if(response is Double){
-                    if(response.toInt()==0){
-                        hasData.postValue(false)
-                    }
+                else{
+                    Log.e("BC_CHECK","getMyBoard api fail : ${response.message}")
                 }
-                boardList.postValue(_boardList)
             }
             catch (e: Exception){
                 Log.e("BC_ERROR","loadAllMyBoards api error $e")

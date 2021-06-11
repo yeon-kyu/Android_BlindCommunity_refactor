@@ -103,8 +103,6 @@ class PostActivity: BaseActivity(), DialogListener {
         deleteCommentDialog.deleteComment(this,commentInfo)
     }
 
-
-
     private fun setMenuClickListener(){
         commentAdapter.setMenuClickListener(object : CommentAdapter.OnMenuClickListener {
             override fun onClick(commentInfo: CommentInfo) {

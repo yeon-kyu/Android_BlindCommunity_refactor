@@ -14,8 +14,10 @@ class BoardRepository(private val boardService: BoardService) : BaseRepository()
     suspend fun getEmployeeBoard(cnt:Int): BoardResponse =
         apiRequest { boardService.getEmployeeBoard(cnt) }
 
-    suspend fun getMyBoard(id: String): Any =
-        apiRequest { boardService.getMyBoard(id) }
+    suspend fun getMyBoard(id: String): BoardResponse =
+        apiRequest { boardService.getMyBoard2(id) }
+
+
 
     suspend fun writeFreePost(
         postId: String,

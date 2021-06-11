@@ -9,7 +9,7 @@ data class BoardInfo(
         val nickname:String?,
         @SerializedName(value = "title")
         val title:String?,
-        @SerializedName(value = "type")
+        @SerializedName(value = "post_type")
         val type: String? = null
 
 )

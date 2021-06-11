@@ -74,7 +74,10 @@ class AccountFragment : Fragment() {
             "자유 게시판" -> 1
             "정보 게시판" -> 2
             "취업 게시판" -> 3
-            else -> 0
+            else -> {
+                Log.e("BC_ERROR", "post type error $board.type")
+                0
+            }
         }
         intent.putExtra("postType",type)
         startActivity(intent)
