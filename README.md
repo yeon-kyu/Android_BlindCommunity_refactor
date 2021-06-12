@@ -47,6 +47,7 @@
 ### REST API 통신
  - `retrofit2`
  - `OkHttp3`
+ - `Gson`
 
 ### Other Libraries
  - `SwipeRefreshLayout`
