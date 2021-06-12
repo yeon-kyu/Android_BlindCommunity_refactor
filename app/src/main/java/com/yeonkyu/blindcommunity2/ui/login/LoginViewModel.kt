@@ -66,9 +66,13 @@ class LoginViewModel(private val repository:AuthRepository) : ViewModel(){
             }
             try {
                 val response = repository.login(LoginInfo(id,pw))
-                loginSuccessFlag.postValue(true)
-                Log.e("BC_CHECK","auto Login result : $response")
-
+                if(response.isSuccess){
+                    loginSuccessFlag.postValue(true)
+                }
+                else{
+                    _autoLoginEvent.postValue(Event(false))
+                    Log.e("BC_FAIL","auto login failed ${response.message}")
+                }
             }catch (e:Exception){
                 Log.e("BC_ERROR","auto login error $e")
             }

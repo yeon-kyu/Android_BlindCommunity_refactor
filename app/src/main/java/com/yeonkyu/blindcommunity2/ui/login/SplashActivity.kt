@@ -29,8 +29,6 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel(){
-        //loginViewModel.setSplashListener(this)
-
         loginViewModel.loginSuccessFlag.observe(this,{
             if(it==true){
                 val intent = Intent(this, MainActivity::class.java)
@@ -47,12 +45,4 @@ class SplashActivity : AppCompatActivity() {
             }
         })
     }
-
-//    override fun onAutoLoginFailed() {
-//        runOnUiThread {
-//            val intent = Intent(this, LoginActivity::class.java)
-//            startActivity(intent)
-//            finish()
-//        }
-//    }
 }

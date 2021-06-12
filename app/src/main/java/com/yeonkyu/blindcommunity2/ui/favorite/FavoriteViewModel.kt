@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yeonkyu.blindcommunity2.data.entities.BoardInfo
-import com.yeonkyu.blindcommunity2.data.repository.BoardRepository
 import com.yeonkyu.blindcommunity2.data.room_persistence.Favorites
 import com.yeonkyu.blindcommunity2.data.room_persistence.FavoritesDao
 import kotlinx.coroutines.Dispatchers
