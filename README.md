@@ -26,6 +26,7 @@
 - fragment 사용 방식 변경 -> `ViewPager2`, `Bottom Navigation` 라이브라리 사용
 - `LinearLayout`, `RelativeLayout` 위주 XML -> `ConstraintLayout` 위주 XML
 - 로그인 데이터 저장 방식 `FileInputStream` 삭제 -> `SharedPreference` 추가
+- 내가 찜한 게시물 저장 기능 추가(`Room persistence` 사용)
 - 기본 제공 다이얼로그 사용 방식 -> `커스텀 다이얼로그` 
 - 보다 일관성있고 직관적인 변수, 함수, 클래스명
 - res/value/string, res/value/color 파일 활용
