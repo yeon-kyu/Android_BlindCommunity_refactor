@@ -141,26 +141,13 @@ class PostViewModel(private val repository: PostRepository, private val db: Favo
                 postId.value?.let {
                     _commentList.clear()
                     val response = repository.getComment(it)
-                    if(response is ArrayList<*>){
-                        val comments = response as ArrayList<LinkedTreeMap<String,String>>
-                        Log.e("BC_CHECK","comments size : ${comments.size}")
-                        for(comment in comments){
-                            val nickname = comment["nickname"]!!
-                            val content = comment["comment_content"]!!
-                            val userId = comment["user_id"]!!
-                            val commentId = comment["comment_id"]!!
-                            _commentList.add(CommentInfo(nickname,content,userId,commentId))
-                        }
+                    if(response.isSuccess){
+                        _commentList.addAll(response.result)
                         commentList.postValue(_commentList)
                     }
-                    else if(response is Double){
-                        if(response.toInt()==0){
-                            commentList.postValue(_commentList)
-                            Log.e("BC_CHECK","no comment in this post")
-                        }
-                        else{
-                            Log.e("BC_FAIL","failed to search comment in this post")
-                        }
+                    else{
+                        Log.e("BC_CHECK","get comment failed ${response.message}")
+                        _alertEvent.postValue(Event(response.message))
                     }
                 }
             }catch (e: Exception){

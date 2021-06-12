@@ -1,7 +1,7 @@
 package com.yeonkyu.blindcommunity2.data.repository
 
 import com.yeonkyu.blindcommunity2.data.api.PostService
-import com.yeonkyu.blindcommunity2.data.entities.PostInfo
+import com.yeonkyu.blindcommunity2.data.entities.CommentResponse
 import com.yeonkyu.blindcommunity2.data.entities.PostResponse
 
 class PostRepository(private val postService: PostService) : BaseRepository() {
@@ -15,7 +15,7 @@ class PostRepository(private val postService: PostService) : BaseRepository() {
     suspend fun getEmployPost(postId: String): PostResponse =
             apiRequest { postService.getEmployPostContent(postId) }
 
-    suspend fun getComment(postId: String): Any =
+    suspend fun getComment(postId: String): CommentResponse =
             apiRequest { postService.getComment(postId) }
 
     suspend fun registerComment(postId:String, userId:String, commentContent:String, commentId:String): Any =
