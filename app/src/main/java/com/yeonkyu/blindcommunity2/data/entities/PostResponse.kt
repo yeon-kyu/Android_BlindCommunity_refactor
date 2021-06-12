@@ -2,9 +2,9 @@ package com.yeonkyu.blindcommunity2.data.entities
 
 import com.google.gson.annotations.SerializedName
 
-data class BoardResponse(
+data class PostResponse(
     @SerializedName(value = "result")
-    val result: ArrayList<BoardInfo>,
+    val result: PostInfo?,
     @SerializedName(value = "isSuccess")
     val isSuccess: Boolean,
     @SerializedName(value = "code")

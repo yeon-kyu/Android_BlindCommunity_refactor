@@ -1,6 +1,7 @@
 package com.yeonkyu.blindcommunity2.data.api
 
 import com.yeonkyu.blindcommunity2.data.entities.PostInfo
+import com.yeonkyu.blindcommunity2.data.entities.PostResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -8,6 +9,15 @@ import retrofit2.http.Query
 interface PostService {
     @GET("/search_free_content?")
     suspend fun getFreePost(@Query("post_id")postId:String): Response<Any>
+
+    @GET("/search/content/free-post")
+    suspend fun getFreePostContent(@Query("post_id")postId:String): Response<PostResponse>
+
+    @GET("/search/content/info-post")
+    suspend fun getInfoPostContent(@Query("post_id")postId:String): Response<PostResponse>
+
+    @GET("/search/content/employ-post")
+    suspend fun getEmployPostContent(@Query("post_id")postId:String): Response<PostResponse>
 
     @GET("search_info_content?")
     suspend fun getInfoPost(@Query("post_id")postId:String): Response<Any>

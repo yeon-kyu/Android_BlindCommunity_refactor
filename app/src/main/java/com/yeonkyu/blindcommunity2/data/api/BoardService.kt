@@ -6,16 +6,16 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface BoardService {
-    @GET("/search/free_post?")
+    @GET("/search/free-post?")
     suspend fun getFreeBoard(@Query("cnt")cnt:Int): Response<BoardResponse>
 
-    @GET("/search/info_post")
+    @GET("/search/info-post")
     suspend fun getInfoBoard(@Query("cnt")cnt: Int): Response<BoardResponse>
 
-    @GET("/search/employee_post")
+    @GET("/search/employee-post")
     suspend fun getEmployeeBoard(@Query("cnt")cnt: Int): Response<BoardResponse>
 
-    @GET("/search/my_post")
+    @GET("/search/my-post")
     suspend fun getMyBoard2(@Query("user_id")id: String): Response<BoardResponse>
 
     @GET("/write_free?")

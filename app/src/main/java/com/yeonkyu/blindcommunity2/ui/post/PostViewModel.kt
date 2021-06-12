@@ -70,15 +70,23 @@ class PostViewModel(private val repository: PostRepository, private val db: Favo
                 isLoading.postValue(true)
                 postId.value?.let {
                     val response = when(type){
-                        1 -> repository.getFreePost(it) as ArrayList<LinkedTreeMap<String, String>>
-                        2 -> repository.getInfoPost(it) as ArrayList<LinkedTreeMap<String, String>>
-                        3 -> repository.getEmployPost(it) as ArrayList<LinkedTreeMap<String, String>>
+                        1 -> repository.getFreePost(it)// as ArrayList<LinkedTreeMap<String, String>>
+                        2 -> repository.getInfoPost(it)// as ArrayList<LinkedTreeMap<String, String>>
+                        3 -> repository.getEmployPost(it)// as ArrayList<LinkedTreeMap<String, String>>
                         else -> null
                     }
                     response?.let {
-                        _nickname.postValue(response[0]["nickname"])
-                        _title.postValue(response[0]["title"])
-                        _content.postValue(response[0]["content"])
+                        if(response.isSuccess){
+                            val postResult = response.result
+                            if(postResult!=null){
+                                _nickname.postValue(postResult.nickname)
+                                _title.postValue(postResult.title)
+                                _content.postValue(postResult.content)
+                            }
+                            else{
+                                _alertEvent.postValue(Event("게시물을 찾지 못했습니다."))
+                            }
+                        }
                     }
                 }
             }
