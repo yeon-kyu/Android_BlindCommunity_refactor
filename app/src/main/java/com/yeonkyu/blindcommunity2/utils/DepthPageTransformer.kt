@@ -4,10 +4,9 @@ import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.viewpager2.widget.ViewPager2
 
-private const val MIN_SCALE = 0.75f
-
 @RequiresApi(21)
 class DepthPageTransformer : ViewPager2.PageTransformer {
+    private val MIN_SCALE = 0.75f
 
     override fun transformPage(view: View, position: Float) {
         view.apply {

@@ -2,6 +2,7 @@ package com.yeonkyu.blindcommunity2.ui
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -13,6 +14,7 @@ import com.yeonkyu.blindcommunity2.ui.account.AccountFragment
 import com.yeonkyu.blindcommunity2.ui.favorite.FavoriteFragment
 import com.yeonkyu.blindcommunity2.ui.home.HomeFragment
 import com.yeonkyu.blindcommunity2.utils.DepthPageTransformer
+import com.yeonkyu.blindcommunity2.utils.ZoomOutPageTransformer
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -24,7 +26,8 @@ class MainActivity : AppCompatActivity() {
         main_view_pager.isUserInputEnabled = false
         main_view_pager.adapter = PagerAdapter(supportFragmentManager,lifecycle)
         main_view_pager.registerOnPageChangeCallback(PageChangeCallback())
-        main_view_pager.setPageTransformer(DepthPageTransformer())
+//        main_view_pager.setPageTransformer(DepthPageTransformer())
+        main_view_pager.setPageTransformer(ZoomOutPageTransformer())
         main_bottom_navigation.setOnNavigationItemSelectedListener { navigationSelected(it) }
     }
 
