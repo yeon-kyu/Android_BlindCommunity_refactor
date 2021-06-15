@@ -92,6 +92,7 @@ class PostViewModel(private val repository: PostRepository, private val db: Favo
             }
             catch (e:Exception){
                 Log.e("BC_ERROR","getPost error : $e")
+                _alertEvent.postValue(Event("통신에 문제가 발생하였습니다."))
             }
             finally {
                 isLoading.postValue(false)
@@ -171,24 +172,28 @@ class PostViewModel(private val repository: PostRepository, private val db: Favo
                 val sdfNow = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.KOREA)
                 val commentId = sdfNow.format(Date(System.currentTimeMillis())) + userId
 
-                val response = repository.registerComment(postId.value!!, userId,comment,commentId)
+                val commentInfo = CommentInfo(
+                        postId = postId.value!!,
+                        userId = userId,
+                        comment = comment,
+                        commentId = commentId,
+                        nickname = null
+                )
+
+                val response = repository.registerComment(commentInfo)
                 Log.e("BC_CHECK","response: $response")
-                if(response is Double){
-                    when(response.toInt()) {
-                        1 -> {
-                            registerCommentEt.postValue("")
-                            refreshComment()
-                        }
-                        else -> {
-                            Log.e("BC_FAIL","registerComment failed")
-                        }
-                    }
+
+                if(response.isSuccess){
+                    registerCommentEt.postValue("")
+                    refreshComment()
                 }
                 else{
-                    Log.e("BC_FAIL","registerComment failed")
+                    Log.e("BC_FAIL","registerComment failed ${response.message}")
+                    _alertEvent.postValue(Event(response.message))
                 }
             }catch (e: Exception){
                 Log.e("BC_ERROR","registerComment error : $e")
+                _alertEvent.postValue(Event("서버와의 통신에 실패하였습니다."))
             }
             finally {
                 isLoading.postValue(false)

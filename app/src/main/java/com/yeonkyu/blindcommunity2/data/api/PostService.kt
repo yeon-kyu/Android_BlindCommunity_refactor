@@ -1,10 +1,13 @@
 package com.yeonkyu.blindcommunity2.data.api
 
+import com.yeonkyu.blindcommunity2.data.entities.CommentInfo
 import com.yeonkyu.blindcommunity2.data.entities.CommentResponse
 import com.yeonkyu.blindcommunity2.data.entities.PostInfo
 import com.yeonkyu.blindcommunity2.data.entities.PostResponse
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface PostService {
@@ -20,13 +23,8 @@ interface PostService {
     @GET("/search/comment?")
     suspend fun getComment(@Query("post_id")postId: String): Response<CommentResponse>
 
-    @GET("/write_comment")
-    suspend fun registerComment(
-            @Query("post_id") postId: String,
-            @Query("user_id") userId: String,
-            @Query("comment_content") commentContent: String,
-            @Query("comment_id") commentId: String
-    ): Response<Any>
+    @POST("/write/comment")
+    suspend fun registerComment(@Body commentInfo: CommentInfo): Response<PostResponse>
 
     @GET("/users/check-writer")
     suspend fun isPostWriter(
