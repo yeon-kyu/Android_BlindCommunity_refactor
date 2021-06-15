@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yeonkyu.blindcommunity2.ApplicationClass
+import com.yeonkyu.blindcommunity2.data.entities.UserInfo
 import com.yeonkyu.blindcommunity2.data.repository.AuthRepository
 import com.yeonkyu.blindcommunity2.utils.Event
 import kotlinx.coroutines.Dispatchers
@@ -72,16 +73,21 @@ class SignupViewModel(private val repository: AuthRepository) : ViewModel() {
             }
         }
         viewModelScope.launch(Dispatchers.IO) {
-            val response = repository.signup(id.value!!,pw.value!!,nickname.value!!,age.value!!)
-            Log.e("BC_CHECK","signup response : $response")
-            when(response){
-                "0" -> _alertEvent.postValue(Event("중복된 아이디가 있습니다"))
-                "1" -> {
+            try {
+                val userInfo = UserInfo(id.value!!, pw.value!!, nickname.value!!, age.value!!)
+                val response = repository.signup(userInfo)
+                Log.e("BC_CHECK", "signup response : $response")
+                if (response.isSuccess) {
                     _signupEvent.postValue(Event(true))
                     ApplicationClass.prefs.setId(id.value!!)
                     ApplicationClass.prefs.setPw(pw.value!!)
+                } else {
+                    Log.e("BC_FAIL","signup fail ${response.message}")
+                    _alertEvent.postValue(Event(response.message))
                 }
-                "-1" -> _alertEvent.postValue(Event("서버에 문제가 발생했습니다."))
+            }catch (e: Exception){
+                Log.e("BC_ERROR", "signup error : $e")
+                _alertEvent.postValue(Event("서버 통신에 실패하였습니다."))
             }
         }
     }

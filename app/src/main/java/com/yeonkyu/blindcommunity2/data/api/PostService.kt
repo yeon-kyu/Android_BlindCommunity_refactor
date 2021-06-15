@@ -28,7 +28,6 @@ interface PostService {
             @Query("comment_id") commentId: String
     ): Response<Any>
 
-    //@GET("/check_writerOrNot")
     @GET("/users/check-writer")
     suspend fun isPostWriter(
             @Query("post_id")postId: String,
