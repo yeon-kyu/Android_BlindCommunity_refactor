@@ -18,7 +18,6 @@ class BoardRepository(private val boardService: BoardService) : BaseRepository()
         apiRequest { boardService.getMyBoard2(id) }
 
 
-
     suspend fun writeFreePost(
         postId: String,
         title: String,

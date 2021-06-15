@@ -1,9 +1,7 @@
 package com.yeonkyu.blindcommunity2.data.repository
 
 import com.yeonkyu.blindcommunity2.data.api.PostService
-import com.yeonkyu.blindcommunity2.data.entities.CommentInfo
-import com.yeonkyu.blindcommunity2.data.entities.CommentResponse
-import com.yeonkyu.blindcommunity2.data.entities.PostResponse
+import com.yeonkyu.blindcommunity2.data.entities.*
 
 class PostRepository(private val postService: PostService) : BaseRepository() {
 
@@ -25,8 +23,8 @@ class PostRepository(private val postService: PostService) : BaseRepository() {
     suspend fun isPostWriter(postId: String, userId: String): PostResponse =
             apiRequest { postService.isPostWriter(postId,userId) }
 
-    suspend fun deletePost(postId:String, postType: Int): Any =
-            apiRequest { postService.deletePost(postId, postType) }
+    suspend fun deletePost(boardInfo: BoardInfo): PostResponse =
+            apiRequest { postService.deletePost(boardInfo) }
 
     suspend fun deleteComment(commentInfo: CommentInfo): CommentResponse =
             apiRequest { postService.deleteComment(commentInfo) }

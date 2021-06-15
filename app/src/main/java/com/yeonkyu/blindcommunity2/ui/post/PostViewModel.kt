@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yeonkyu.blindcommunity2.ApplicationClass
+import com.yeonkyu.blindcommunity2.data.entities.BoardInfo
 import com.yeonkyu.blindcommunity2.data.entities.CommentInfo
 import com.yeonkyu.blindcommunity2.data.repository.PostRepository
 import com.yeonkyu.blindcommunity2.data.room_persistence.Favorites
@@ -69,9 +70,9 @@ class PostViewModel(private val repository: PostRepository, private val db: Favo
                 isLoading.postValue(true)
                 postId.value?.let {
                     val response = when(type){
-                        1 -> repository.getFreePost(it)// as ArrayList<LinkedTreeMap<String, String>>
-                        2 -> repository.getInfoPost(it)// as ArrayList<LinkedTreeMap<String, String>>
-                        3 -> repository.getEmployPost(it)// as ArrayList<LinkedTreeMap<String, String>>
+                        1 -> repository.getFreePost(it)
+                        2 -> repository.getInfoPost(it)
+                        3 -> repository.getEmployPost(it)
                         else -> null
                     }
                     response?.let {
@@ -206,12 +207,20 @@ class PostViewModel(private val repository: PostRepository, private val db: Favo
                 postId.value?.let {
                     val isWriterResponse = repository.isPostWriter(it,ApplicationClass.prefs.getId())
                     if(isWriterResponse.isSuccess){
-                        val deleteResponse = repository.deletePost(postId.value!!, type!!)
-                        if(deleteResponse is Double) {
-                            when (deleteResponse.toInt()) {
-                                -1 -> _alertEvent.postValue(Event("게시물 삭제에 실패하였습니다"))
-                                1 -> _finishActivityEvent.postValue(Event(true))
-                            }
+                        val postInfo = BoardInfo(
+                                postId = postId.value!!,
+                                type = type!!.toString(),
+                                nickname = null,
+                                title = null
+                        )
+
+                        val deleteResponse = repository.deletePost(postInfo)
+                        if(deleteResponse.isSuccess){
+                            _finishActivityEvent.postValue(Event(true))
+                        }
+                        else{
+                            _alertEvent.postValue(Event("게시물 삭제에 실패하였습니다"))
+                            Log.e("BC_FAIL","delete post failed ${deleteResponse.message}")
                         }
                     }
                     else{
@@ -221,6 +230,7 @@ class PostViewModel(private val repository: PostRepository, private val db: Favo
                 }
             }
             catch (e: Exception){
+                Log.e("BC_ERROR","delete post error $e")
                 _alertEvent.postValue(Event("게시물을 삭제하던 중 문제가 발생하였습니다"))
             }
         }
