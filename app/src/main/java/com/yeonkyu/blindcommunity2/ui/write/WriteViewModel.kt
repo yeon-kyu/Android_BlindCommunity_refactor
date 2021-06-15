@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yeonkyu.blindcommunity2.ApplicationClass
+import com.yeonkyu.blindcommunity2.data.entities.PostInfo
+import com.yeonkyu.blindcommunity2.data.entities.PostResponse
 import com.yeonkyu.blindcommunity2.data.repository.BoardRepository
 import com.yeonkyu.blindcommunity2.utils.Event
 import kotlinx.coroutines.Dispatchers
@@ -54,36 +56,36 @@ class WriteViewModel(private val repository: BoardRepository) : ViewModel() {
         }
 
         viewModelScope.launch(Dispatchers.IO) {
-
-            val response = when(postType){
-                "자유 게시판" -> repository.writeFreePost(postId, title, content, ApplicationClass.prefs.getId())
-                "정보 게시판" -> repository.writeInfoPost(postId, title, content, ApplicationClass.prefs.getId())
-                "취업 게시판" -> repository.writeEmployPost(postId, title, content, ApplicationClass.prefs.getId())
-                else -> {
-                    Log.e("BC_ERROR", "게시판 종류에 문제가 있습니다.")
-                }
-            }
-
-            if(response is Double){
-                when(response.toInt()){
-                    1 -> {
-                        Log.e("BC_CHECK","writePost success")
-                        _writeSuccessEvent.postValue(Event(true))
-                    }
-                    0 -> {
-                        Log.e("BC_CHECK","writePost fail")
-                        _writeSuccessEvent.postValue(Event(false))
-                    }
+            try {
+                val postInfo = PostInfo(
+                        postId = postId,
+                        title = title,
+                        content = content,
+                        userId = ApplicationClass.prefs.getId(),
+                        nickname = null
+                )
+                val response: PostResponse? = when (postType) {
+                    "자유 게시판" -> repository.writeFreePost(postInfo)
+                    "정보 게시판" -> repository.writeInfoPost(postInfo)
+                    "취업 게시판" -> repository.writeEmployPost(postInfo)
                     else -> {
-                        Log.e("BC_CHECK","writePost error")
+                        Log.e("BC_CHECK", "writePost fail")
+                        _writeSuccessEvent.postValue(Event(false))
+                        null
+                    }
+                }
+                response?.let {
+                    if (it.isSuccess) {
+                        Log.e("BC_CHECK", "writePost success")
+                        _writeSuccessEvent.postValue(Event(true))
+                    } else {
+                        Log.e("BC_CHECK", "writePost fail")
                         _writeSuccessEvent.postValue(Event(false))
                     }
                 }
-            }
-            else{
-                _writeSuccessEvent.postValue(Event(false))
+            }catch (e: Exception){
+                Log.e("BC_ERROR","write post error $e")
             }
         }
     }
-
 }
