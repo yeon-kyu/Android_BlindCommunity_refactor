@@ -5,10 +5,7 @@ import com.yeonkyu.blindcommunity2.data.entities.CommentResponse
 import com.yeonkyu.blindcommunity2.data.entities.PostInfo
 import com.yeonkyu.blindcommunity2.data.entities.PostResponse
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface PostService {
     @GET("/search/content/free-post")
@@ -38,8 +35,6 @@ interface PostService {
             @Query("post_type") postType: Int
     ): Response<Any>
 
-    @GET("/delete_comment")
-    suspend fun deleteComment(
-            @Query("comment_id") commentId: String
-    ): Response<Any>
+    @PATCH("/delete/comment")
+    suspend fun deleteComment(@Body commentInfo:CommentInfo): Response<CommentResponse>
 }

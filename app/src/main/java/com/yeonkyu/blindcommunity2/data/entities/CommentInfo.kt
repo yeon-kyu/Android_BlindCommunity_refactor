@@ -6,9 +6,9 @@ data class CommentInfo(
         @SerializedName(value = "nickname")
         val nickname: String?,
         @SerializedName(value = "comment_content")
-        val comment: String,
+        val comment: String?,
         @SerializedName(value = "user_id")
-        val userId: String,
+        val userId: String?,
         @SerializedName(value = "comment_id")
         val commentId: String,
         @SerializedName(value = "post_id")

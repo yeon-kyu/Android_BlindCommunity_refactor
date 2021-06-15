@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.gson.internal.LinkedTreeMap
 import com.yeonkyu.blindcommunity2.ApplicationClass
 import com.yeonkyu.blindcommunity2.data.entities.CommentInfo
 import com.yeonkyu.blindcommunity2.data.repository.PostRepository
@@ -207,9 +206,9 @@ class PostViewModel(private val repository: PostRepository, private val db: Favo
                 postId.value?.let {
                     val isWriterResponse = repository.isPostWriter(it,ApplicationClass.prefs.getId())
                     if(isWriterResponse.isSuccess){
-                        val response = repository.deletePost(postId.value!!, type!!)
-                        if(response is Double) {
-                            when (response.toInt()) {
+                        val deleteResponse = repository.deletePost(postId.value!!, type!!)
+                        if(deleteResponse is Double) {
+                            when (deleteResponse.toInt()) {
                                 -1 -> _alertEvent.postValue(Event("게시물 삭제에 실패하였습니다"))
                                 1 -> _finishActivityEvent.postValue(Event(true))
                             }
@@ -231,18 +230,19 @@ class PostViewModel(private val repository: PostRepository, private val db: Favo
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 if(ApplicationClass.prefs.getId() == commentInfo.userId){
-                    val response = repository.deleteComment(commentInfo.commentId)
-                    if(response is Double){
-                        when(response.toInt()){
-                            1 -> refreshComment()
-                            -1 -> _alertEvent.postValue(Event("댓글 삭제에 실패하였습니다."))
-                        }
+                    val response = repository.deleteComment(commentInfo)
+                    if(response.isSuccess){
+                        refreshComment()
+                    }
+                    else{
+                        Log.e("BC_FAIL","delete comment failed ${response.message}")
+                        _alertEvent.postValue(Event("댓글 삭제에 실패하였습니다."))
                     }
                 }
                 else{
+                    Log.e("BC_FAIL","deletePost failed : not writer of this comment")
                     _alertEvent.postValue(Event("댓글 작성자가 댓글을 지울 수 있습니다."))
                 }
-
             }
             catch (e: Exception){
                 _alertEvent.postValue(Event("댓글을 삭제하던 중 문제가 발생하였습니다."))
