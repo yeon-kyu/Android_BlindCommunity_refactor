@@ -75,6 +75,7 @@ class LoginViewModel(private val repository:AuthRepository) : ViewModel(){
                 }
             }catch (e:Exception){
                 Log.e("BC_ERROR","auto login error $e")
+                _popUpEvent.postValue(Event("서버 통신에 실패하였습니다"))
             }
         }
 

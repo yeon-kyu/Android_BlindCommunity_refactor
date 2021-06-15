@@ -28,11 +28,12 @@ interface PostService {
             @Query("comment_id") commentId: String
     ): Response<Any>
 
-    @GET("/check_writerOrNot")
+    //@GET("/check_writerOrNot")
+    @GET("/users/check-writer")
     suspend fun isPostWriter(
             @Query("post_id")postId: String,
             @Query("user_id")userId: String
-    ): Response<Any>
+    ): Response<PostResponse>
 
     @GET("/delete_post")
     suspend fun deletePost(

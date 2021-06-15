@@ -6,10 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.yeonkyu.blindcommunity2.R
 import com.yeonkyu.blindcommunity2.databinding.ActivitySplashBinding
+import com.yeonkyu.blindcommunity2.ui.BaseActivity
 import com.yeonkyu.blindcommunity2.ui.MainActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : BaseActivity() {
     private lateinit var binding: ActivitySplashBinding
     private val loginViewModel: LoginViewModel by viewModel()
 
@@ -42,6 +43,12 @@ class SplashActivity : AppCompatActivity() {
                 val intent = Intent(this,LoginActivity::class.java)
                 startActivity(intent)
                 finish()
+            }
+        })
+
+        loginViewModel.popUpEvent.observe(binding.lifecycleOwner!!,{ event ->
+            event.getContentIfNotHandled()?.let{
+                showDialog(it,"확인",null)
             }
         })
     }
