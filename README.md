@@ -8,18 +8,17 @@
 </p>
 </br>
 
- ## 구글 플레이스토어 링크
- https://play.google.com/store/apps/details?id=com.yeonkyu.blindcommunity
-</br>
-</br>
-</br>
-
 <p align="center">
 <img src="https://github.com/yeon-kyu/Android_BlindCommunity_refactor/blob/main/previews/BC_from_login_to_post.gif" width="32%"/>
 <img src="https://github.com/yeon-kyu/Android_BlindCommunity_refactor/blob/main/previews/BC_from_board_to_write_post.gif" width="32%"/>
 <img src="https://github.com/yeon-kyu/Android_BlindCommunity_refactor/blob/main/previews/BC_from_board_to_write_comment.gif" width="32%"/>
 </p>
 
+</br>
+
+ ## 구글 플레이스토어 링크
+ https://play.google.com/store/apps/details?id=com.yeonkyu.blindcommunity
+</br>
 </br>
 
 ### 변경 사항
