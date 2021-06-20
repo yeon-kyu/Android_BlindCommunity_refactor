@@ -65,11 +65,11 @@
 ### MAD Score Card
 
 <p align="center">
-<img height ="400" src="/previews/summary.png"/>
+<img height ="500" src="/previews/summary.png"/>
 </p>
 <p align="center">
-<img height ="400" src="/previews/kotlin.png"/>
+<img height ="600" src="/previews/kotlin.png"/>
 </p>
 <p align="center">
-<img height ="400" src="/previews/jetpack.png"/>
+<img height ="800" src="/previews/jetpack.png"/>
 </p>
