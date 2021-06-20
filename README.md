@@ -61,3 +61,15 @@
  - `Navigation`
  - `RealTimeBlurView`
  - `Mockito`
+
+### MAD Score Card
+
+<p align="center">
+<img height ="400" src="/previews/summary.png"/>
+</p>
+<p align="center">
+<img height ="400" src="/previews/kotlin.png"/>
+</p>
+<p align="center">
+<img height ="400" src="/previews/jetpack.png"/>
+</p>
