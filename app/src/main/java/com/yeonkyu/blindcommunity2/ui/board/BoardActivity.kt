@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yeonkyu.blindcommunity2.R
@@ -88,17 +89,17 @@ class BoardActivity : AppCompatActivity(){
     }
 
     private fun setupViewModel(){
-        boardViewModel.boardList.observe(binding.lifecycleOwner!!, {
+        boardViewModel.boardList.observe(binding.lifecycleOwner!!) {
             boardAdapter.submitList(it.toMutableList())
-        })
+        }
 
-        boardViewModel.writePostEvent.observe(binding.lifecycleOwner!!,{ event ->
+        boardViewModel.writePostEvent.observe(binding.lifecycleOwner!!) { event ->
             event.getContentIfNotHandled()?.let {
                 val intent = Intent(this, WriteActivity::class.java)
                 intent.putExtra("type",it)
                 startActivityForResult(intent,100)
             }
-        })
+        }
     }
 
     private fun setEndScrollListener(){
