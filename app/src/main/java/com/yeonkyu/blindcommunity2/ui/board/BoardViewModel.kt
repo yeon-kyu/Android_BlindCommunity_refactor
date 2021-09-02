@@ -19,12 +19,6 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
 
     var hasBeenInit = false
 
-    private val _boardList = ArrayList<BoardInfo>()
-    val boardList: MutableLiveData<ArrayList<BoardInfo>> by lazy{
-        MutableLiveData<ArrayList<BoardInfo>>()
-    }
-
-    private var count : Int = 0
     private var boardType = 0 //1:자유게시판 2:정보게시판 3:취업게시판
 
     private val _writePostEvent = MutableLiveData<Event<String>>()
@@ -32,7 +26,7 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
         get() = _writePostEvent
 
     val boardFlow = Pager(PagingConfig(pageSize = 20)) {
-        BoardPagingSource(repository.boardService)
+        BoardPagingSource(boardType, repository.boardService)
     }.flow.cachedIn(viewModelScope)
 
     fun setBoardType(type:Int){
@@ -42,83 +36,12 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
         return boardType
     }
 
-    fun refresh(){
-        count = 0
-        _boardList.clear()
-        loadNextBoards()
-    }
-
-    fun loadNextBoards(){
-        when(boardType){
-            //1 -> loadNextFreeBoards()
-            2 -> loadNextInfoBoards()
-            3 -> loadNextEmployeeBoards()
-        }
-    }
-
-//    private fun loadNextFreeBoards(){
-//        viewModelScope.launch(Dispatchers.IO) {
-//            try {
-//                val response = repository.getFreeBoard(count)
-//                if(response.isSuccess){
-//                    for(board in response.result){
-//                        _boardList.add(board)
-//                    }
-//                    //_boardList.addAll(response.result)
-//                    boardList.postValue(_boardList)
-//                    count += response.result.size
-//                    Log.e("BC_CHECK","boardList size : ${_boardList.size}")
-//                }
-//                else{
-//                    Log.e("BC_FAIL","getFreeBoard failed ${response.message}")
-//                }
-//            } catch (e: Exception) {
-//                Log.e("ERROR_TAG", "getFreeBoard api error $e")
-//            }
-//        }
+//TODO refresh는 어떻게할지 다시 고민
+//    fun refresh(){
+//        count = 0
+//        _boardList.clear()
+//        loadNextBoards()
 //    }
-
-    private fun loadNextInfoBoards(){
-        viewModelScope.launch(Dispatchers.IO){
-            try {
-                val response = repository.getInfoBoard(count)
-                if(response.isSuccess){
-                    for(board in response.result){
-                        _boardList.add(board)
-                    }
-                    boardList.postValue(_boardList)
-                    count += response.result.size
-                    Log.e("BC_CHECK","boardList size : ${_boardList.size}")
-                }
-                else{
-                    Log.e("BC_FAIL","getInfoBoard failed ${response.message}")
-                }
-            }catch (e:Exception){
-                Log.e("ERROR_TAG","getInfoBoard api error $e")
-            }
-        }
-    }
-
-    private fun loadNextEmployeeBoards(){
-        viewModelScope.launch(Dispatchers.IO){
-            try {
-                val response = repository.getEmployeeBoard(count)
-                if(response.isSuccess){
-                    for(board in response.result){
-                        _boardList.add(board)
-                    }
-                    boardList.postValue(_boardList)
-                    count += response.result.size
-                    Log.e("BC_CHECK","boardList size : ${_boardList.size}")
-                }
-                else{
-                    Log.e("BC_FAIL","getInfoBoard failed ${response.message}")
-                }
-            }catch (e:Exception){
-                Log.e("ERROR_TAG","getEmployeeBoard api error $e")
-            }
-        }
-    }
 
     fun writePost(){
         when(boardType){

@@ -18,9 +18,6 @@ class BoardPagingAdapter(private val itemClick: (BoardInfo) -> Unit) : PagingDat
 
     override fun onBindViewHolder(holder: BoardPagingViewHolder, position: Int) {
         holder.bind(getItem(position))
-//        if(itemCount - position == 1){
-//            endScrollListener?.onTouchEndScroll()
-//        }
     }
 
     object BoardDiffCallback : DiffUtil.ItemCallback<BoardInfo>(){

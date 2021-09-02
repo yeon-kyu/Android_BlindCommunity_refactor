@@ -34,7 +34,7 @@ class BoardActivity : AppCompatActivity(){
         setupViewModel()
 
         if(!boardViewModel.hasBeenInit){
-            boardViewModel.refresh()
+            //boardViewModel.refresh()
             boardViewModel.hasBeenInit = true
         }
     }
@@ -64,27 +64,6 @@ class BoardActivity : AppCompatActivity(){
 
         boardRecyclerView.adapter = boardAdapter
 
-        lifecycleScope.launch {
-            boardViewModel.boardFlow.collectLatest { pagingData ->
-                boardAdapter.submitData(pagingData)
-            }
-        }
-
-        //setItemClickListener()
-        //setEndScrollListener()
-
-        binding.boardSwipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this,R.color.primary))
-        //mBinding.boardSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.rgb(0,165,165))
-
-        binding.boardSwipeRefreshLayout.setOnRefreshListener {
-            boardViewModel.refresh()
-            binding.boardSwipeRefreshLayout.isRefreshing = false
-        }
-
-        binding.boardRefreshBt.setOnClickListener {
-            boardViewModel.refresh()
-        }
-
         when(intent.getStringExtra("type")){
             "free" -> {
                 binding.boardTv.text = "자유 게시판"
@@ -99,13 +78,27 @@ class BoardActivity : AppCompatActivity(){
                 boardViewModel.setBoardType(3)
             }
         }
+
+        lifecycleScope.launch {
+            boardViewModel.boardFlow.collectLatest { pagingData ->
+                boardAdapter.submitData(pagingData)
+            }
+        }
+
+        binding.boardSwipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this,R.color.primary))
+        //mBinding.boardSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.rgb(0,165,165))
+
+        binding.boardSwipeRefreshLayout.setOnRefreshListener {
+            //boardViewModel.refresh()
+            binding.boardSwipeRefreshLayout.isRefreshing = false
+        }
+
+        binding.boardRefreshBt.setOnClickListener {
+            //boardViewModel.refresh()
+        }
     }
 
     private fun setupViewModel(){
-//        boardViewModel.boardList.observe(binding.lifecycleOwner!!) {
-//            boardAdapter.submitList(it.toMutableList())
-//        }
-
         boardViewModel.writePostEvent.observe(binding.lifecycleOwner!!) { event ->
             event.getContentIfNotHandled()?.let {
                 val intent = Intent(this, WriteActivity::class.java)
@@ -114,22 +107,6 @@ class BoardActivity : AppCompatActivity(){
             }
         }
     }
-
-//    private fun setEndScrollListener(){
-//        boardAdapter.setEndScrollListener(object : BoardListAdapter.EndScrollListener{
-//            override fun onTouchEndScroll() {
-//                boardViewModel.loadNextBoards()
-//            }
-//        })
-//    }
-//
-//    private fun setItemClickListener(){
-//        boardAdapter.setItemClickListener(object: BoardListAdapter.OnItemClickListener{
-//            override fun onItemClick(board: BoardInfo) {
-//                moveToPostActivity(board.postId!!)
-//            }
-//        })
-//    }
 
     fun moveToPostActivity(postId: String){
         val intent = Intent(this, PostActivity::class.java)
@@ -142,7 +119,7 @@ class BoardActivity : AppCompatActivity(){
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == 100){
             if(resultCode == RESULT_OK){
-                boardViewModel.refresh()
+                //boardViewModel.refresh()
             }
         }
     }
