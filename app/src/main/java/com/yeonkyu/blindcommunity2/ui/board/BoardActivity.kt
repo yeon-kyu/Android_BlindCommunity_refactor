@@ -34,7 +34,6 @@ class BoardActivity : AppCompatActivity(){
         setupViewModel()
 
         if(!boardViewModel.hasBeenInit){
-            //boardViewModel.refresh()
             boardViewModel.hasBeenInit = true
         }
     }
@@ -89,14 +88,12 @@ class BoardActivity : AppCompatActivity(){
         //mBinding.boardSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.rgb(0,165,165))
 
         binding.boardSwipeRefreshLayout.setOnRefreshListener {
-            //boardViewModel.refresh()
             boardAdapter.refresh()
             binding.boardSwipeRefreshLayout.isRefreshing = false
         }
 
         binding.boardRefreshBt.setOnClickListener {
             boardAdapter.refresh()
-            //boardViewModel.refresh()
         }
     }
 
@@ -119,10 +116,9 @@ class BoardActivity : AppCompatActivity(){
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == 100){
-            if(resultCode == RESULT_OK){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 100) {
                 boardAdapter.refresh()
-                //boardViewModel.refresh()
             }
         }
     }

@@ -10,14 +10,12 @@ class BoardPagingSource(private val boardType: Int, private val boardService: Bo
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, BoardInfo> {
         return try{
             val nextPage = params.key ?: 0
-
             val response = when(boardType){
                 1 -> boardService.getFreeBoard(nextPage).body()
                 2 -> boardService.getInfoBoard(nextPage).body()
                 3 -> boardService.getEmployeeBoard(nextPage).body()
                 else -> null
             }
-            //val response = boardService.getFreeBoard(nextPage).body()
             val data = response?.result as List<BoardInfo>
 
             Log.e("Board Paging", "size : ${data.size}, next Page : $nextPage")

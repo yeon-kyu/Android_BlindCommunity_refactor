@@ -1,7 +1,5 @@
 package com.yeonkyu.blindcommunity2.ui.board
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.yeonkyu.blindcommunity2.data.entities.BoardInfo
 import com.yeonkyu.blindcommunity2.databinding.ItemBoardListBinding
