@@ -36,10 +36,10 @@ class BoardPagingSource(private val boardType: Int, private val boardService: Bo
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, BoardInfo>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, BoardInfo>): Int? { //refresh할 때 자동으로 호출된다.
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
-            anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
+            anchorPage?.prevKey?.plus(20) ?: anchorPage?.nextKey?.minus(20)
         }
     }
 }

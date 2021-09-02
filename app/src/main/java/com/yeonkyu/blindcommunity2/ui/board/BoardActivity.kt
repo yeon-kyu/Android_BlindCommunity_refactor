@@ -90,10 +90,12 @@ class BoardActivity : AppCompatActivity(){
 
         binding.boardSwipeRefreshLayout.setOnRefreshListener {
             //boardViewModel.refresh()
+            boardAdapter.refresh()
             binding.boardSwipeRefreshLayout.isRefreshing = false
         }
 
         binding.boardRefreshBt.setOnClickListener {
+            boardAdapter.refresh()
             //boardViewModel.refresh()
         }
     }
@@ -119,6 +121,7 @@ class BoardActivity : AppCompatActivity(){
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == 100){
             if(resultCode == RESULT_OK){
+                boardAdapter.refresh()
                 //boardViewModel.refresh()
             }
         }

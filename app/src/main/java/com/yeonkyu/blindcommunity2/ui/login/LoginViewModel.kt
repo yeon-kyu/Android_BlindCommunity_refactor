@@ -50,7 +50,7 @@ class LoginViewModel(private val repository:AuthRepository) : ViewModel(){
 
     fun autoLogin(){
         viewModelScope.launch {
-            delay(2000)
+            delay(1000)
 
             val id = ApplicationClass.prefs.getId()
             if(id.isEmpty()){
