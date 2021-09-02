@@ -9,6 +9,7 @@ import com.yeonkyu.blindcommunity2.utils.PreferenceUtil
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 
 class ApplicationClass : Application() {
 
@@ -21,9 +22,9 @@ class ApplicationClass : Application() {
         prefs = PreferenceUtil(applicationContext)
 
         startKoin{
-            androidLogger()
+            androidLogger(Level.ERROR)
             androidContext(this@ApplicationClass)
-            modules(listOf(viewModelModule, networkModule, repositoryModule, roomDBModule))
+            modules(viewModelModule, networkModule, repositoryModule, roomDBModule)
         }
     }
 }

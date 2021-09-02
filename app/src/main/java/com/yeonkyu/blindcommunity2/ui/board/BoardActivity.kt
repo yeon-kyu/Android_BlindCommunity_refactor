@@ -6,14 +6,18 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yeonkyu.blindcommunity2.R
 import com.yeonkyu.blindcommunity2.data.entities.BoardInfo
 import com.yeonkyu.blindcommunity2.databinding.ActivityBoardBinding
+import com.yeonkyu.blindcommunity2.generated.callback.OnClickListener
 import com.yeonkyu.blindcommunity2.ui.post.PostActivity
 import com.yeonkyu.blindcommunity2.ui.write.WriteActivity
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -21,7 +25,7 @@ class BoardActivity : AppCompatActivity(){
 
     private lateinit var binding: ActivityBoardBinding
     private val boardViewModel: BoardViewModel by viewModel()
-    private lateinit var boardAdapter: BoardListAdapter
+    private lateinit var boardAdapter: BoardPagingAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,11 +58,20 @@ class BoardActivity : AppCompatActivity(){
         val linearLayoutManager = LinearLayoutManager(this)
         boardRecyclerView.layoutManager = linearLayoutManager
 
-        boardAdapter = BoardListAdapter()
+        boardAdapter = BoardPagingAdapter { board ->
+            moveToPostActivity(board.postId!!)
+        }
+
         boardRecyclerView.adapter = boardAdapter
 
-        setItemClickListener()
-        setEndScrollListener()
+        lifecycleScope.launch {
+            boardViewModel.boardFlow.collectLatest { pagingData ->
+                boardAdapter.submitData(pagingData)
+            }
+        }
+
+        //setItemClickListener()
+        //setEndScrollListener()
 
         binding.boardSwipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this,R.color.primary))
         //mBinding.boardSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.rgb(0,165,165))
@@ -89,9 +102,9 @@ class BoardActivity : AppCompatActivity(){
     }
 
     private fun setupViewModel(){
-        boardViewModel.boardList.observe(binding.lifecycleOwner!!) {
-            boardAdapter.submitList(it.toMutableList())
-        }
+//        boardViewModel.boardList.observe(binding.lifecycleOwner!!) {
+//            boardAdapter.submitList(it.toMutableList())
+//        }
 
         boardViewModel.writePostEvent.observe(binding.lifecycleOwner!!) { event ->
             event.getContentIfNotHandled()?.let {
@@ -102,21 +115,21 @@ class BoardActivity : AppCompatActivity(){
         }
     }
 
-    private fun setEndScrollListener(){
-        boardAdapter.setEndScrollListener(object : BoardListAdapter.EndScrollListener{
-            override fun onTouchEndScroll() {
-                boardViewModel.loadNextBoards()
-            }
-        })
-    }
-
-    private fun setItemClickListener(){
-        boardAdapter.setItemClickListener(object: BoardListAdapter.OnItemClickListener{
-            override fun onItemClick(board: BoardInfo) {
-                moveToPostActivity(board.postId!!)
-            }
-        })
-    }
+//    private fun setEndScrollListener(){
+//        boardAdapter.setEndScrollListener(object : BoardListAdapter.EndScrollListener{
+//            override fun onTouchEndScroll() {
+//                boardViewModel.loadNextBoards()
+//            }
+//        })
+//    }
+//
+//    private fun setItemClickListener(){
+//        boardAdapter.setItemClickListener(object: BoardListAdapter.OnItemClickListener{
+//            override fun onItemClick(board: BoardInfo) {
+//                moveToPostActivity(board.postId!!)
+//            }
+//        })
+//    }
 
     fun moveToPostActivity(postId: String){
         val intent = Intent(this, PostActivity::class.java)
