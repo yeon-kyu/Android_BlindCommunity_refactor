@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,7 +13,6 @@ import com.yeonkyu.blindcommunity2.R
 import com.yeonkyu.blindcommunity2.data.entities.BoardInfo
 import com.yeonkyu.blindcommunity2.databinding.FragmentFavoriteBinding
 import com.yeonkyu.blindcommunity2.ui.account.BelongedBoardAdapter
-import com.yeonkyu.blindcommunity2.ui.board.BoardListAdapter
 import com.yeonkyu.blindcommunity2.ui.post.PostActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

@@ -6,7 +6,6 @@ import com.yeonkyu.blindcommunity2.data.entities.LoginInfo
 import com.yeonkyu.blindcommunity2.data.entities.UserInfo
 
 class AuthRepository(private val authService: AuthService) : BaseRepository() {
-
     suspend fun login(loginInfo:LoginInfo): AuthResponse =
         apiRequest { authService.login(loginInfo) }
 

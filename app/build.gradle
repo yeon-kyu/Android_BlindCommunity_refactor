@@ -43,7 +43,6 @@ android {
 
 dependencies {
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'
@@ -107,6 +106,12 @@ dependencies {
     //realTimeBlurView
     implementation 'com.github.mmin18:realtimeblurview:1.2.1'
 
-    //viewPager
+    //viewPager2
     implementation "androidx.viewpager2:viewpager2:1.0.0"
+
+    //paging
+    def paging_version = "3.0.1"
+    implementation "androidx.paging:paging-runtime:$paging_version"
+    implementation "androidx.paging:paging-rxjava3:$paging_version"
+    implementation "androidx.paging:paging-compose:1.0.0-alpha12"
 }

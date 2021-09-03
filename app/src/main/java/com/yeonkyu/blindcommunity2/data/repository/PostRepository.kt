@@ -4,7 +4,6 @@ import com.yeonkyu.blindcommunity2.data.api.PostService
 import com.yeonkyu.blindcommunity2.data.entities.*
 
 class PostRepository(private val postService: PostService) : BaseRepository() {
-
     suspend fun getFreePost(postId:String): PostResponse =
             apiRequest { postService.getFreePostContent(postId) }
 
