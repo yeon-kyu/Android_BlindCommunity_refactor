@@ -49,6 +49,7 @@
  - `DataBinding`
  - `LiveData`
  - `Room`
+ - `Paging`
 
 ### REST API 통신
  - `retrofit2`
