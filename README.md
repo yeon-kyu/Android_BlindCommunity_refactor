@@ -4,7 +4,7 @@
 
 <p align="center">  
 2020년에 만들었던 <a href="https://github.com/yeon-kyu/Android_BlindCommunity" target="_blank"> BlindCommunity </a> 를 리펙토링한 프로젝트입니다. </br>
-기존 서버 코드는 유지한 채로 앱단에서 UI, 아키텍쳐, 비즈니스 로직 등을 수정하였습니다.
+
 </p>
 </br>
 
