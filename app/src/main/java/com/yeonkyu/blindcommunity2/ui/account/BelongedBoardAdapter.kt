@@ -1,8 +1,6 @@
 package com.yeonkyu.blindcommunity2.ui.account
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
@@ -10,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.yeonkyu.blindcommunity2.R
 import com.yeonkyu.blindcommunity2.data.entities.BoardInfo
 import com.yeonkyu.blindcommunity2.databinding.ItemBelongedBoardListBinding
-import com.yeonkyu.blindcommunity2.ui.account.BelongedBoardAdapter.*
 import androidx.recyclerview.widget.ListAdapter
 
 class BelongedBoardAdapter: ListAdapter<BoardInfo, BelongedBoardAdapter.BelongedBoardViewHolder>(
@@ -27,7 +24,7 @@ class BelongedBoardAdapter: ListAdapter<BoardInfo, BelongedBoardAdapter.Belonged
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BelongedBoardViewHolder {
-        val binding:ItemBelongedBoardListBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_belonged_board_list,parent,false)
+        val binding:ItemBelongedBoardListBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_belonged_board_list, parent,false)
         return BelongedBoardViewHolder(binding)
     }
 
