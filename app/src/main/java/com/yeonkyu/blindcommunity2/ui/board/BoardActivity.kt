@@ -11,9 +11,8 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yeonkyu.blindcommunity2.R
-import com.yeonkyu.blindcommunity2.data.entities.BoardInfo
+import com.yeonkyu.blindcommunity2.data.entities.BoardTypeState
 import com.yeonkyu.blindcommunity2.databinding.ActivityBoardBinding
-import com.yeonkyu.blindcommunity2.generated.callback.OnClickListener
 import com.yeonkyu.blindcommunity2.ui.post.PostActivity
 import com.yeonkyu.blindcommunity2.ui.write.WriteActivity
 import kotlinx.coroutines.flow.collectLatest
@@ -66,15 +65,15 @@ class BoardActivity : AppCompatActivity(){
         when(intent.getStringExtra("type")){
             "free" -> {
                 binding.boardTv.text = "자유 게시판"
-                boardViewModel.setBoardType(1)
+                boardViewModel.setBoardType(BoardTypeState.Free)
             }
             "info" -> {
                 binding.boardTv.text = "정보 게시판"
-                boardViewModel.setBoardType(2)
+                boardViewModel.setBoardType(BoardTypeState.Info)
             }
             "employee" -> {
                 binding.boardTv.text = "취업 게시판"
-                boardViewModel.setBoardType(3)
+                boardViewModel.setBoardType(BoardTypeState.Employ)
             }
         }
 
@@ -107,10 +106,10 @@ class BoardActivity : AppCompatActivity(){
         }
     }
 
-    fun moveToPostActivity(postId: String){
+    private fun moveToPostActivity(postId: String){
         val intent = Intent(this, PostActivity::class.java)
-        intent.putExtra("postId",postId)
-        intent.putExtra("postType",boardViewModel.getBoardType())
+        intent.putExtra("postId", postId)
+        intent.putExtra("postType", boardViewModel.getBoardType())
         startActivity(intent)
     }
 
