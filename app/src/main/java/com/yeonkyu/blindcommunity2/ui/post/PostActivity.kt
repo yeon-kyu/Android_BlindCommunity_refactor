@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yeonkyu.blindcommunity2.R
+import com.yeonkyu.blindcommunity2.data.entities.BoardTypeState
 import com.yeonkyu.blindcommunity2.data.entities.CommentInfo
 import com.yeonkyu.blindcommunity2.databinding.ActivityPostBinding
 import com.yeonkyu.blindcommunity2.ui.BaseActivity
@@ -24,11 +25,11 @@ class PostActivity: BaseActivity(), DialogListener {
         super.onCreate(savedInstanceState)
 
         val postId = intent.getStringExtra("postId")
-        val postType = intent.getIntExtra("postType",0)
-        Log.e("BC_CHECK","postID : $postId")
-        postViewModel.postId.value = postId
+        val postType = intent.getSerializableExtra("postType") as BoardTypeState
+        Log.e("BC_CHECK","postID : $postId, postType : $postType")
 
-        postViewModel.type = postType
+        postViewModel.postId.value = postId
+        postViewModel.boardType = postType
 
         setupView()
         setupViewModel()

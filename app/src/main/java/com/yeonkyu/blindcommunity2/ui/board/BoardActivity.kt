@@ -65,15 +65,15 @@ class BoardActivity : AppCompatActivity(){
         when(intent.getStringExtra("type")){
             "free" -> {
                 binding.boardTv.text = "자유 게시판"
-                boardViewModel.setBoardType(BoardTypeState.Free)
+                boardViewModel.boardType = BoardTypeState.Free
             }
             "info" -> {
                 binding.boardTv.text = "정보 게시판"
-                boardViewModel.setBoardType(BoardTypeState.Info)
+                boardViewModel.boardType = BoardTypeState.Info
             }
             "employee" -> {
                 binding.boardTv.text = "취업 게시판"
-                boardViewModel.setBoardType(BoardTypeState.Employ)
+                boardViewModel.boardType = BoardTypeState.Employ
             }
         }
 
@@ -109,7 +109,7 @@ class BoardActivity : AppCompatActivity(){
     private fun moveToPostActivity(postId: String){
         val intent = Intent(this, PostActivity::class.java)
         intent.putExtra("postId", postId)
-        intent.putExtra("postType", boardViewModel.getBoardType())
+        intent.putExtra("postType", boardViewModel.boardType)
         startActivity(intent)
     }
 

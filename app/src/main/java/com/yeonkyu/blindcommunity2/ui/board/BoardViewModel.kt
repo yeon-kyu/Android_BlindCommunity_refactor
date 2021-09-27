@@ -16,7 +16,7 @@ class BoardViewModel(private val repository: BoardRepository) : ViewModel(){
 
     var hasBeenInit = false
 
-    private var boardType = BoardTypeState.None
+    var boardType = BoardTypeState.None
 
     private val _writePostEvent = MutableLiveData<Event<String>>()
     val writePostEvent : LiveData<Event<String>>
@@ -25,14 +25,6 @@ class BoardViewModel(private val repository: BoardRepository) : ViewModel(){
     val boardFlow = Pager(PagingConfig(pageSize = 20)) {
         BoardPagingSource(boardType, repository.boardService)
     }.flow.cachedIn(viewModelScope)
-
-    fun setBoardType(type: BoardTypeState){
-        boardType = type
-    }
-
-    fun getBoardType(): Int{
-        return boardType.type
-    }
 
     fun writePost(){
         when(boardType){
