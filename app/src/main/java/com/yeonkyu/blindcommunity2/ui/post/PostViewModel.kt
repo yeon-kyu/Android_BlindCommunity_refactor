@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yeonkyu.blindcommunity2.ApplicationClass
 import com.yeonkyu.blindcommunity2.data.entities.BoardInfo
+import com.yeonkyu.blindcommunity2.data.entities.BoardTypeState
 import com.yeonkyu.blindcommunity2.data.entities.CommentInfo
 import com.yeonkyu.blindcommunity2.data.repository.PostRepository
 import com.yeonkyu.blindcommunity2.data.room_persistence.Favorites
@@ -21,7 +22,7 @@ import kotlin.collections.ArrayList
 class PostViewModel(private val repository: PostRepository, private val db: FavoritesDao) : ViewModel() {
 
     var hasBeenInit = false
-    var type: Int? = null//1: free, 2: info, 3: employ
+    var boardType = BoardTypeState.None
     val postId = MutableLiveData<String>()
 
     val isStared = MutableLiveData<Boolean>()
@@ -69,10 +70,10 @@ class PostViewModel(private val repository: PostRepository, private val db: Favo
             try{
                 isLoading.postValue(true)
                 postId.value?.let {
-                    val response = when(type){
-                        1 -> repository.getFreePost(it)
-                        2 -> repository.getInfoPost(it)
-                        3 -> repository.getEmployPost(it)
+                    val response = when(boardType){
+                        BoardTypeState.Free -> repository.getFreePost(it)
+                        BoardTypeState.Info -> repository.getInfoPost(it)
+                        BoardTypeState.Employ -> repository.getEmployPost(it)
                         else -> null
                     }
                     response?.let {
@@ -121,7 +122,7 @@ class PostViewModel(private val repository: PostRepository, private val db: Favo
 
     fun insertOrDeleteStar(){
         viewModelScope.launch(Dispatchers.Default) {
-            val favorite = Favorites(postId.value!!,nickname.value!!,title.value!!,type!!.toString())
+            val favorite = Favorites(postId.value!!,nickname.value!!,title.value!!,boardType.type.toString())
             if(isStared.value == true){
                 db.deletePost(favorite)
                 isStared.postValue(false)
@@ -209,7 +210,7 @@ class PostViewModel(private val repository: PostRepository, private val db: Favo
                     if(isWriterResponse.isSuccess){
                         val postInfo = BoardInfo(
                                 postId = postId.value!!,
-                                type = type!!.toString(),
+                                type = boardType.type!!.toString(),
                                 nickname = null,
                                 title = null
                         )

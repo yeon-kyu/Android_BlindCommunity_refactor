@@ -5,15 +5,16 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.yeonkyu.blindcommunity2.data.api.BoardService
 import com.yeonkyu.blindcommunity2.data.entities.BoardInfo
+import com.yeonkyu.blindcommunity2.data.entities.BoardTypeState
 
-class BoardPagingSource(private val boardType: Int, private val boardService: BoardService) : PagingSource<Int, BoardInfo>() {
+class BoardPagingSource(private val boardType: BoardTypeState, private val boardService: BoardService) : PagingSource<Int, BoardInfo>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, BoardInfo> {
         return try{
             val nextPage = params.key ?: 0
             val response = when(boardType){
-                1 -> boardService.getFreeBoard(nextPage).body()
-                2 -> boardService.getInfoBoard(nextPage).body()
-                3 -> boardService.getEmployeeBoard(nextPage).body()
+                BoardTypeState.Free -> boardService.getFreeBoard(nextPage).body()
+                BoardTypeState.Info -> boardService.getInfoBoard(nextPage).body()
+                BoardTypeState.Employ -> boardService.getEmployeeBoard(nextPage).body()
                 else -> null
             }
             val data = response?.result as List<BoardInfo>

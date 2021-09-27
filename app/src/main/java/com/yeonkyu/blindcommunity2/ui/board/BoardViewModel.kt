@@ -7,15 +7,16 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
+import com.yeonkyu.blindcommunity2.data.entities.BoardTypeState
 import com.yeonkyu.blindcommunity2.data.repository.BoardPagingSource
 import com.yeonkyu.blindcommunity2.data.repository.BoardRepository
 import com.yeonkyu.blindcommunity2.utils.Event
 
-class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
+class BoardViewModel(private val repository: BoardRepository) : ViewModel(){
 
     var hasBeenInit = false
 
-    private var boardType = 0 //1:자유게시판 2:정보게시판 3:취업게시판
+    var boardType = BoardTypeState.None
 
     private val _writePostEvent = MutableLiveData<Event<String>>()
     val writePostEvent : LiveData<Event<String>>
@@ -25,19 +26,13 @@ class BoardViewModel(private val repository:BoardRepository) : ViewModel(){
         BoardPagingSource(boardType, repository.boardService)
     }.flow.cachedIn(viewModelScope)
 
-    fun setBoardType(type:Int){
-        boardType = type
-    }
-
-    fun getBoardType(): Int{
-        return boardType
-    }
-
     fun writePost(){
         when(boardType){
-            1 -> _writePostEvent.postValue(Event("자유 게시판"))
-            2 -> _writePostEvent.postValue(Event("정보 게시판"))
-            3 -> _writePostEvent.postValue(Event("취업 게시판"))
+            BoardTypeState.Free -> _writePostEvent.postValue(Event("자유 게시판"))
+            BoardTypeState.Info -> _writePostEvent.postValue(Event("정보 게시판"))
+            BoardTypeState.Employ -> _writePostEvent.postValue(Event("취업 게시판"))
         }
     }
+
+
 }
