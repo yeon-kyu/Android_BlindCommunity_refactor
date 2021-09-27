@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class PostViewModel(private val repository: PostRepository, private val db: FavoritesDao) : ViewModel() {
+class PostViewModel(private val repository: PostRepository) : ViewModel() {
 
     var hasBeenInit = false
     var boardType = BoardTypeState.None
@@ -69,13 +69,10 @@ class PostViewModel(private val repository: PostRepository, private val db: Favo
         viewModelScope.launch(Dispatchers.IO) {
             try{
                 isLoading.postValue(true)
+
                 postId.value?.let {
-                    val response = when(boardType){
-                        BoardTypeState.Free -> repository.getFreePost(it)
-                        BoardTypeState.Info -> repository.getInfoPost(it)
-                        BoardTypeState.Employ -> repository.getEmployPost(it)
-                        else -> null
-                    }
+                    val response = repository.loadPost(it, boardType)
+
                     response?.let {
                         if(response.isSuccess){
                             val postResult = response.result
@@ -106,7 +103,7 @@ class PostViewModel(private val repository: PostRepository, private val db: Favo
     private fun refreshStar(){
         viewModelScope.launch(Dispatchers.Default) {
             try {
-                val postList  = db.getAllPost()
+                val postList = repository.getAllPost()
                 isStared.postValue(false)
                 for(item in postList){
                     if(item.postId == postId.value){
@@ -124,12 +121,12 @@ class PostViewModel(private val repository: PostRepository, private val db: Favo
         viewModelScope.launch(Dispatchers.Default) {
             val favorite = Favorites(postId.value!!,nickname.value!!,title.value!!,boardType.type.toString())
             if(isStared.value == true){
-                db.deletePost(favorite)
+                repository.deletePost(favorite)
                 isStared.postValue(false)
                 Log.e("BC_CHECK","게시물이 찜 리스트에서 삭제되었습니다.")
             }
             else{
-                db.insertPost(favorite)
+                repository.insertPost(favorite)
                 isStared.postValue(true)
                 Log.e("BC_CHECK","게시물이 찜 리스트에 추가되었습니다.")
             }
@@ -162,7 +159,7 @@ class PostViewModel(private val repository: PostRepository, private val db: Favo
     }
 
     fun registerComment(){
-        if(registerCommentEt.value?.length == 0){
+        if(registerCommentEt.value.isNullOrEmpty()){
             return
         }
         viewModelScope.launch(Dispatchers.IO) {

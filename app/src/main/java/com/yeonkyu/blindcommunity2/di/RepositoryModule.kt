@@ -8,5 +8,5 @@ import org.koin.dsl.module
 val repositoryModule = module {
     single { AuthRepository(get()) }
     single { BoardRepository(get()) }
-    single { PostRepository(get()) }
+    single { PostRepository(get(), get()) }
 }

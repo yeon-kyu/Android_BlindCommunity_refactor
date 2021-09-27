@@ -2,16 +2,19 @@ package com.yeonkyu.blindcommunity2.data.repository
 
 import com.yeonkyu.blindcommunity2.data.api.PostService
 import com.yeonkyu.blindcommunity2.data.entities.*
+import com.yeonkyu.blindcommunity2.data.room_persistence.Favorites
+import com.yeonkyu.blindcommunity2.data.room_persistence.FavoritesDao
 
-class PostRepository(private val postService: PostService) : BaseRepository() {
-    suspend fun getFreePost(postId:String): PostResponse =
-            apiRequest { postService.getFreePostContent(postId) }
+class PostRepository(private val postService: PostService, private val favoritesDao: FavoritesDao) : BaseRepository() {
 
-    suspend fun getInfoPost(postId: String): PostResponse =
-            apiRequest { postService.getInfoPostContent(postId) }
-
-    suspend fun getEmployPost(postId: String): PostResponse =
-            apiRequest { postService.getEmployPostContent(postId) }
+    suspend fun loadPost(postId: String, typeState: BoardTypeState): PostResponse?{
+        return when(typeState){
+            BoardTypeState.Free -> apiRequest { postService.getFreePostContent(postId) }
+            BoardTypeState.Info -> apiRequest { postService.getInfoPostContent(postId) }
+            BoardTypeState.Employ -> apiRequest { postService.getEmployPostContent(postId) }
+            else -> null
+        }
+    }
 
     suspend fun getComment(postId: String): CommentResponse =
             apiRequest { postService.getComment(postId) }
@@ -27,4 +30,10 @@ class PostRepository(private val postService: PostService) : BaseRepository() {
 
     suspend fun deleteComment(commentInfo: CommentInfo): CommentResponse =
             apiRequest { postService.deleteComment(commentInfo) }
+
+    fun getAllPost() = favoritesDao.getAllPost()
+
+    fun deletePost(favorite: Favorites) = favoritesDao.deletePost(favorite)
+
+    fun insertPost(favorite: Favorites) = favoritesDao.insertPost(favorite)
 }
